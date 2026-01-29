@@ -308,6 +308,217 @@ body {
 /* Initial States for ScrollTrigger to animate FROM/TO */
 .card-left { transform: translateX(-120%) translateZ(-200px) rotateY(15deg); opacity: 0.5; }
 .card-right { transform: translateX(120%) translateZ(-200px) rotateY(-15deg); opacity: 0.5; }
+/* Comparison Slider */
+.comparison-section {
+    padding: var(--section-padding) 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #050505; /* Seamless transition from Workflow area */
+    color: white;
+}
+
+.comparison-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.comparison-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 600px;
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: ew-resize; /* Indicate draggable */
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+}
+
+.img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #222;
+}
+
+.sketch-pattern {
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(45deg, #333 0, #333 1px, transparent 0, transparent 50%);
+    background-size: 10px 10px;
+    position: relative;
+}
+/* Mock sketch lines */
+.sketch-pattern::after {
+    content: "SKETCH";
+    font-size: 10rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.05);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.after-image {
+    width: 50%; /* Initial state */
+    overflow: hidden; /* Clips the content */
+    border-right: 2px solid white;
+    z-index: 2;
+}
+
+.render-pattern {
+    width: 1000px; /* Must equal container width to prevent squishing */
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974&auto=format&fit=crop'); /* Placeholder beautiful abstract render */
+    background-size: cover;
+    background-position: center;
+}
+
+.label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.6);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    z-index: 5;
+}
+
+.after-image .label {
+    left: auto;
+    right: 20px;
+}
+
+/* Fix for inner content width in clipped container */
+.after-image .placeholder-content {
+    width: 100vw; /* Fallback */
+    max-width: 1000px; /* Same as container */
+}
+
+.slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 40px;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Let clicks pass to container */
+}
+
+.handle-line {
+    width: 2px;
+    height: 100%;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.handle-circle {
+    position: absolute;
+    top: 50%;
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.handle-icon {
+    width: 12px;
+    height: 12px;
+}
+.handle-icon.flip { transform: scaleX(-1); }
+
+
+/* Horizontal Gallery */
+.gallery-section {
+    background: white;
+    overflow: hidden; /* Hide scrollbar for the pinned track */
+    /* No padding here, we want full bleed track, but maybe some vertical space before pin */
+}
+
+.gallery-wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.gallery-track {
+    display: flex;
+    gap: 40px;
+    padding: 0 100px; /* Initial offset */
+    width: max-content; /* Ensure it takes full width of children */
+}
+
+.gallery-item {
+    width: 400px; /* Fixed width */
+    height: 500px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop'); /* Placeholder */
+    background-size: cover;
+    background-position: center;
+}
+
+.gallery-item:nth-child(even) .gallery-img {
+    background-image: url('https://images.unsplash.com/photo-1633511090164-b43840ea1607?q=80&w=1964&auto=format&fit=crop');
+}
+
+.gallery-item:hover .gallery-img {
+    transform: scale(0.98);
+}
+
+.gallery-artist {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+}
+
+.gallery-text {
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.gallery-text h3 {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 24px;
+    color: #000;
+}
+
 /* Premium Footer */
 .site-footer {
     background: #050505;
