@@ -182,8 +182,44 @@ function initFeatures() {
 }
 
 
+// 5. Product Image Blur Reveal
+function initProductReveal() {
+    gsap.to('.product-image-wrapper', {
+        opacity: 1,
+        filter: "blur(0px)",
+        scale: 1,
+        duration: 1.5,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: '.product-section',
+            start: "top 70%",
+            end: "top 30%",
+            scrub: true // Scrub for smooth control or toggleActions for play once
+            // Requirement says "Images appear with blur -> sharp transition". 
+            // Usually this is a play-once event, not scrub linked.
+            // Let's switch to toggleActions for Play Once to satisfy "Appear"
+        }
+    });
+
+    // Re-doing with toggleActions as it feels more "reveal"
+    ScrollTrigger.create({
+        trigger: '.product-section',
+        start: "top 75%",
+        onEnter: () => {
+            gsap.to('.product-image-wrapper', {
+                opacity: 1,
+                filter: "blur(0px)",
+                scale: 1,
+                duration: 1.5,
+                ease: "power2.out"
+            });
+        } 
+    });
+}
+
 // Initialize
 window.addEventListener('load', () => {
     initHero();
     initFeatures();
+    initProductReveal();
 });

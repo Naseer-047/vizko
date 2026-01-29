@@ -169,16 +169,104 @@ body {
     color: #111;
 }
 
-/* Hero Section */
+/* Sticky Section Logic */
+.sticky-section {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+}
+
+.relative-section {
+    position: relative;
+    z-index: 10;
+    background: var(--color-bg); /* Ensure background covers the sticky hero */
+    padding-top: var(--section-padding);
+    /* Box shadow to create depth when sliding over */
+    box-shadow: 0 -50px 100px rgba(0,0,0,0.05); 
+}
+
+/* Button Micro-interactions */
+.btn-arrow {
+    margin-left: 8px;
+    transform: translateX(0);
+    transition: transform 0.3s var(--ease-out-expo);
+}
+
+.btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.btn span {
+    transition: transform 0.3s var(--ease-out-expo);
+    display: inline-block;
+}
+
+.btn:hover span {
+    transform: translateX(-2px); /* Subtle shift to counter arrow movement balance */
+}
+
+/* Hero Section Refinements */
 .hero-section {
     height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    position: sticky; /* Part of the logic */
+    top: 0;
     padding-top: 80px;
     overflow: hidden;
+}
+
+/* Product Visuals Section */
+.product-section {
+    padding: var(--section-padding) 48px;
+    background: #000; /* Dark section for contrast as seen on Vizcom */
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-container {
+    max-width: var(--container-width);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.product-image-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #222;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    opacity: 0; /* JS handles reveal */
+    filter: blur(20px);
+    transform: scale(0.95);
+}
+
+.product-mockup {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #333, #444);
+    /* Add some pattern to make it look like interface */
+    background-image: radial-gradient(#555 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.product-text h2 {
+    font-size: var(--h2-size);
+    margin-bottom: 24px;
+}
+
+.product-text p {
+    font-size: 1.25rem;
+    color: #999;
 }
 
 .hero-container {
