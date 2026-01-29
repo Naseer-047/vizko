@@ -527,11 +527,28 @@ function initFAQ() {
 }
 
 // 15. Velocity Scroll Text (Global)
+// 15. Velocity Scroll Text (Global)
 function initVelocityText() {
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.5 // Add some lag for inertia feel
-        }
+    const sections = document.querySelectorAll('.velocity-section');
+    
+    sections.forEach(section => {
+        const track = section.querySelector('.velocity-track');
+        if (!track) return;
+        
+        // Duplicate content to ensure seamless loop
+        track.innerHTML += track.innerHTML; 
+        
+        // Move track based on scroll
+        gsap.to(track, {
+            xPercent: -20, // Move left
+            ease: "none",
+            scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0 // Direct response
+            }
+        });
     });
 }
 
