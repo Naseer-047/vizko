@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizcom - AI Creative Tools</title>
+    <meta name="description" content="Visualizing construction responsibly.">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Preload Fonts (Inter for premium feel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Critical CSS to prevent FOUC */
+        html.lenis {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">VIZCOM</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Product</a>
+                <a href="#" class="nav-link">Studio</a>
+                <a href="#" class="nav-link">Community</a>
+                <a href="#" class="nav-link">Pricing</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-ghost">Log In</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="line-mask"><span class="reveal-text">Visualizing</span></span>
+                        <span class="line-mask"><span class="reveal-text">construction</span></span>
+                        <span class="line-mask"><span class="reveal-text">responsibly.</span></span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        <span class="line-mask"><span class="reveal-text delay-1">See your drawings come to life in seconds,</span></span>
+                        <span class="line-mask"><span class="reveal-text delay-1">not hours. The future of industrial design is here.</span></span>
+                    </p>
+                    <div class="hero-cta-wrapper">
+                        <a href="#" class="btn btn-large btn-primary-glow">
+                            <span>Get Started</span>
+                            <div class="btn-glow"></div>
+                        </a>
+                        <a href="#" class="btn btn-large btn-outline">
+                            <span>Watch Demo</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-wrapper" data-speed="0.5">
+                        <div class="visual-card layer-1"></div>
+                        <div class="visual-card layer-2"></div>
+                        <div class="visual-card main-visual">
+                            <!-- Placeholder for main interactive graphic -->
+                            <div class="gradient-sphere"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <h2 class="section-title">Designed for flow state.</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-content">
+                        <h3>Render</h3>
+                        <p>Turn sketches into photorealistic images.</p>
+                    </div>
+                    <div class="card-visual"></div>
+                </div>
+                <div class="feature-card">
+                    <div class="card-content">
+                        <h3>Refine</h3>
+                        <p>Iterate with precision control.</p>
+                    </div>
+                    <div class="card-visual"></div>
+                </div>
+                <div class="feature-card">
+                    <div class="card-content">
+                        <h3>Export</h3>
+                        <p>Production-ready assets in clicks.</p>
+                    </div>
+                    <div class="card-visual"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="spacer-section" style="height: 100vh; display: flex; align-items: center; justify-content: center; background: #0a0a0a; color: white;">
+            <h2>More content coming soon...</h2>
+        </section>
+    </main>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>

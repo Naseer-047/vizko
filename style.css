@@ -1,0 +1,310 @@
+/* 
+   Vizcom Recreation - Core Styles
+   Design System & Animation Variables 
+*/
+
+:root {
+    /* Colors */
+    --color-bg: #FFFFFF;
+    --color-text-main: #111111;
+    --color-text-secondary: #666666;
+    --color-accent: #2563EB; /* Premium Blue */
+    --color-surface: #F5F5F7;
+    --color-border: #E5E5E5;
+    
+    /* Typography */
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --h1-size: clamp(3rem, 5vw, 5rem);
+    --h2-size: clamp(2rem, 3vw, 3.5rem);
+    --body-size: 1.125rem;
+    
+    /* Animation Easing (Cubic Bezier for 'Apple-like' feel) */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+    
+    /* Spacing */
+    --container-width: 1440px;
+    --section-padding: 120px;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    font-family: var(--font-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+::selection {
+    background: var(--color-text-main);
+    color: var(--color-bg);
+}
+
+/* Custom Cursor */
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: black;
+}
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0,0,0,0.5);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px 48px;
+    z-index: 100;
+    transition: transform 0.3s var(--ease-out-expo);
+    mix-blend-mode: difference;
+    color: white; /* Because of difference mode against white bg */
+}
+
+.nav-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s var(--ease-out-expo);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+/* Buttons */
+.btn {
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 99px;
+    font-weight: 500;
+    transition: all 0.3s var(--ease-out-expo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: white;
+    color: black;
+}
+
+.btn-large {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+}
+
+.btn-primary-glow {
+    background: #111;
+    color: white;
+    overflow: hidden;
+}
+
+.btn-outline {
+    border: 1px solid rgba(0,0,0,0.1);
+    color: #111;
+}
+
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 80px;
+    overflow: hidden;
+}
+
+.hero-container {
+    max-width: var(--container-width);
+    width: 100%;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: var(--h1-size);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+}
+
+.line-mask {
+    display: block;
+    overflow: hidden;
+}
+
+.reveal-text {
+    display: block;
+    transform: translateY(120%);
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+    max-width: 500px;
+}
+
+.hero-cta-wrapper {
+    display: flex;
+    gap: 16px;
+    opacity: 0; /* Animated in */
+    transform: translateY(20px);
+}
+
+.hero-visual {
+    position: relative;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.visual-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.visual-card {
+    position: absolute;
+    border-radius: 24px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.1);
+}
+
+.main-visual {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.gradient-sphere {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, #ffaaaa, #4444ff);
+    filter: blur(80px);
+    top: 20%;
+    left: 20%;
+    animation: float 10s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, -20px); }
+}
+
+/* Features */
+.features-section {
+    padding: var(--section-padding) 48px;
+    background: var(--color-surface);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+}
+
+.feature-card {
+    background: white;
+    padding: 32px;
+    border-radius: 24px;
+    height: 400px;
+    position: relative;
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+}
+
+.card-visual {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    border-radius: 12px;
+}
