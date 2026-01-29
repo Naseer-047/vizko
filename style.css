@@ -218,56 +218,97 @@ body {
     overflow: hidden;
 }
 
-/* Product Visuals Section */
-.product-section {
+/* Marquee Section */
+.marquee-section {
+    padding: 60px 0;
+    background: #000;
+    color: #444;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); /* Fade edges */
+}
+
+.marquee-track {
+    display: flex;
+    gap: 80px;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+}
+
+.marquee-item {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Assumes duplicate content for seamless loop */
+}
+
+/* 3D Workflow Section */
+.workflow-section {
     padding: var(--section-padding) 48px;
-    background: #000; /* Dark section for contrast as seen on Vizcom */
+    background: #000;
     color: white;
-    min-height: 100vh;
+    min-height: 150vh; /* Extra height for scroll duration */
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-text {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #fff 40%, #666);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.workflow-3d-stage {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    perspective: 1200px; /* Strong perspective */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.workflow-card {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    background: #1a1a1a;
+    border-radius: 20px;
+    border: 1px solid #333;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    transform-style: preserve-3d;
 }
 
-.product-container {
-    max-width: var(--container-width);
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-}
-
-.product-image-wrapper {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #222;
-    border-radius: 24px;
-    overflow: hidden;
-    position: relative;
-    opacity: 0; /* JS handles reveal */
-    filter: blur(20px);
-    transform: scale(0.95);
-}
-
-.product-mockup {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #333, #444);
-    /* Add some pattern to make it look like interface */
-    background-image: radial-gradient(#555 1px, transparent 1px);
-    background-size: 20px 20px;
-}
-
-.product-text h2 {
-    font-size: var(--h2-size);
-    margin-bottom: 24px;
-}
-
-.product-text p {
-    font-size: 1.25rem;
-    color: #999;
-}
+/* Initial States for ScrollTrigger to animate FROM/TO */
+.card-left { transform: translateX(-120%) translateZ(-200px) rotateY(15deg); opacity: 0.5; }
+.card-right { transform: translateX(120%) translateZ(-200px) rotateY(-15deg); opacity: 0.5; }
+.card-center { transform: translateZ(0); z-index: 2; border: 1px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,0.1); }
 
 .hero-container {
     max-width: var(--container-width);

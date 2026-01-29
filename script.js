@@ -230,9 +230,51 @@ function initProductReveal() {
     });
 }
 
+// 6. 3D Workflow Animation
+function initWorkflow() {
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".workflow-section",
+            start: "top 20%",
+            end: "bottom bottom",
+            scrub: 1, // Smooth scrub
+            pin: true // Pin the section while animating
+        }
+    });
+
+    // Animate cards converging
+    tl.to('.card-left', {
+        x: '-60%', // Move closer
+        z: -100,
+        rotationY: 5,
+        opacity: 1,
+        duration: 1
+    }, 0)
+    .to('.card-right', {
+        x: '60%',
+        z: -100,
+        rotationY: -5,
+        opacity: 1,
+        duration: 1
+    }, 0)
+    .to('.card-center', {
+        scale: 1.1,
+        boxShadow: "0 0 60px rgba(255,255,255,0.2)",
+        duration: 1
+    }, 0);
+    
+    // Slight rotation correction as requested in prompt "Slight rotation correction while scrolling"
+    // applied to the container or cards for that 3D feel
+    tl.to('.workflow-3d-stage', {
+        rotationX: 5,
+        duration: 1
+    }, 0);
+}
+
 // Initialize
 window.addEventListener('load', () => {
     initHero();
     initFeatures();
     initProductReveal();
+    initWorkflow();
 });
