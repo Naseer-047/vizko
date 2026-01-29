@@ -364,6 +364,16 @@ section {
 .gradient-text {
     background: linear-gradient(135deg, #fff 40%, #666);
     -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-dark, 
+.stack-section .gradient-text,
+.team-section .gradient-text {
+    background: linear-gradient(135deg, #111 30%, #666);
+    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -1193,7 +1203,7 @@ section {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 600px; /* Fixed width matching container */
     height: 100%;
     background: #fff;
     border: 1px solid #eee;
