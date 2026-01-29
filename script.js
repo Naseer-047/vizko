@@ -211,36 +211,32 @@ function initFeatures() {
 
 // 5. Product Image Blur Reveal
 function initProductReveal() {
+    // Pin the section while the reveal happens
     gsap.to('.product-image-wrapper', {
         opacity: 1,
         filter: "blur(0px)",
         scale: 1,
-        duration: 1.5,
+        duration: 1,
         ease: "power2.out",
         scrollTrigger: {
             trigger: '.product-section',
-            start: "top 70%",
-            end: "top 30%",
-            scrub: true // Scrub for smooth control or toggleActions for play once
-            // Requirement says "Images appear with blur -> sharp transition". 
-            // Usually this is a play-once event, not scrub linked.
-            // Let's switch to toggleActions for Play Once to satisfy "Appear"
+            start: "top top", // Pin immediately when it hits top
+            end: "+=100%", // Pin for 1 screen height duration
+            pin: true,
+            scrub: true // Scrub the animation while pinned
         }
     });
 
-    // Re-doing with toggleActions as it feels more "reveal"
-    ScrollTrigger.create({
-        trigger: '.product-section',
-        start: "top 75%",
-        onEnter: () => {
-            gsap.to('.product-image-wrapper', {
-                opacity: 1,
-                filter: "blur(0px)",
-                scale: 1,
-                duration: 1.5,
-                ease: "power2.out"
-            });
-        } 
+    // Also animate text slightly for parallax
+    gsap.from('.product-text', {
+        y: 50,
+        opacity: 0,
+        scrollTrigger: {
+            trigger: '.product-section',
+            start: "top top",
+            end: "+=50%",
+            scrub: true
+        }
     });
 }
 
