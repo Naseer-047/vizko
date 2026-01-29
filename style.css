@@ -519,28 +519,62 @@ section {
     transform: translateX(0);
 }
 
-.approach-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    max-width: var(--container-width);
-    margin: 0 auto;
+/* Stacked Cards Layout */
+.process-stack-container {
     width: 100%;
+    max-width: 800px; /* Narrower for focus */
+    margin: 0 auto;
+    padding-bottom: 20vh; /* Space at end */
 }
 
 .step-card {
+    position: sticky;
+    top: 150px; /* Stick near top */
     background: #111;
-    border: 1px solid #222;
-    padding: 40px;
-    border-radius: 24px;
-    position: relative;
+    border: 1px solid #333;
+    border-radius: 32px;
+    padding: 60px;
+    margin-bottom: 10vh; /* Scroll space between releases */
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.5); /* Shadow up to separate layers */
+    transform-origin: center top; /* For scale effect */
+    will-change: transform;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
-    /* 3D Setup */
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    opacity: 0; /* Hidden initially for JS reveal */
+    /* Ensure opacity is visible by default (JS will handle anim) */
+    opacity: 1;
 }
+
+.step-number {
+    font-size: 6rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex-grow: 1;
+}
+
+.step-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.step-desc {
+    font-size: 1.1rem;
+    color: #999;
+    line-height: 1.6;
+}
+
+/* Card Variants for natural layering colors */
+.step-card.card-1 { background: #111; z-index: 1; }
+.step-card.card-2 { background: #161616; z-index: 2; }
+.step-card.card-3 { background: #1a1a1a; z-index: 3; }
 
 /* Connecting Line (Only visible on desktop) */
 .step-card::after {

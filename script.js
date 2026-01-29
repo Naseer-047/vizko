@@ -261,31 +261,41 @@ function initProductReveal() {
 }
 
 // 6. 3D Workflow Animation
-// 6. Engineering Approach Animation (Premium 3D Flip)
+// 6. Engineering Approach Animation (Stacked Cards)
 function initWorkflow() {
-    gsap.set('.step-card', { 
-        rotationX: 90, 
-        opacity: 0, 
-        transformOrigin: "top center", 
-        y: -50 
-    });
+    const cards = gsap.utils.toArray('.step-card');
+    
+    cards.forEach((card, i) => {
+        // Initial fade in for the first card(s) as they enter viewport
+        gsap.from(card, {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: card,
+                start: "top 90%"
+            }
+        });
 
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".approach-grid",
-            start: "top 70%",
-            end: "bottom bottom",
-            toggleActions: "play none none reverse"
+        // Scale Down Effect (Logic: When THIS card hits top, it stays sticky. 
+        // When the NEXT card comes up, THIS card scales down.)
+        
+        if (i < cards.length - 1) { // Don't animate the last card scaling down
+            const nextCard = cards[i + 1];
+            
+            gsap.to(card, {
+                scale: 0.9,
+                opacity: 0.5,
+                filter: "blur(5px)",
+                scrollTrigger: {
+                    trigger: nextCard,
+                    start: "top 70%", // Start scaling when next card is getting close to covering
+                    end: "top 20%",
+                    scrub: true
+                }
+            });
         }
-    });
-
-    tl.to('.step-card', {
-        rotationX: 0,
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.3,
-        ease: "back.out(1.7)" // Bouncy arrival
     });
 }
 
