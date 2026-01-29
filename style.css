@@ -454,25 +454,70 @@ section {
     align-items: center;
 }
 
-.center-text {
-    text-align: center;
-    margin-bottom: 100px;
+/* Most Valuable Section */
+.features-section {
+    padding: var(--section-padding) 48px;
+    background: #000;
+    color: white;
 }
 
-.gradient-text {
-    background: linear-gradient(135deg, #fff 40%, #666);
+.values-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.value-item {
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s;
+    group: hover;
+}
+
+.value-item:hover {
+    padding-left: 20px;
+    border-color: white;
+}
+
+.value-left {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+}
+
+.value-number {
+    font-family: 'Fira Code', monospace;
+    color: #666;
+    font-size: 1rem;
+}
+
+.value-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(to right, #fff, #888);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.gradient-text-dark, 
-.stack-section .gradient-text,
-.team-section .gradient-text {
-    background: linear-gradient(135deg, #111 30%, #666);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.value-desc {
+    color: #888;
+    font-size: 1.1rem;
+    max-width: 300px;
+    text-align: right;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.value-item:hover .value-desc {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .workflow-3d-stage {
