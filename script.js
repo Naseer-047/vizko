@@ -368,21 +368,23 @@ function initFooter() {
     });
 }
 
-// 10. AI Style Selector Logic
+// 10. Tech Ecosystem Logic
 function initStyleSelector() {
-    const btns = document.querySelectorAll('.style-btn');
-    const images = document.querySelectorAll('.style-img');
+    const tabs = document.querySelectorAll('.style-tab');
+    const images = document.querySelectorAll('.style-image');
 
-    btns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
             // Remove active
-            btns.forEach(b => b.classList.remove('active'));
+            tabs.forEach(t => t.classList.remove('active'));
             images.forEach(img => img.classList.remove('active'));
 
             // Add active
-            btn.classList.add('active');
-            const targetId = `style-img-${btn.dataset.target}`;
-            document.getElementById(targetId).classList.add('active');
+            tab.classList.add('active');
+            // ID format is style-[name] e.g. style-cyberpunk
+            const targetId = `style-${tab.dataset.style}`;
+            const target = document.getElementById(targetId);
+            if(target) target.classList.add('active');
         });
     });
 }
