@@ -338,37 +338,65 @@ function initSlider() {
     container.addEventListener('touchmove', moveSlider);
 }
 
-// 8. Horizontal Gallery Scroll
-function initGallery() {
-    const section = document.querySelector('.gallery-section');
-    const track = document.querySelector('.gallery-track');
-
-    // Create a scroll trigger that pins the section
-    // and moves the track to the left
+// 8. Projects Grid (Filterable + Animation)
+function initProjectsGrid() {
+    const filters = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
     
-    // Calculate total width to move
-    // We want to move (trackWidth - viewportWidth)
-    // But track.scrollWidth is easier
-    
-    // We need to wait for images/layout potentially, but let's assume fixed sizes or sufficient load
-    
-     // Use function to get fresh width on resize
-    function getScrollAmount() {
-        let trackWidth = track.scrollWidth;
-        return -(trackWidth - window.innerWidth + 100); // 100px buffer/padding
-    }
-
-    const tween = gsap.to(track, {
-        x: getScrollAmount,
-        ease: "none",
+    // Initial Reveal
+    gsap.from(cards, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
         scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${getScrollAmount() * -1}`, // Scroll distance proportional to width
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true // Recalculate on resize
+            trigger: ".project-grid",
+            start: "top 80%"
         }
+    });
+
+    filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1. Update Active State
+            filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const category = btn.dataset.filter;
+            
+            // 2. Filter Logic (Fade Out -> Layout Change -> Fade In)
+            // Ideally we'd use GSAP Flip here, but without the plugin loaded, 
+            // a robust "animate out, switch, animate in" is safest.
+            
+            const tl = gsap.timeline();
+
+            // Step A: Hide all current cards
+            tl.to(cards, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: () => {
+                    // Step B: Update DOM layout (Display None/Block)
+                    cards.forEach(card => {
+                        if (category === 'all' || card.dataset.category === category) {
+                            card.style.display = "block";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                }
+            });
+
+            // Step C:  Animate visible cards back in (New Layout)
+            tl.to(cards, {
+                 scale: 1,
+                 opacity: 1,
+                 duration: 0.4,
+                 ease: "power2.out",
+                 stagger: 0.05,
+                 clearProps: "scale" // Ensure hover effects work later
+            }); // This runs after A completes due to timeline
+        });
     });
 }
 
