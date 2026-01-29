@@ -830,6 +830,206 @@ body {
     transform: rotate(45deg);
 }
 
+/* 7. Team Section */
+.team-section {
+    padding: var(--section-padding) 48px;
+    background: #fff;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.team-card {
+    position: relative;
+    height: 400px;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.team-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s;
+}
+
+.team-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.4s var(--ease-out-expo);
+}
+
+.team-card:hover .team-img { transform: scale(1.1); }
+.team-card:hover .team-info { transform: translateY(0); }
+
+/* 8. Orbit Section */
+.orbit-section {
+    height: 100vh;
+    background: #050505;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+}
+
+.orbit-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    animation: orbitTilt 10s infinite alternate ease-in-out;
+}
+
+@keyframes orbitTilt {
+    0% { transform: rotateX(60deg) rotateZ(0deg); }
+    100% { transform: rotateX(70deg) rotateZ(20deg); }
+}
+
+.orbit-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: black;
+    box-shadow: 0 0 50px rgba(255,255,255,0.4);
+    z-index: 10;
+}
+
+.orbit-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transform-style: preserve-3d;
+}
+
+.ring-1 { width: 300px; height: 300px; animation: spin 15s linear infinite; }
+.ring-2 { width: 500px; height: 500px; animation: spin 25s linear infinite reverse; }
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.orbit-item {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Arrange items on ring */
+.item-1 { top: -25px; left: 50%; margin-left: -25px; }
+.item-2 { bottom: 20%; left: 10%; }
+.item-3 { bottom: 20%; right: 10%; }
+
+.item-4 { top: 50%; right: -25px; margin-top: -25px; }
+.item-5 { bottom: 10%; left: 30%; }
+.item-6 { top: 10%; left: 30%; }
+
+/* 9. Velocity Section */
+.velocity-section {
+    padding: 100px 0;
+    background: white;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.velocity-track {
+    font-size: 10rem;
+    font-weight: 900;
+    line-height: 1;
+    color: black;
+    display: inline-block;
+}
+
+.velocity-track span { margin-right: 60px; }
+.velocity-track .stroke {
+    -webkit-text-stroke: 2px black;
+    color: transparent;
+}
+
+/* 10. Final CTA */
+.cta-section {
+    padding: 150px 48px;
+    background: #000;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.cta-subtitle {
+    font-size: 1.5rem;
+    color: #888;
+    margin-bottom: 60px;
+}
+
+.cta-bg-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--color-accent), transparent 70%);
+    opacity: 0.2;
+    filter: blur(100px);
+    animation: pulse 4s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.2); }
+}
+
 /* Premium Footer */
 .site-footer {
     background: #050505;
