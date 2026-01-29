@@ -266,32 +266,32 @@ function initWorkflow() {
     const cards = gsap.utils.toArray('.step-card');
     
     cards.forEach((card, i) => {
-        // Initial fade in for the first card(s) as they enter viewport
+        // 1. Smooth Entry: Standard fade up as they come into view
         gsap.from(card, {
-            y: 50,
+            y: 100,
             opacity: 0,
             duration: 1,
-            ease: "power3.out",
+            ease: "power2.out",
             scrollTrigger: {
                 trigger: card,
-                start: "top 90%"
+                start: "top 95%", // Trigger earlier
+                toggleActions: "play none none reverse" 
             }
         });
 
-        // Scale Down Effect (Logic: When THIS card hits top, it stays sticky. 
-        // When the NEXT card comes up, THIS card scales down.)
-        
-        if (i < cards.length - 1) { // Don't animate the last card scaling down
+        // 2. Stack Effect: Scale down previous card when next one overlaps
+        if (i < cards.length - 1) { 
             const nextCard = cards[i + 1];
             
             gsap.to(card, {
                 scale: 0.9,
-                opacity: 0.5,
-                filter: "blur(5px)",
+                filter: "brightness(0.5) blur(5px)", // Darken and blur
+                transformOrigin: "center top",
+                ease: "none",
                 scrollTrigger: {
                     trigger: nextCard,
-                    start: "top 70%", // Start scaling when next card is getting close to covering
-                    end: "top 20%",
+                    start: "top bottom", // Start scaling as soon as next card enters viewport
+                    end: "top 150px", // Finish when next card hits the sticky top
                     scrub: true
                 }
             });
