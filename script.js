@@ -492,26 +492,14 @@ function initVelocityText() {
     });
 }
 
-// Initialize
-window.addEventListener('load', () => {
-    initHero();
-    initFeatures();
-    initProductReveal();
-    initWorkflow();
-    initSlider();
-    initGallery();
-    initStyleSelector();
-    initPricingTilt();
-    initVideoParallax();
-    initStats();
-    initFAQ();
 // 16. Optimized Atmosphere (Scroll + Hover)
 function initAtmosphere() {
     const section = document.querySelector('.mesh-section');
     const mesh = document.querySelector('.mesh-gradient');
     
+    if(!section || !mesh) return;
+
     // 1. Scroll Interaction (Parallax & Rotation)
-    // Moves the mesh slowly as you scroll past
     gsap.to(mesh, {
         rotation: 45,
         scale: 1.5,
@@ -527,7 +515,7 @@ function initAtmosphere() {
 
     // 2. Hover Interaction (Mouse Follow)
     section.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 50; // -25 to 25px
+        const x = (e.clientX / window.innerWidth - 0.5) * 50; 
         const y = (e.clientY / window.innerHeight - 0.5) * 50;
 
         gsap.to(mesh, {
@@ -536,6 +524,65 @@ function initAtmosphere() {
             duration: 1,
             ease: "power2.out"
         });
+    });
+}
+
+// 17. Team Section Reveal
+function initTeam() {
+    gsap.from('.team-card', {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.team-section',
+            start: "top 80%"
+        }
+    });
+}
+
+// 18. Orbit Interaction (Mouse Tilt)
+function initOrbit() {
+    const container = document.querySelector('.orbit-container');
+    if(!container) return;
+    
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        gsap.to(container, {
+            rotationY: x * 30,
+            rotationX: -y * 30,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+    
+    // Reset on leave
+    container.addEventListener('mouseleave', () => {
+        gsap.to(container, {
+            rotationY: 0,
+            rotationX: 0,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+}
+
+// 19. CTA Reveal
+function initCTA() {
+    gsap.from('.cta-content > *', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.cta-section',
+            start: "top 70%"
+        }
     });
 }
 
@@ -551,8 +598,11 @@ window.addEventListener('load', () => {
     initPricingTilt();
     initVideoParallax();
     initStats();
-    initAtmosphere(); // Added
+    initAtmosphere();
     initFAQ();
+    initTeam();
+    initOrbit();
     initVelocityText();
+    initCTA();
     initFooter();
 });
