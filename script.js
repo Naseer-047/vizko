@@ -261,19 +261,31 @@ function initProductReveal() {
 }
 
 // 6. 3D Workflow Animation
-// 6. Engineering Approach Animation
+// 6. Engineering Approach Animation (Premium 3D Flip)
 function initWorkflow() {
-    gsap.from('.step-card', {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2, // Sequential reveal
-        ease: "power3.out",
+    gsap.set('.step-card', { 
+        rotationX: 90, 
+        opacity: 0, 
+        transformOrigin: "top center", 
+        y: -50 
+    });
+
+    const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".approach-grid",
-            start: "top 85%", // Start when grid is near bottom of viewport
+            start: "top 70%",
+            end: "bottom bottom",
             toggleActions: "play none none reverse"
         }
+    });
+
+    tl.to('.step-card', {
+        rotationX: 0,
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.3,
+        ease: "back.out(1.7)" // Bouncy arrival
     });
 }
 
