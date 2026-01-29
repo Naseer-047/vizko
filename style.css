@@ -712,6 +712,124 @@ body {
 
 .play-button:hover { transform: scale(1.1); background: white; color: black; }
 
+/* 4. Stats Section */
+.stats-section {
+    padding: 100px 48px;
+    background: #000;
+    color: white;
+    border-bottom: 1px solid #222;
+}
+
+.stats-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 16px;
+    background: linear-gradient(to bottom, #fff, #666);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.stat-number::after { content: "+"; font-size: 3rem; vertical-align: super; }
+
+.stat-label {
+    font-size: 1.25rem;
+    color: #888;
+}
+
+/* 5. Gradient Mesh Section */
+.mesh-section {
+    height: 80vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mesh-title {
+    position: relative;
+    z-index: 2;
+    font-size: 8rem;
+    font-weight: 800;
+    color: white;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.mesh-gradient {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: 
+        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    filter: blur(80px);
+    animation: meshMove 10s infinite alternate ease-in-out;
+    opacity: 0.6;
+}
+
+@keyframes meshMove {
+    0% { transform: translate(-10%, -10%) rotate(0deg); }
+    100% { transform: translate(10%, 10%) rotate(5deg); }
+}
+
+/* 6. FAQ Section */
+.faq-section {
+    padding: var(--section-padding) 48px;
+    background: #0a0a0a;
+    color: white;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid #333;
+}
+
+.faq-question {
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.faq-answer {
+    height: 0;
+    overflow: hidden;
+    color: #999;
+    line-height: 1.6;
+}
+
+.faq-answer p {
+    padding-bottom: 24px;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+}
+
 /* Premium Footer */
 .site-footer {
     background: #050505;

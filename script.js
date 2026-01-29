@@ -425,6 +425,49 @@ function initVideoParallax() {
 }
 
 
+// 13. Animated Stats
+function initStats() {
+    gsap.utils.toArray('.stat-number').forEach(stat => {
+        const target = parseInt(stat.dataset.target);
+        gsap.to(stat, {
+            innerText: target,
+            duration: 2,
+            snap: { innerText: 1 },
+            scrollTrigger: {
+                trigger: stat,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+}
+
+// 14. Smooth FAQ
+function initFAQ() {
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all
+            items.forEach(i => {
+                i.classList.remove('active');
+                gsap.to(i.querySelector('.faq-answer'), { height: 0, duration: 0.3 });
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                // Auto height animation
+                gsap.set(answer, { height: "auto" });
+                gsap.from(answer, { height: 0, duration: 0.3 });
+            }
+        });
+    });
+}
+
 // Initialize
 window.addEventListener('load', () => {
     initHero();
@@ -436,5 +479,7 @@ window.addEventListener('load', () => {
     initStyleSelector();
     initPricingTilt();
     initVideoParallax();
+    initStats();
+    initFAQ();
     initFooter();
 });
