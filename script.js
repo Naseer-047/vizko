@@ -710,18 +710,20 @@ function initDevices() {
 
 // 23. Magnetic Button
 function initMagnetic() {
-    const btn = document.querySelector('.magnetic-btn');
+    const btns = document.querySelectorAll('.magnetic-btn');
     
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+    btns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+        });
         
-        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
-    });
-    
-    btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+        });
     });
 }
 
@@ -738,6 +740,7 @@ window.addEventListener('load', () => {
     initVideoParallax();
     initStats();
     initAtmosphere();
+    initMagnetic();
     initFAQ();
     initTeam();
     initOrbit();
