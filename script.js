@@ -146,6 +146,20 @@ function initHero() {
             scrub: true
         }
     });
+
+    // Fade out Hero to be explicitly invisible when scrolling
+    // This fixes the "eating background" issue by making the hero transparent
+    gsap.to('.hero-section', {
+        opacity: 0,
+        pointerEvents: "none",
+        ease: "none",
+        scrollTrigger: {
+            trigger: '.hero-section',
+            start: "top top",
+            end: "bottom top", 
+            scrub: true
+        }
+    });
 }
 
 // 4. Feature Section & Card Glow

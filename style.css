@@ -185,45 +185,33 @@ body {
     box-shadow: 0 -50px 100px rgba(0,0,0,0.05); 
 }
 
-/* GLOBAL FIX: Ensure all content sections cover the sticky hero */
-section:not(.hero-section) {
-    position: relative;
+/* GLOBAL FIX: Ensure all content sections stack on top of the sticky hero */
+section {
+    position: relative; 
     z-index: 10;
-    background-color: var(--color-bg); /* Default background, overridden by specific sections */
 }
 
-/* Specific overrides for dark sections to ensure they keep their dark bg */
-.marquee-section, .workflow-section, .comparison-section, 
-.style-selector-section, .video-window-section, .stats-section, 
-.mesh-section, .faq-section, .orbit-section, .cta-section, .site-footer {
-    background-color: #000; /* Or their specific dark color */
+.hero-section {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    /* Hero needs to be visible initially, but covered by others */
 }
-.pricing-section, .team-section, .velocity-section, .gallery-section {
-    background-color: #fff;
-}
-/* Re-apply specific backgrounds if needed, but the cascade handles it usually. 
-   Actually, the specific class rules later in the file will override this generic background-color 
-   as long as they have equal or higher specificity. Single class vs element:not(.class) + class??
-   section:not(.hero) is specificity (0,0,1) + (0,1,0) = 0,1,1.
-   .marquee-section is 0,1,0.
-   So strict selector might override simple class. 
-   I should be careful. 
-   
-   Better approach: sticky-section logic is fine. Just apply z-index to a list of known sections?
-   Or just use !important for z-index? No.
-   
-   Let's just change the rule to:
-   section { position: relative; z-index: 10; }
-   .hero-section { z-index: 0; }
-*/
-section {
+
+/* Ensure all subsequent sections have a background to cover the hero */
+.features-section, .product-section, .marquee-section, 
+.workflow-section, .comparison-section, .gallery-section,
+.style-selector-section, .pricing-section, .video-window-section,
+.stats-section, .mesh-section, .faq-section, .team-section,
+.orbit-section, .velocity-section, .cta-section, .site-footer {
     position: relative;
     z-index: 10; 
 }
-.hero-section {
-    position: sticky;
-    z-index: 0;
-}
+/* Note: Background colors are already defined in their specific blocks below. 
+   We just need to ensure z-index is higher than hero (0). 
+   The sticky hero will stay at top:0, and these sections will scroll UP over it.
+   Since they have z-index 10 and backgrounds, they will cover it.
+*/
 
 /* Button Micro-interactions */
 .btn-arrow {
