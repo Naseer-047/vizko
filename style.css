@@ -688,8 +688,9 @@ section {
 
 /* Horizontal Gallery */
 .gallery-section {
-    background: white;
+    background: var(--color-bg);
     overflow: hidden; /* Hide scrollbar for the pinned track */
+    color: white;
     /* No padding here, we want full bleed track, but maybe some vertical space before pin */
 }
 
@@ -718,7 +719,7 @@ section {
 .gallery-img {
     width: 100%;
     height: 100%;
-    background: #eee;
+    background: #222;
     border-radius: 16px;
     overflow: hidden;
     transition: transform 0.3s;
@@ -741,7 +742,7 @@ section {
     left: 0;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #666;
+    color: #888;
 }
 
 .gallery-text {
@@ -757,7 +758,7 @@ section {
     font-size: 4rem;
     line-height: 1;
     margin-bottom: 24px;
-    color: #000;
+    color: white;
 }
 
 /* 1. Tech Ecosystem (formerly Style Selector) */
@@ -830,8 +831,8 @@ section {
 /* 2. Pricing Section */
 .pricing-section {
     padding: var(--section-padding) 48px;
-    background: #fff;
-    color: #111;
+    background: var(--color-bg);
+    color: white;
 }
 
 .pricing-grid {
@@ -843,7 +844,7 @@ section {
 }
 
 .pricing-card {
-    background: #F5F5F7;
+    background: #111;
     padding: 40px;
     border-radius: 24px;
     display: flex;
@@ -854,7 +855,7 @@ section {
 }
 
 .pricing-card.premium {
-    background: #111;
+    background: #222;
     color: white;
     transform: scale(1.05); /* Make it stand out */
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
@@ -1073,7 +1074,7 @@ section {
 /* 7. Education Section (formerly Team) */
 .team-section {
     padding: var(--section-padding) 48px;
-    background: #fff;
+    background: var(--color-bg);
 }
 
 .team-grid {
@@ -1089,7 +1090,7 @@ section {
     position: relative;
     padding: 32px;
     border-radius: 16px;
-    background: #F5F5F7;
+    background: #111;
     transition: transform 0.3s ease, background 0.3s ease;
     border: 1px solid transparent;
     display: flex;
@@ -1101,8 +1102,8 @@ section {
 
 .team-card:hover {
     transform: translateY(-5px);
-    background: white;
-    border-color: #eee;
+    background: #1a1a1a;
+    border-color: #333;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
@@ -1112,7 +1113,7 @@ section {
     transform: none;
     padding: 0;
     background: transparent;
-    color: black;
+    color: white;
 }
 
 .team-info h3 {
@@ -1122,7 +1123,7 @@ section {
 
 .team-info p {
     font-size: 1.1rem;
-    color: #555;
+    color: #888;
     margin-bottom: 4px;
 }
 
