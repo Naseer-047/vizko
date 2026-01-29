@@ -772,7 +772,7 @@ window.addEventListener('load', () => {
     initProductReveal();
     initWorkflow();
     initSlider();
-    initGallery();
+    initProjectsGrid();
     initStyleSelector();
     initPricingTilt();
     initVideoParallax();
