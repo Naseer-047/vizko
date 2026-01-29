@@ -361,6 +361,16 @@ body {
 }
 
 /* Features */
+/* Divider */
+.section-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    transform-origin: left;
+    transform: scaleX(0); /* Hidden initially */
+    margin-bottom: 60px;
+}
+
 .features-section {
     padding: var(--section-padding) 48px;
     background: var(--color-surface);

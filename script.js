@@ -150,12 +150,25 @@ function initHero() {
 
 // 4. Feature Section & Card Glow
 function initFeatures() {
-    // Scroll Reveal for cards
+    // Divider Animation
+    gsap.to('.section-divider', {
+        scaleX: 1,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.features-section',
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Scroll Reveal for cards - Added Depth (Scale)
     const cards = gsap.utils.toArray('.feature-card');
     cards.forEach((card, i) => {
         gsap.from(card, {
-            y: 120,
+            y: 100,
             opacity: 0,
+            scale: 0.92, // Z-depth illusion
             duration: 1.2,
             ease: "power3.out",
             scrollTrigger: {
