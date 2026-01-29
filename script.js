@@ -358,6 +358,73 @@ function initFooter() {
     });
 }
 
+// 10. AI Style Selector Logic
+function initStyleSelector() {
+    const btns = document.querySelectorAll('.style-btn');
+    const images = document.querySelectorAll('.style-img');
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active
+            btns.forEach(b => b.classList.remove('active'));
+            images.forEach(img => img.classList.remove('active'));
+
+            // Add active
+            btn.classList.add('active');
+            const targetId = `style-img-${btn.dataset.target}`;
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+}
+
+// 11. 3D Pricing Tilt
+function initPricingTilt() {
+    const cards = document.querySelectorAll('.pricing-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Normalize to -1 to 1
+            const xPct = (x / rect.width - 0.5) * 20; // 20deg max
+            const yPct = (y / rect.height - 0.5) * -20; 
+
+            gsap.to(card, {
+                rotationY: xPct,
+                rotationX: yPct,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                rotationY: 0,
+                rotationX: 0,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+    });
+}
+
+// 12. Video Window Parallax
+function initVideoParallax() {
+    gsap.to('.video-scale-wrapper', {
+        scale: 1,
+        borderRadius: "0px", // Optional: go full bleed
+        scrollTrigger: {
+            trigger: '.video-window-section',
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true
+        }
+    });
+}
+
+
 // Initialize
 window.addEventListener('load', () => {
     initHero();
@@ -366,5 +433,8 @@ window.addEventListener('load', () => {
     initWorkflow();
     initSlider();
     initGallery();
+    initStyleSelector();
+    initPricingTilt();
+    initVideoParallax();
     initFooter();
 });

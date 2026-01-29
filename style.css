@@ -519,6 +519,199 @@ body {
     color: #000;
 }
 
+/* 1. AI Style Selector */
+.style-selector-section {
+    padding: var(--section-padding) 48px;
+    background: #0a0a0a;
+    color: white;
+}
+
+.style-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.style-display {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #111;
+}
+
+.style-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.style-img.active {
+    opacity: 1;
+}
+
+/* Placeholders for styles */
+#style-img-1 { background-image: url('https://images.unsplash.com/photo-1592478411213-61535fdd861d?q=80&w=2070&auto=format&fit=crop'); } /* Cyberpunk */
+#style-img-2 { background-image: url('https://images.unsplash.com/photo-1507643179173-617d6a798696?q=80&w=1974&auto=format&fit=crop'); } /* Minimal */
+#style-img-3 { background-image: url('https://images.unsplash.com/photo-1470058869958-2a77ade41c02?q=80&w=2070&auto=format&fit=crop'); } /* Organic */
+
+.style-controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.style-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 99px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.style-btn.active, .style-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* 2. Pricing Section */
+.pricing-section {
+    padding: var(--section-padding) 48px;
+    background: #fff;
+    color: #111;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.pricing-card {
+    background: #F5F5F7;
+    padding: 40px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.1s ease-out; /* Super fast for tilt */
+    transform-style: preserve-3d;
+}
+
+.pricing-card.premium {
+    background: #111;
+    color: white;
+    transform: scale(1.05); /* Make it stand out */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.price-header h3 { font-size: 1.5rem; margin-bottom: 8px; }
+.price { font-size: 3rem; font-weight: 700; margin-bottom: 32px; }
+
+.features-list {
+    list-style: none;
+    margin-bottom: 40px;
+    flex-grow: 1;
+}
+
+.features-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.features-list li::before {
+    content: "✓";
+    margin-right: 8px;
+    color: var(--color-accent);
+}
+
+/* 3. Parallax Video Window */
+.video-window-section {
+    height: 150vh; /* Scroll space */
+    background: #000;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.video-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+}
+
+.video-scale-wrapper {
+    width: 80%;
+    height: 80%;
+    transform: scale(0.5); /* Start small */
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.play-button {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.play-button:hover { transform: scale(1.1); background: white; color: black; }
+
 /* Premium Footer */
 .site-footer {
     background: #050505;
