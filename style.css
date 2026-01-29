@@ -246,6 +246,63 @@ section {
     overflow: hidden;
 }
 
+/* Product Visuals Section */
+.product-section {
+    padding: var(--section-padding) 48px;
+    background: #fff;
+    color: #111;
+    display: flex;
+    justify-content: center;
+}
+
+.product-container {
+    max-width: var(--container-width);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.product-image-wrapper {
+    width: 100%;
+    height: 600px;
+    background: #F5F5F7;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    /* Initial state for reveal handled by JS, but set defaults */
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.95);
+}
+
+.product-mockup {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop'); /* Tech interface mockup */
+    background-size: cover;
+    background-position: center;
+}
+
+.product-text {
+    max-width: 500px;
+}
+
+.product-text h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.product-text p {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
 /* Marquee Section */
 .marquee-section {
     padding: 60px 0;
