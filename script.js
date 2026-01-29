@@ -271,10 +271,25 @@ function initWorkflow() {
     }, 0);
 }
 
+// 7. Footer Parallax
+function initFooter() {
+    gsap.from('.footer-big-text span', {
+        yPercent: 50,
+        opacity: 0,
+        scrollTrigger: {
+            trigger: '.site-footer',
+            start: "top 80%",
+            end: "bottom bottom",
+            scrub: 1
+        }
+    });
+}
+
 // Initialize
 window.addEventListener('load', () => {
     initHero();
     initFeatures();
     initProductReveal();
     initWorkflow();
+    initFooter();
 });
