@@ -1071,6 +1071,267 @@ section {
     color: transparent;
 }
 
+/* 11. Bento Grid */
+.bento-section {
+    padding: var(--section-padding) 48px;
+    background: #F5F5F7;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 300px);
+    gap: 24px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.bento-item {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bento-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.bento-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: #111;
+    color: white;
+}
+
+.bento-item.medium {
+    grid-column: span 2;
+}
+
+.bento-visual.visual-collab {
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(45deg, #333, #555);
+    border-radius: 12px;
+    margin-top: 24px;
+}
+
+.bento-icon {
+    font-size: 3rem;
+    align-self: flex-end;
+}
+
+.bento-content h3 {
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+}
+
+/* 12. Spotlight Section */
+.spotlight-section {
+    height: 100vh;
+    background: #000;
+    color: #333; /* Hidden text color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: none; /* Hide default cursor */
+}
+
+.spotlight-text {
+    font-size: 4rem;
+    font-weight: 800;
+    text-align: center;
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
+    line-height: 1.2;
+}
+
+.spotlight-beam {
+    position: fixed; /* Fixed to follow mouse easily via JS updating var */
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    mix-blend-mode: overlay;
+}
+
+.spotlight-text span.highlight {
+    color: white; /* Always visible keyword */
+}
+
+/* 13. Testimonial Stack */
+.stack-section {
+    height: 150vh; /* Scroll space */
+    background: #fff;
+    padding: var(--section-padding) 48px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-container {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    margin-top: 50px;
+}
+
+.stack-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 24px;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform-origin: center bottom;
+}
+
+.stack-card p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+/* 14. Device Parallax */
+.device-section {
+    padding: 150px 48px;
+    background: #F5F5F7;
+    overflow: hidden;
+}
+
+.device-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.device-text {
+    max-width: 400px;
+    z-index: 2;
+}
+
+.device-text h2 { font-size: 4rem; margin-bottom: 24px; }
+
+.devices-wrapper {
+    position: relative;
+    width: 800px;
+    height: 600px;
+}
+
+.device-laptop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 600px;
+    height: 400px;
+    background: #333;
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.device-tablet {
+    position: absolute;
+    bottom: 50px;
+    left: 100px;
+    width: 300px;
+    height: 400px;
+    background: #444;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.device-phone {
+    position: absolute;
+    bottom: 0;
+    right: 150px;
+    width: 120px;
+    height: 240px;
+    background: #111;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    z-index: 3;
+}
+
+/* 15. Magnetic Newsletter */
+.newsletter-section {
+    padding: 100px 48px;
+    background: white;
+    display: flex;
+    justify-content: center;
+}
+
+.newsletter-content {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.newsletter-content h2 { font-size: 2rem; margin-bottom: 32px; }
+
+.input-group {
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.input-group input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    padding: 12px;
+}
+
+.magnetic-btn {
+    background: black;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 99px;
+    cursor: pointer;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
 /* 10. Final CTA */
 .cta-section {
     padding: 150px 48px;
