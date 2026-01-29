@@ -244,7 +244,79 @@ section {
     top: 0;
     padding-top: 80px;
     overflow: hidden;
+    /* Subtle premium grid background */
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
+
+/* Code Window Styles */
+.code-window {
+    width: 400px;
+    background: #1e1e1e; /* VS Code Dark */
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    overflow: hidden;
+    font-family: 'Fira Code', monospace;
+    color: #d4d4d4;
+    border: 1px solid rgba(255,255,255,0.1);
+    transform: rotateY(-10deg) rotateX(5deg); /* Slight 3D tilt */
+}
+
+.window-header {
+    background: #252526;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.window-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.win-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.win-btn.red { background: #ff5f56; }
+.win-btn.yellow { background: #ffbd2e; }
+.win-btn.green { background: #27c93f; }
+
+.window-title {
+    margin-left: 20px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.window-body {
+    padding: 24px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.code-line { display: flex; }
+.indent-1 { padding-left: 20px; }
+.indent-2 { padding-left: 40px; }
+.indent-3 { padding-left: 60px; }
+
+/* Syntax Highlighting */
+.k { color: #569cd6; } /* Keyword blue */
+.f { color: #dcdcaa; } /* Function yellow */
+.t { color: #4ec9b0; } /* Type teal */
+.p { color: #9cdcfe; } /* Prop light blue */
+.s { color: #ce9178; } /* String orange */
+
+.code-cursor {
+    display: inline-block;
+    color: #569cd6;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
 
 /* Product Visuals Section */
 .product-section {
