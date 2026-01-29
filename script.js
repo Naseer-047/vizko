@@ -98,18 +98,8 @@ function splitTextToSpans(selector) {
 
 // 3. Hero Setup & Animation
 function initHero() {
-    // Split text first
-    // Note: In our HTML we have specific structures, so we might target specific classes
-    // But for "Vizcom" feel, let's keep the line-masks but split words inside if we want word-by-word
-    // The prompt asks for letter-by-letter or word-by-word. Let's do word-by-word for smoother, less chaotic look on big headers
-    // Actually, let's stick to the line reveal `y: 120 -> 0` as implemented in CSS/HTML for the main block, 
-    // but maybe refine the easing.
-    
-    // Changing approach slightly to match "Letter by letter" requirement strictly? 
-    // "Every heading animates letter-by-letter or word-by-word".
-    // Let's stick to the current Line Reveal for the specific "Vizcom" style (which often blocks text), 
-    // BUT the prompt explicitly asked for it. Let's start with the line reveal as it's very premium/Apple.
-    
+    initCodeWindow(); // New function for code interactions
+
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
     // Hero Title Reveal
@@ -126,15 +116,6 @@ function initHero() {
         ease: "power3.out"
     }, "-=1.2");
 
-    // Floating Visual - Sine Wave
-    gsap.to('.gradient-sphere', {
-        y: -30,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-    });
-
     // Parallax
     gsap.to('.visual-wrapper', {
         yPercent: 30, // Increased parallax depth
@@ -147,18 +128,57 @@ function initHero() {
         }
     });
 
-    // Fade out Hero to be explicitly invisible when scrolling
-    // This fixes the "eating background" issue by making the hero transparent
-    gsap.to('.hero-section', {
-        opacity: 0,
-        pointerEvents: "none",
-        ease: "none",
-        scrollTrigger: {
-            trigger: '.hero-section',
-            start: "top top",
-            end: "bottom top", 
-            scrub: true
-        }
+}
+
+function initCodeWindow() {
+    // 3a. Magnetic Follow Effect
+    const heroSection = document.querySelector('.hero-section');
+    const codeWindow = document.querySelector('.code-window');
+
+    if (heroSection && codeWindow) {
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            // Calculate mouse position relative to center of hero section
+            const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2); // -1 to 1
+            const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2); // -1 to 1
+
+            // Move window slightly (Magnetic feel)
+            gsap.to(codeWindow, {
+                x: x * 30, // Move 30px max
+                y: y * 30, // Move 30px max
+                rotationY: x * 10, // Tilt 10deg
+                rotationX: -y * 10, // Tilt 10deg
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            gsap.to(codeWindow, {
+                x: 0,
+                y: 0,
+                rotationY: -10, // Return to default CSS skew
+                rotationX: 5,
+                duration: 1,
+                ease: "elastic.out(1, 0.5)"
+            });
+        });
+    }
+
+    // 3b. Typewriter Effect
+    const codeLines = document.querySelectorAll('.code-line');
+    
+    // reset text to hidden first
+    gsap.set(codeLines, { opacity: 0, x: -10 });
+
+    const typeTl = gsap.timeline({ delay: 1.5 }); // Wait for hero reveal
+    codeLines.forEach((line) => {
+        typeTl.to(line, {
+            opacity: 1,
+            x: 0,
+            duration: 0.05, // Fast "typing" appearance of line
+            ease: "none"
+        }, "+=0.08"); // Small pause between lines
     });
 }
 
