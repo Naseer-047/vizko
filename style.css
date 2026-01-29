@@ -253,6 +253,9 @@ section {
     color: #111;
     display: flex;
     justify-content: center;
+    /* Pinned sections look best when full screen */
+    min-height: 100vh;
+    align-items: center; 
 }
 
 .product-container {
