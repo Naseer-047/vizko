@@ -251,6 +251,28 @@ section {
     background-size: 40px 40px;
 }
 
+.hero-container {
+    max-width: var(--container-width);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* For 3D tilts */
+}
+
 /* Code Window Styles */
 .code-window {
     width: 400px;

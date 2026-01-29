@@ -169,16 +169,16 @@ function initCodeWindow() {
     const codeLines = document.querySelectorAll('.code-line');
     
     // reset text to hidden first
-    gsap.set(codeLines, { opacity: 0, x: -10 });
+    gsap.set(codeLines, { autoAlpha: 0, x: -10 });
 
-    const typeTl = gsap.timeline({ delay: 1.5 }); // Wait for hero reveal
+    const typeTl = gsap.timeline({ delay: 0.5 }); // Start quickly
     codeLines.forEach((line) => {
         typeTl.to(line, {
-            opacity: 1,
+            autoAlpha: 1,
             x: 0,
-            duration: 0.05, // Fast "typing" appearance of line
+            duration: 0.05,
             ease: "none"
-        }, "+=0.08"); // Small pause between lines
+        }, "+=0.08"); 
     });
 }
 
