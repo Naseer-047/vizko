@@ -505,6 +505,54 @@ window.addEventListener('load', () => {
     initVideoParallax();
     initStats();
     initFAQ();
+// 16. Optimized Atmosphere (Scroll + Hover)
+function initAtmosphere() {
+    const section = document.querySelector('.mesh-section');
+    const mesh = document.querySelector('.mesh-gradient');
+    
+    // 1. Scroll Interaction (Parallax & Rotation)
+    // Moves the mesh slowly as you scroll past
+    gsap.to(mesh, {
+        rotation: 45,
+        scale: 1.5,
+        yPercent: 20,
+        ease: "none",
+        scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+        }
+    });
+
+    // 2. Hover Interaction (Mouse Follow)
+    section.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 50; // -25 to 25px
+        const y = (e.clientY / window.innerHeight - 0.5) * 50;
+
+        gsap.to(mesh, {
+            x: x,
+            y: y,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+}
+
+// Initialize
+window.addEventListener('load', () => {
+    initHero();
+    initFeatures();
+    initProductReveal();
+    initWorkflow();
+    initSlider();
+    initGallery();
+    initStyleSelector();
+    initPricingTilt();
+    initVideoParallax();
+    initStats();
+    initAtmosphere(); // Added
+    initFAQ();
     initVelocityText();
     initFooter();
 });
