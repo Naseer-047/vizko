@@ -1217,7 +1217,7 @@ section {
 /* 9. Velocity Section */
 .velocity-section {
     padding: 100px 0;
-    background: white;
+    background: var(--color-bg);
     overflow: hidden;
     white-space: nowrap;
 }
@@ -1226,20 +1226,20 @@ section {
     font-size: 10rem;
     font-weight: 900;
     line-height: 1;
-    color: black;
+    color: white;
     display: inline-block;
 }
 
 .velocity-track span { margin-right: 60px; }
 .velocity-track .stroke {
-    -webkit-text-stroke: 2px black;
+    -webkit-text-stroke: 2px white;
     color: transparent;
 }
 
 /* 11. Bento Grid */
 .bento-section {
     padding: var(--section-padding) 48px;
-    background: #F5F5F7;
+    background: var(--color-bg);
 }
 
 .bento-grid {
@@ -1252,7 +1252,7 @@ section {
 }
 
 .bento-item {
-    background: white;
+    background: #111;
     border-radius: 24px;
     padding: 32px;
     position: relative;
@@ -1339,7 +1339,7 @@ section {
 /* 13. Testimonial Stack */
 .stack-section {
     height: 150vh; /* Scroll space */
-    background: #fff;
+    background: var(--color-bg);
     padding: var(--section-padding) 48px;
     position: relative;
     display: flex;
@@ -1360,8 +1360,8 @@ section {
     left: 0;
     width: 600px; /* Fixed width matching container */
     height: 100%;
-    background: #fff;
-    border: 1px solid #eee;
+    background: #111;
+    border: 1px solid #333;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     border-radius: 24px;
     padding: 60px;
@@ -1393,7 +1393,7 @@ section {
 /* 14. Device Parallax */
 .device-section {
     padding: 150px 48px;
-    background: #F5F5F7;
+    background: var(--color-bg);
     overflow: hidden;
 }
 
@@ -1457,7 +1457,7 @@ section {
 /* 15. Magnetic Newsletter */
 .newsletter-section {
     padding: 100px 48px;
-    background: white;
+    background: var(--color-bg);
     display: flex;
     justify-content: center;
 }
@@ -1486,8 +1486,8 @@ section {
 }
 
 .magnetic-btn {
-    background: black;
-    color: white;
+    background: white;
+    color: black;
     border: none;
     padding: 12px 32px;
     border-radius: 99px;
@@ -1661,183 +1661,6 @@ section {
     pointer-events: none;
 }
 
-.hero-container {
-    max-width: var(--container-width);
-    width: 100%;
-    padding: 0 48px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.hero-title {
-    font-size: var(--h1-size);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-    margin-bottom: 24px;
-}
-
-.line-mask {
-    display: block;
-    overflow: hidden;
-}
-
-.reveal-text {
-    display: block;
-    transform: translateY(120%);
-    opacity: 0;
-    will-change: transform, opacity;
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--color-text-secondary);
-    margin-bottom: 40px;
-    line-height: 1.5;
-    max-width: 500px;
-}
-
-.hero-cta-wrapper {
-    display: flex;
-    gap: 16px;
-    opacity: 0; /* Animated in */
-    transform: translateY(20px);
-}
-
-.hero-visual {
-    position: relative;
-    height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1000px;
-}
-
-.visual-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-}
-
-.visual-card {
-    position: absolute;
-    border-radius: 24px;
-    box-shadow: 0 20px 80px rgba(0,0,0,0.1);
-}
-
-.main-visual {
-    width: 100%;
-    height: 100%;
-    background: #f0f0f0;
-    z-index: 2;
-    overflow: hidden;
-}
-
-.gradient-sphere {
-    position: absolute;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, #ffaaaa, #4444ff);
-    filter: blur(80px);
-    top: 20%;
-    left: 20%;
-    animation: float 10s infinite ease-in-out;
-}
-
-@keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(20px, -20px); }
-}
-
-/* Features */
-/* Divider */
-.section-divider {
-    width: 100%;
-    height: 1px;
-    background: rgba(0,0,0,0.1);
-    transform-origin: left;
-    transform: scaleX(0); /* Hidden initially */
-    margin-bottom: 60px;
-}
-
-.features-section {
-    padding: var(--section-padding) 48px;
-    background: var(--color-surface);
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 60px;
-}
-
-/* Updated Feature Card - Clean Border Reveal Hover */
-.feature-card {
-    background: white;
-    padding: 32px;
-    border-radius: 24px;
-    height: 400px;
-    position: relative;
-    transition: transform 0.4s var(--ease-out-expo);
-    overflow: hidden;
-    /* Remove old border/shadow for clean slate */
-    border: 1px solid transparent; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-}
-
-/* The Reveal Border */
-.feature-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 24px;
-    padding: 2px; /* Border width */
-    background: linear-gradient(135deg, #000, transparent 40%);
-    -webkit-mask: 
-       linear-gradient(#fff 0 0) content-box, 
-       linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.1; /* Subtle default */
-    transition: opacity 0.4s, background 0.4s;
-    pointer-events: none;
-}
-
-/* Hover State - "Naseer's New Design" */
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
-}
-
-.feature-card:hover::before {
-    opacity: 1;
-    background: linear-gradient(135deg, var(--color-accent), transparent 60%);
-}
-
-.card-visual {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: #111;
-    border-radius: 50%;
-    /* Icon-like visual */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    transition: transform 0.4s var(--ease-out-expo);
-}
-
-.feature-card:hover .card-visual {
-    transform: scale(1.2) rotate(-10deg);
-}
 
 /* Footer Rebrand */
 .logo.large-logo { font-size: 8rem; margin: 0; letter-spacing: -0.05em; margin-bottom: 24px; }
