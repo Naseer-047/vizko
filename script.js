@@ -526,13 +526,8 @@ function initFAQ() {
     });
 }
 
-// 15. Velocity Text
+// 15. Velocity Scroll Text (Global)
 function initVelocityText() {
-    gsap.to('.velocity-track', {
-        xPercent: -50, // Move left
-        ease: "none",
-        scrollTrigger: {
-            trigger: '.velocity-section',
             start: "top bottom",
             end: "bottom top",
             scrub: 0.5 // Add some lag for inertia feel
