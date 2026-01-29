@@ -586,6 +586,123 @@ function initCTA() {
     });
 }
 
+// 20. Spotlight Mouse Tracker
+function initSpotlight() {
+    const section = document.querySelector('.spotlight-section');
+    const text = document.querySelector('.spotlight-text');
+    
+    section.addEventListener('mousemove', (e) => {
+        // We can just use a simple mask or color switch
+        // But for "flashlight" effect, we might need a clip-path or complex mask
+        // Simpler premium feel: The text is dark grey (#333) and the beam lightens it?
+        // Actually CSS overlay mix-blend-mode handles the beam visual.
+        // Let's just make the text light up close to mouse?
+        // Or simple: Text is dark, Beam is white overlay with exclusion? 
+        // Let's stick to the CSS beam following mouse.
+        
+        const rect = section.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        gsap.to('.spotlight-beam', {
+            x: e.clientX, // Fixed position based on viewport
+            y: e.clientY,
+            duration: 0.1,
+            ease: "power1.out"
+        });
+        
+        // Dynamic text color shift
+        const textRect = text.getBoundingClientRect();
+        const relX = e.clientX - textRect.left;
+        const relY = e.clientY - textRect.top;
+        
+        // Advanced: Use CSS variables to update radial gradient on text itself
+        text.style.backgroundImage = `radial-gradient(circle at ${relX}px ${relY}px, white 0%, #333 150px)`;
+        text.style.webkitBackgroundClip = "text";
+        text.style.webkitTextFillColor = "transparent";
+    });
+}
+
+// 21. Testimonial Stack Swipe
+function initStack() {
+    const cards = document.querySelectorAll('.stack-card');
+    
+    // Pin section
+    ScrollTrigger.create({
+        trigger: '.stack-section',
+        start: "top top",
+        end: "+=200%", // 3 cards
+        pin: true,
+        scrub: 1,
+        onUpdate: (self) => {
+            // Logic to peel off cards
+            const progress = self.progress; // 0 to 1
+            const total = cards.length;
+            const index = Math.floor(progress * total);
+            
+            // Current card flies away? 
+            // Better: Stack logic. 
+            // All start visible. As we scroll, top one slides up/out.
+            
+            cards.forEach((card, i) => {
+                // Determine phase for this card
+                const start = i / total;
+                const end = (i + 1) / total;
+                const cardProgress = (progress - start) / (end - start); // 0 to 1 within its slot
+                
+                if (progress > start) {
+                    // Card is active or done
+                    // Animate it out
+                    gsap.to(card, {
+                        y: -50 * cardProgress + (i * 10), // slight offset
+                        scale: 1 - (cardProgress * 0.1),
+                        opacity: 1 - cardProgress,
+                        rotation: cardProgress * 5,
+                        duration: 0, // Scrub controlled
+                        overwrite: true
+                    });
+                } else {
+                    // Reset
+                    gsap.to(card, { y: i * 10, scale: 1 - (i * 0.05), opacity: 1, rotation: 0, duration: 0.1, overwrite: true });
+                }
+            });
+        }
+    });
+}
+
+// 22. Device Parallax
+function initDevices() {
+    gsap.from('.device-laptop', {
+        y: 100,
+        scrollTrigger: { trigger: '.device-section', scrub: true }
+    });
+    gsap.from('.device-tablet', {
+        y: 200,
+        scrollTrigger: { trigger: '.device-section', scrub: true }
+    });
+    gsap.from('.device-phone', {
+        y: 300,
+        scrollTrigger: { trigger: '.device-section', scrub: true }
+    });
+}
+
+// 23. Magnetic Button
+function initMagnetic() {
+    const btn = document.querySelector('.magnetic-btn');
+    
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+    });
+}
+
 // Initialize
 window.addEventListener('load', () => {
     initHero();
@@ -603,6 +720,13 @@ window.addEventListener('load', () => {
     initTeam();
     initOrbit();
     initVelocityText();
+    
+    // Batch 3
+    initSpotlight();
+    initStack();
+    initDevices();
+    initMagnetic();
+    
     initCTA();
     initFooter();
 });
