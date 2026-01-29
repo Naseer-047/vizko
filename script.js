@@ -271,7 +271,80 @@ function initWorkflow() {
     }, 0);
 }
 
-// 7. Footer Parallax
+// 7. Interactive Comparison Slider
+function initSlider() {
+    const container = document.querySelector('.comparison-container');
+    const afterImage = document.querySelector('.after-image');
+    const handle = document.querySelector('.slider-handle');
+
+    if (!container) return;
+
+    function moveSlider(e) {
+        const rect = container.getBoundingClientRect();
+        // Calculate position (clamp between 0 and width)
+        let x = (e.clientX || e.touches[0].clientX) - rect.left;
+        x = Math.max(0, Math.min(x, rect.width));
+        
+        const percentage = (x / rect.width) * 100;
+
+        // Update width of the Top image (After Image usually, or Before depending on layer order)
+        // Here .after-image is the one on top (z-index 2), covering the sketch.
+        // It has overflow hidden. 
+        // So resizing width reveals/hides it.
+        // If width is 100%, we see full render. If 0%, full sketch.
+        
+        gsap.to(afterImage, {
+            width: `${percentage}%`,
+            duration: 0.1, // Quick follow
+            ease: "none"
+        });
+        
+        gsap.to(handle, {
+            left: `${percentage}%`,
+            duration: 0.1,
+            ease: "none"
+        });
+    }
+
+    container.addEventListener('mousemove', moveSlider);
+    container.addEventListener('touchmove', moveSlider);
+}
+
+// 8. Horizontal Gallery Scroll
+function initGallery() {
+    const section = document.querySelector('.gallery-section');
+    const track = document.querySelector('.gallery-track');
+
+    // Create a scroll trigger that pins the section
+    // and moves the track to the left
+    
+    // Calculate total width to move
+    // We want to move (trackWidth - viewportWidth)
+    // But track.scrollWidth is easier
+    
+    // We need to wait for images/layout potentially, but let's assume fixed sizes or sufficient load
+    
+     // Use function to get fresh width on resize
+    function getScrollAmount() {
+        let trackWidth = track.scrollWidth;
+        return -(trackWidth - window.innerWidth + 100); // 100px buffer/padding
+    }
+
+    const tween = gsap.to(track, {
+        x: getScrollAmount,
+        ease: "none",
+        scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${getScrollAmount() * -1}`, // Scroll distance proportional to width
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true // Recalculate on resize
+        }
+    });
+}
+
+// 9. Footer Parallax
 function initFooter() {
     gsap.from('.footer-big-text span', {
         yPercent: 50,
@@ -291,5 +364,7 @@ window.addEventListener('load', () => {
     initFeatures();
     initProductReveal();
     initWorkflow();
+    initSlider();
+    initGallery();
     initFooter();
 });
