@@ -522,28 +522,30 @@ section {
 /* Stacked Cards Layout */
 .process-stack-container {
     width: 100%;
-    max-width: var(--container-width); /* Full container width */
+    max-width: var(--container-width);
     margin: 0 auto;
     padding-bottom: 20vh;
+    min-height: 300vh; /* IMPORTANT: Force a long scroll track */
+    position: relative;
 }
 
 .step-card {
     position: sticky;
-    top: 150px;
+    top: 120px; /* Base stick position */
     background: #111;
     border: 1px solid #333;
     border-radius: 32px;
-    padding: 80px; /* Increased padding */
-    margin-bottom: 5vh; /* Tighter overlap */
+    padding: 80px;
+    margin-bottom: 15vh; /* Larger gap between cards in the flow */
     display: grid;
-    grid-template-columns: 200px 1fr; /* Number left, Content right */
+    grid-template-columns: 200px 1fr;
     align-items: center;
-    gap: 80px; /* More space between number and text */
+    gap: 80px;
     box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
     transform-origin: center top;
     will-change: transform;
     opacity: 1;
-    min-height: 500px; /* Ensure substantial height */
+    min-height: 500px;
 }
 
 .step-number {
