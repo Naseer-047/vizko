@@ -4,13 +4,13 @@
 */
 
 :root {
-    /* Colors */
-    --color-bg: #FFFFFF;
-    --color-text-main: #111111;
-    --color-text-secondary: #666666;
-    --color-accent: #2563EB; /* Premium Blue */
-    --color-surface: #F5F5F7;
-    --color-border: #E5E5E5;
+    /* Colors (Dark Theme) */
+    --color-bg: #050505;
+    --color-text-main: #EEEEEE;
+    --color-text-secondary: #999999;
+    --color-accent: #3B82F6; /* Brighter Blue for Dark Mode */
+    --color-surface: #111111;
+    --color-border: #333333;
     
     /* Typography */
     --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -64,12 +64,12 @@ body {
 .cursor-dot {
     width: 8px;
     height: 8px;
-    background-color: black;
+    background-color: white; /* Invert to white */
 }
 .cursor-outline {
     width: 40px;
     height: 40px;
-    border: 1px solid rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.5); /* Invert border */
     transition: width 0.2s, height 0.2s, background-color 0.2s;
 }
 
@@ -82,12 +82,12 @@ body {
     padding: 24px 48px;
     z-index: 100;
     transition: all 0.3s var(--ease-out-expo);
-    /* Classic Glass Layout */
-    background: rgba(255, 255, 255, 0.85); /* Frosty white */
+    /* Classic Dark Glass Layout */
+    background: rgba(5, 5, 5, 0.85); /* Frosty Dark */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle border */
-    color: #111; /* Strong classic text */
+    border-bottom: 1px solid rgba(255,255,255,0.08); /* Subtle light border */
+    color: #EEE; /* Light text */
 }
 
 .nav-container {
@@ -248,10 +248,10 @@ section {
     top: 0;
     padding-top: 80px;
     overflow: hidden;
-    /* Subtle premium grid background */
+    /* Subtle premium grid background - Light lines on dark */
     background-image: 
-        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
 }
 
@@ -347,8 +347,8 @@ section {
 /* Product Visuals Section */
 .product-section {
     padding: var(--section-padding) 48px;
-    background: #fff;
-    color: #111;
+    background: var(--color-bg); /* Use dark variable */
+    color: var(--color-text-main);
     display: flex;
     justify-content: center;
     /* Pinned sections look best when full screen */
@@ -368,7 +368,7 @@ section {
 .product-image-wrapper {
     width: 100%;
     height: 600px;
-    background: #F5F5F7;
+    background: #111; /* Dark surface */
     border-radius: 32px;
     overflow: hidden;
     position: relative;
