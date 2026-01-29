@@ -1620,50 +1620,75 @@ section {
     margin-top: 60px;
 }
 
+/* Updated Feature Card - Clean Border Reveal Hover */
 .feature-card {
     background: white;
     padding: 32px;
     border-radius: 24px;
     height: 400px;
     position: relative;
-    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
-    overflow: hidden; /* For the glow */
-    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.4s var(--ease-out-expo);
+    overflow: hidden;
+    /* Remove old border/shadow for clean slate */
+    border: 1px solid transparent; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
 }
 
+/* The Reveal Border */
 .feature-card::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-        800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-        rgba(0,0,0,0.04), 
-        transparent 40%
-    );
-    z-index: 1;
+    inset: 0;
+    border-radius: 24px;
+    padding: 2px; /* Border width */
+    background: linear-gradient(135deg, #000, transparent 40%);
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.1; /* Subtle default */
+    transition: opacity 0.4s, background 0.4s;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s;
+}
+
+/* Hover State - "Naseer's New Design" */
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
 }
 
 .feature-card:hover::before {
     opacity: 1;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+    background: linear-gradient(135deg, var(--color-accent), transparent 60%);
 }
 
 .card-visual {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 100px;
-    height: 100px;
-    background: #eee;
-    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    background: #111;
+    border-radius: 50%;
+    /* Icon-like visual */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    transition: transform 0.4s var(--ease-out-expo);
+}
+
+.feature-card:hover .card-visual {
+    transform: scale(1.2) rotate(-10deg);
+}
+
+/* Footer Rebrand */
+.logo.large-logo { font-size: 8rem; margin: 0; letter-spacing: -0.05em; margin-bottom: 24px; }
+
+.footer-big-text span { display: none; } /* Hide old big text if needed or update it */
+.footer-big-text::after {
+    content: "NASEER";
+    display: block;
 }
