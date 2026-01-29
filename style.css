@@ -581,18 +581,7 @@ section {
 .step-card.card-1 { background: #0a0a0a; z-index: 1; }
 .step-card.card-2 { background: #111; z-index: 2; }
 .step-card.card-3 { background: #161616; z-index: 3; }
-
-.step-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 12px;
-}
-
-.step-desc {
-    color: #888;
-    line-height: 1.6;
-}
+.step-card.card-4 { background: #1b1b1b; z-index: 4; }
 
 /* Initial States for ScrollTrigger to animate FROM/TO */
 .card-left { transform: translateX(-120%) translateZ(-200px) rotateY(15deg); opacity: 0.5; }
