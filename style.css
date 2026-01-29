@@ -81,9 +81,13 @@ body {
     width: 100%;
     padding: 24px 48px;
     z-index: 100;
-    transition: transform 0.3s var(--ease-out-expo);
-    mix-blend-mode: difference;
-    color: white; /* Because of difference mode against white bg */
+    transition: all 0.3s var(--ease-out-expo);
+    /* Classic Glass Layout */
+    background: rgba(255, 255, 255, 0.85); /* Frosty white */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle border */
+    color: #111; /* Strong classic text */
 }
 
 .nav-container {
