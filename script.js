@@ -527,26 +527,64 @@ function initFAQ() {
 }
 
 // 15. Velocity Scroll Text (Global)
-// 15. Velocity Scroll Text (Global)
+// 15. Velocity Scroll Text (Global Infinite Loop)
+// 15. Velocity Scroll Text (Global Infinite Loop)
 function initVelocityText() {
     const sections = document.querySelectorAll('.velocity-section');
     
-    sections.forEach(section => {
+    sections.forEach((section, index) => {
         const track = section.querySelector('.velocity-track');
         if (!track) return;
-        
-        // Duplicate content to ensure seamless loop
+
+        // 1. Duplicate content: We need at least 2 full widths to loop seamlessly.
+        // The HTML already has some text. Let's replicate it enough times.
         track.innerHTML += track.innerHTML; 
+        track.innerHTML += track.innerHTML; // 4x original content
         
-        // Move track based on scroll
-        gsap.to(track, {
-            xPercent: -20, // Move left
-            ease: "none",
-            scrollTrigger: {
-                trigger: section,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 0 // Direct response
+        // 2. Setup Variables
+        let xPos = 0;
+        const direction = index % 2 === 0 ? -1 : 1; // -1 = Left, 1 = Right
+        const baseSpeed = 1.5 * direction; // Constant movement speed
+        let scrollVelocity = 0;
+        
+        // 3. Ticker for Infinite Movement
+        gsap.ticker.add(() => {
+            // Calculate movement: Base Speed + Boost from Scroll
+            const movement = baseSpeed + (scrollVelocity * direction * 0.5);
+            xPos += movement;
+            
+            // 4. Wrap Logic (Infinite)
+            // We wrap around half the total scrollWidth (since we duplicated content)
+            // Actually, we wrap around the width of ONE Set of content.
+            // Since we did 4x, we can wrap at 25% or 50% safely.
+            const wrapWidth = track.scrollWidth / 2; 
+            
+            if (direction === -1) {
+                // Moving Left
+                if (xPos < -wrapWidth) xPos = 0;
+            } else {
+                // Moving Right
+                if (xPos > 0) xPos = -wrapWidth;
+            }
+            
+            // Apply
+            gsap.set(track, { x: xPos });
+            
+            // Decay scroll velocity
+            scrollVelocity *= 0.9;
+        });
+        
+        // 5. Scroll Interaction (Boost)
+        ScrollTrigger.create({
+            trigger: section,
+            onUpdate: (self) => {
+                // self.getVelocity() gives pixels/second.
+                // We add this impulse to our separate velocity variable
+                // We limit the impulse to prevent glitching
+                const v = self.getVelocity() / 50; 
+                if (v !== 0) {
+                     scrollVelocity = v; 
+                }
             }
         });
     });
