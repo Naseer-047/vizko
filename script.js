@@ -216,120 +216,96 @@ function initCodeWindow() {
     });
 }
 
-// 4. Feature Section & Card Glow
+// 4. Restored Features Section
 function initFeatures() {
-    // Divider Animation
-    gsap.to('.section-divider', {
-        scaleX: 1,
-        duration: 1.5,
-        ease: "power3.out",
+    // Animate the numbers and titles
+    gsap.from('.value-item', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power2.out",
         scrollTrigger: {
             trigger: '.features-section',
-            start: "top 80%",
-            toggleActions: "play none none reverse"
+            start: "top 80%"
         }
-    });
-
-    // Scroll Reveal for cards - Added Depth (Scale)
-    const cards = gsap.utils.toArray('.feature-card');
-    cards.forEach((card, i) => {
-        gsap.from(card, {
-            y: 100,
-            opacity: 0,
-            scale: 0.92, // Z-depth illusion
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: card,
-                start: "top 90%",
-                toggleActions: "play none none reverse"
-            }
-        });
-
-        // Mouse Move Glow Effect
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            gsap.to(card, {
-                "--mouse-x": `${x}px`,
-                "--mouse-y": `${y}px`,
-                duration: 0.1,
-                overwrite: true
-            });
-        });
     });
 }
 
 
-// 5. Product Image Blur Reveal
-function initProductReveal() {
-    // Pin the section while the reveal happens
-    gsap.to('.product-image-wrapper', {
-        opacity: 1,
-        filter: "blur(0px)",
-        scale: 1,
-        duration: 1,
-        ease: "power2.out",
+// 5. Expertise Bento Grid
+function initExpertise() {
+    const cards = gsap.utils.toArray('.expertise-card');
+    
+    gsap.from(cards, {
+        y: 50,
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "back.out(1.2)",
         scrollTrigger: {
-            trigger: '.product-section',
-            start: "top top", // Pin immediately when it hits top
-            end: "+=100%", // Pin for 1 screen height duration
-            pin: true,
-            scrub: true // Scrub the animation while pinned
+            trigger: '.expertise-section',
+            start: "top 75%"
         }
     });
 
-    // Also animate text slightly for parallax
-    gsap.from('.product-text', {
-        y: 50,
-        opacity: 0,
-        scrollTrigger: {
-            trigger: '.product-section',
-            start: "top top",
-            end: "+=50%",
-            scrub: true
-        }
+    // Card Tilt Effect specifically for Bento
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Subtle tilt
+            const xPct = (x / rect.width - 0.5) * 5; 
+            const yPct = (y / rect.height - 0.5) * -5;
+
+            gsap.to(card, {
+                rotationY: xPct,
+                rotationX: yPct,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+             gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.4 });
+        });
     });
 }
 
 // 6. 3D Workflow Animation
 // 6. Engineering Approach Animation (Stacked Cards)
+// 6. Circuit Workflow Animation
 function initWorkflow() {
-    const cards = gsap.utils.toArray('.step-card');
-    
-    cards.forEach((card, i) => {
-        // 1. Smooth Entry: Standard fade up as they come into view
-        gsap.from(card, {
-            y: 100,
+    // Animate the line filling up
+    gsap.to('.circuit-line-active', {
+        width: "100%",
+        ease: "none",
+        scrollTrigger: {
+            trigger: '.circuit-container',
+            start: "top 70%",
+            end: "bottom 70%",
+            scrub: 1
+        }
+    });
+
+    // Reveal Steps
+    const steps = gsap.utils.toArray('.circuit-step');
+    steps.forEach((step, i) => {
+        gsap.from(step, {
+            y: 50,
             opacity: 0,
-            duration: 1,
+            duration: 0.6,
+            delay: i * 0.2, // Stagger based on index
             ease: "power2.out",
             scrollTrigger: {
-                trigger: card,
-                start: "top 95%", // Trigger earlier
-                toggleActions: "play none none reverse" 
+                trigger: '.circuit-container',
+                start: "top 70%"
+                // No scrub, just play
             }
         });
-
-        // 2. Stack Effect: Scale down previous card when next one overlaps
-        if (i < cards.length - 1) { 
-            const nextCard = cards[i + 1];
-            
-            gsap.to(card, {
-                scale: 0.9,
-                filter: "brightness(0.5) blur(5px)", // Darken and blur
-                transformOrigin: "center top",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: nextCard,
-                    start: "top bottom", // Start scaling as soon as next card enters viewport
-                    end: "top 150px", // Finish when next card hits the sticky top
-                    scrub: true
-                }
-            });
-        }
     });
 }
 
@@ -470,36 +446,36 @@ function initStyleSelector() {
 }
 
 // 11. 3D Pricing Tilt
-function initPricingTilt() {
-    const cards = document.querySelectorAll('.pricing-card');
+// 11. Contact Terminal Typing Effect
+function initTerminal() {
+    const section = document.querySelector('.contact-section');
+    if(!section) return;
 
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Normalize to -1 to 1
-            const xPct = (x / rect.width - 0.5) * 20; // 20deg max
-            const yPct = (y / rect.height - 0.5) * -20; 
+    // Typewriter for the command
+    gsap.fromTo('.terminal-line .command', 
+        { width: "0ch", opacity: 1, overflow: "hidden", whiteSpace: "nowrap", display: "inline-block", borderRight: "2px solid #fff" },
+        { 
+            width: "16ch", // "initiate_contact".length
+            duration: 1.5, 
+            ease: "steps(16)",
+            scrollTrigger: {
+                trigger: section,
+                start: "top 60%"
+            },
+            onComplete: () => {
+                gsap.set('.terminal-line .command', { borderRight: "none" }); // Remove cursor
+                
+                // Show Output
+                gsap.to('.terminal-line .output', { opacity: 1, duration: 0.5, stagger: 0.5 });
+                // Show Input
+                gsap.to('.terminal-input-line', { opacity: 1, y: 0, duration: 0.5, delay: 1 });
+            }
+        }
+    );
 
-            gsap.to(card, {
-                rotationY: xPct,
-                rotationX: yPct,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        });
-
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-                rotationY: 0,
-                rotationX: 0,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        });
-    });
+    // Initial Hide
+    gsap.set('.terminal-line .output', { opacity: 0 });
+    gsap.set('.terminal-input-line', { opacity: 0, y: 10 });
 }
 
 // 12. Video Window Parallax
@@ -660,17 +636,33 @@ function initAtmosphere() {
 }
 
 // 17. Team Section Reveal
-function initTeam() {
-    gsap.from('.team-card', {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
+// 17. Education Timeline Reveal
+function initEducation() {
+    // Line height grow
+    gsap.from('.timeline-line', {
+        scaleY: 0,
+        transformOrigin: "top center",
+        duration: 1.5,
         ease: "power3.out",
         scrollTrigger: {
-            trigger: '.team-section',
-            start: "top 80%"
+             trigger: '.education-section',
+             start: "top 60%"
         }
+    });
+
+    // Items slide in
+    const items = gsap.utils.toArray('.timeline-item');
+    items.forEach((item, i) => {
+        const isLeft = item.classList.contains('left');
+        gsap.from(item, {
+            x: isLeft ? -50 : 50,
+            opacity: 0,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: item,
+                start: "top 85%"
+            }
+        });
     });
 }
 
@@ -895,20 +887,21 @@ function initProjectModal() {
 document.addEventListener('DOMContentLoaded', () => {
     // Run all inits
     initHero();
-    initFeatures();
-    initProductReveal();
-    initWorkflow();
+    initFeatures(); // Restored
+    initExpertise(); // New Bento
+    initWorkflow(); // New Circuit
     initSlider();
     initProjectsGrid();
     initFooter();
     initStyleSelector();
-    initPricingTilt();
+    // initPricingTilt(); // Removed
+    initTerminal(); // New Contact
     initVideoParallax();
     initStats();
     initFAQ();
     initVelocityText();
     initAtmosphere();
-    initTeam();
+    initEducation(); // New Timeline
     initOrbit();
     initCTA();
     initSpotlight();
