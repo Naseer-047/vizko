@@ -2116,3 +2116,134 @@ section {
         grid-template-columns: 1fr;
     }
 }
+
+/* --- Expertise Section (Bento Grid) --- */
+.expertise-section {
+    padding: var(--section-padding) 48px;
+    background: #000;
+    position: relative;
+    z-index: 10;
+}
+
+.expertise-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.expertise-header {
+    margin-bottom: 60px;
+    text-align: left;
+}
+
+.expertise-header h2 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 12px;
+}
+
+.expertise-header p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 500px;
+}
+
+.expertise-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 250px 250px;
+    gap: 24px;
+}
+
+.expertise-card {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+}
+
+.expertise-card:hover {
+    border-color: #444;
+    transform: translateY(-5px);
+}
+
+.expertise-card.large {
+    grid-column: 1;
+    grid-row: 1 / 3; /* Spans full height */
+    background: linear-gradient(135deg, #111, #080808);
+}
+
+.expertise-card.large .card-content {
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.expertise-card h3 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.expertise-card p {
+    color: #888;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.card-icon {
+    font-size: 3rem;
+    align-self: flex-end;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.expertise-card:hover .card-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.tech-pill-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.tech-pill-container span {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+/* Card Glow Animation */
+.card-bg-glow {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
+    filter: blur(40px);
+    transition: opacity 0.4s;
+}
+
+@media (max-width: 900px) {
+    .expertise-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .expertise-card.large {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 300px;
+    }
+}
