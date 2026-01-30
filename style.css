@@ -3104,10 +3104,12 @@ section {
     }
 }
 
-/* 18. Services Section - Modern Redesign */
+
+/* 20. Services Section - Premium Dark Redesign */
 .services-section-new {
-    padding: 100px 80px;
-    background: #fff;
+    padding: 120px 80px;
+    background: #0a0a0a;
+    position: relative;
 }
 
 .services-container {
@@ -3117,10 +3119,169 @@ section {
 
 .services-header {
     text-align: center;
-    .capabilities-column {
-        padding: 0;
+    margin-bottom: 80px;
+}
+
+.services-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.services-subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem;
+    color: #888;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 50px 40px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(46, 76, 158, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(46, 76, 158, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 20px 60px rgba(46, 76, 158, 0.15);
+}
+
+/* Service Number Badge */
+.service-number {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.05);
+    line-height: 1;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+.service-card:hover .service-number {
+    color: rgba(46, 76, 158, 0.15);
+    transform: scale(1.2);
+}
+
+/* Service Icon */
+.service-icon {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #2E4C9E, #4A6FC9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: rotate(10deg) scale(1.1);
+    box-shadow: 0 10px 30px rgba(46, 76, 158, 0.4);
+}
+
+.service-icon i {
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+/* Service Content */
+.service-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+    letter-spacing: -0.01em;
+}
+
+.service-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #aaa;
+    position: relative;
+    z-index: 2;
+}
+
+/* Responsive */
+@media(max-width: 1200px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .services-title {
+        font-size: 4rem;
     }
 }
+
+@media(max-width: 768px) {
+    .services-section-new {
+        padding: 80px 40px;
+    }
+    
+    .services-title {
+        font-size: 3rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .service-card {
+        padding: 40px 30px;
+    }
+    
+    .service-number {
+        font-size: 2rem;
+    }
+}
+
+
 
 /* 16. Project Sections (Dark & Light Themes) */
 .project-section {
