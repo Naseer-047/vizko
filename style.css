@@ -2413,19 +2413,24 @@ section {
     border: 1px solid #333;
     border-radius: 16px;
     padding: 24px;
+    padding-bottom: 24px; /* Explicit for transition */
     opacity: 1; 
     transform: none; 
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Unified Timing */
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    /* Ensure content clipping for collapse */
     overflow: hidden; 
+    /* Collapsed state adjustments could go here if using a modifier class, 
+       but relying on p-tag collapse + visual density. */
 }
+
+/* Optional: reduce padding when not hovered to mimic tighter collapse? 
+   No, generic card padding is good. focusing on p-tag. */
 
 .circuit-step:hover .step-card {
     border-color: #fff;
     background: #1a1a1a;
     box-shadow: 0 10px 40px rgba(0,255,133,0.1);
-    transform: translateY(-5px); /* Slight lift on expand */
+    transform: translateY(-5px);
 }
 
 .circuit-step:hover .step-card {
