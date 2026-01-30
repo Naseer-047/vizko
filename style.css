@@ -2757,7 +2757,7 @@ section {
 /* 19A. SKILLS Section (New) - First Split */
 .skills-section-new {
     padding: 100px 80px;
-    background: #fff;
+    background: #0a0a0a;
 }
 
 .skills-container-new {
@@ -2774,7 +2774,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 4rem;
     font-weight: 800;
-    color: #000;
+    color: #fff;
     line-height: 1;
     margin-bottom: 15px;
     letter-spacing: -0.01em;
@@ -2800,7 +2800,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #000;
+    color: #fff;
     margin-bottom: 25px;
     letter-spacing: 0.05em;
 }
@@ -2818,7 +2818,7 @@ section {
 .skill-name-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    color: #333;
+    color: #ccc;
     font-weight: 500;
 }
 
@@ -2832,7 +2832,7 @@ section {
 .skill-bar-new {
     width: 100%;
     height: 8px;
-    background: #f0f0f0;
+    background: #1a1a1a;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -2854,7 +2854,7 @@ section {
 .strengths-list li {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    color: #555;
+    color: #aaa;
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -2869,7 +2869,7 @@ section {
 /* 19B. EXPERIENCE Section (New) - Second Split */
 .experience-section-new {
     padding: 100px 80px;
-    background: #fff;
+    background: #0a0a0a;
 }
 
 .experience-container-new {
@@ -2886,7 +2886,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 4rem;
     font-weight: 800;
-    color: #000;
+    color: #fff;
     line-height: 1;
     margin-bottom: 15px;
     letter-spacing: -0.01em;
@@ -2895,7 +2895,7 @@ section {
 .experience-subtitle-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
-    color: #666;
+    color: #888;
 }
 
 .timeline-new {
@@ -2940,7 +2940,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #000;
+    color: #fff;
     margin-bottom: 8px;
     letter-spacing: 0.02em;
 }
@@ -2948,7 +2948,7 @@ section {
 .job-role-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    color: #555;
+    color: #aaa;
     margin-bottom: 5px;
 }
 
@@ -2962,7 +2962,7 @@ section {
 /* 19C. EDUCATION & CAPABILITIES Section (New) - Third Split */
 .education-section-new {
     padding: 100px 80px;
-    background: #fafafa;
+    background: #0a0a0a;
 }
 
 .education-container-new {
@@ -2980,7 +2980,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.8rem;
     font-weight: 700;
-    color: #000;
+    color: #fff;
     margin-bottom: 30px;
     letter-spacing: 0.02em;
 }
@@ -2993,21 +2993,21 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #000;
+    color: #fff;
     margin-bottom: 8px;
 }
 
 .university-name-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
-    color: #666;
+    color: #888;
     margin-bottom: 5px;
 }
 
 .graduation-year {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.9rem;
-    color: #999;
+    color: #666;
 }
 
 .capabilities-list, .design-skills-list {
@@ -3019,7 +3019,7 @@ section {
 .capabilities-list li, .design-skills-list li {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    color: #555;
+    color: #aaa;
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -3048,9 +3048,9 @@ section {
     flex-direction: column;
     align-items: center;
     padding: 25px 15px;
-    background: #fff;
+    background: rgba(255,255,255,0.05);
     border-radius: 12px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid rgba(255,255,255,0.1);
     transition: all 0.3s ease;
 }
 
@@ -3069,7 +3069,7 @@ section {
 .hobby-item-new p {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.85rem;
-    color: #666;
+    color: #ccc;
     font-weight: 500;
 }
 
@@ -3105,10 +3105,10 @@ section {
 }
 
 
-/* 20. Services Section - Light Theme */
+/* 20. Services Section - Premium Dark Theme */
 .services-section-new {
     padding: 120px 80px;
-    background: #f9f9f9;
+    background: #0a0a0a;
     position: relative;
 }
 
@@ -3126,7 +3126,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 5rem;
     font-weight: 800;
-    color: #000;
+    color: #fff;
     line-height: 1;
     margin-bottom: 20px;
     letter-spacing: -0.02em;
@@ -3135,7 +3135,7 @@ section {
 .services-subtitle {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.1rem;
-    color: #666;
+    color: #888;
     max-width: 700px;
     margin: 0 auto;
 }
@@ -3148,8 +3148,8 @@ section {
 }
 
 .service-card {
-    background: #fff;
-    border: 1px solid #e5e5e5;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     padding: 50px 40px;
     position: relative;
@@ -3176,9 +3176,9 @@ section {
 
 .service-card:hover {
     transform: translateY(-10px);
-    border-color: #2E4C9E;
-    background: #fff;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    border-color: rgba(46, 76, 158, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 20px 60px rgba(46, 76, 158, 0.15);
 }
 
 /* Service Number Badge */
@@ -3189,14 +3189,14 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 3rem;
     font-weight: 800;
-    color: rgba(0, 0, 0, 0.03);
+    color: rgba(255, 255, 255, 0.05);
     line-height: 1;
     z-index: 1;
     transition: all 0.4s ease;
 }
 
 .service-card:hover .service-number {
-    color: rgba(46, 76, 158, 0.1);
+    color: rgba(46, 76, 158, 0.15);
     transform: scale(1.2);
 }
 
@@ -3230,7 +3230,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: #000;
+    color: #fff;
     margin-bottom: 20px;
     position: relative;
     z-index: 2;
@@ -3241,7 +3241,7 @@ section {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.7;
-    color: #666;
+    color: #aaa;
     position: relative;
     z-index: 2;
 }
@@ -3293,13 +3293,13 @@ section {
 }
 
 .project-dark {
-    background: #fff;
-    color: #000;
+    background: #000;
+    color: #fff;
 }
 
 .project-light {
-    background: #f5f5f5;
-    color: #000;
+    background: #0a0a0a;
+    color: #fff;
 }
 
 .project-container {
@@ -3344,11 +3344,11 @@ section {
 }
 
 .project-dark .project-description {
-    color: #666;
+    color: #ccc;
 }
 
 .project-light .project-description {
-    color: #333;
+    color: #aaa;
 }
 
 /* Project Visual (Right) */
