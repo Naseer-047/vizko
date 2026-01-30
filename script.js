@@ -666,31 +666,36 @@ function initEducation() {
     });
 }
 
-// 18. Orbit Interaction (Mouse Tilt)
+// 18. Orbit Interaction (Solar System Tilt)
 function initOrbit() {
-    const container = document.querySelector('.orbit-container');
-    if(!container) return;
+    const section = document.querySelector('.orbit-section');
+    const system = document.querySelector('.solar-system');
     
-    container.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
+    if(!section || !system) return;
+    
+    section.addEventListener('mousemove', (e) => {
+        const rect = section.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
         
-        gsap.to(container, {
-            rotationY: x * 30,
-            rotationX: -y * 30,
+        // Base Rotation: rotateX(60deg) rotateZ(-20deg)
+        // We add mouse influence to X and Z axes
+        
+        gsap.to(system, {
+            rotationX: 60 + (y * 20), // Tilt up/down
+            rotationZ: -20 + (x * 20), // Rotate around
             duration: 1,
             ease: "power2.out"
         });
     });
     
     // Reset on leave
-    container.addEventListener('mouseleave', () => {
-        gsap.to(container, {
-            rotationY: 0,
-            rotationX: 0,
-            duration: 1,
-            ease: "power2.out"
+    section.addEventListener('mouseleave', () => {
+        gsap.to(system, {
+            rotationX: 60,
+            rotationZ: -20,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.5)"
         });
     });
 }
