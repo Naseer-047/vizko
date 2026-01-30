@@ -551,6 +551,80 @@ function initResume() {
 }
 
 
+// 3.7 Project Sections Animations
+function initProjects() {
+    // Animate project content (text)
+    gsap.utils.toArray('.project-content').forEach(content => {
+        // Project number
+        gsap.from(content.querySelector('.project-number'), {
+            scrollTrigger: {
+                trigger: content,
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            x: -50,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power2.out'
+        });
+        
+        // Project subtitle
+        gsap.from(content.querySelector('.project-subtitle'), {
+            scrollTrigger: {
+                trigger: content,
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            duration: 1.2,
+            delay: 0.3,
+            ease: 'power2.out'
+        });
+        
+        // Project description
+        gsap.from(content.querySelector('.project-description'), {
+            scrollTrigger: {
+                trigger: content,
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 1.2,
+            delay: 0.6,
+            ease: 'power2.out'
+        });
+    });
+    
+    // Animate single project image
+    gsap.from('.project-image-single', {
+        scrollTrigger: {
+            trigger: '.project-image-single',
+            start: 'top 75%',
+            toggleActions: 'play none none reverse'
+        },
+        scale: 0.9,
+        opacity: 0,
+        duration: 1.5,
+        ease: 'power3.out'
+    });
+    
+    // Animate multi-image grid
+    gsap.from('.project-images-grid img', {
+        scrollTrigger: {
+            trigger: '.project-images-grid',
+            start: 'top 75%',
+            toggleActions: 'play none none reverse'
+        },
+        scale: 0.8,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1.2,
+        ease: 'back.out(1.7)'
+    });
+}
+
+
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Register
@@ -560,6 +634,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHero();
     initAbout(); // New 3D Section
     initResume(); // Resume section with skills/timeline
+    initProjects(); // Project showcase sections
     initServices(); 
     initVelocityText(); // New Velocity Text
     initBento();     
