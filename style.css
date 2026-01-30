@@ -2382,8 +2382,134 @@ section {
         margin-bottom: 0;
         min-width: 40px; /* Prevent shrink */
     }
-    .step-card {
-        transform: none;
+
+/* --- Education Section (Timeline) --- */
+.education-section {
+    padding: var(--section-padding) 48px;
+    background: #050505;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 60px auto 0;
+}
+
+/* Vertical Line */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #333, #333, transparent);
+    z-index: 0;
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+}
+
+.timeline-item.right {
+    left: 50%;
+    text-align: left;
+}
+
+.timeline-dot {
+    position: absolute;
+    top: 40px;
+    width: 16px;
+    height: 16px;
+    background: #000;
+    border: 2px solid #555;
+    border-radius: 50%;
+    z-index: 2;
+    transition: all 0.3s;
+}
+
+.timeline-item.left .timeline-dot {
+    right: -8px; 
+}
+
+.timeline-item.right .timeline-dot {
+    left: -8px;
+}
+
+.timeline-item:hover .timeline-dot {
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    transform: scale(1.3);
+}
+
+.timeline-content {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    transition: all 0.4s;
+}
+
+.timeline-item:hover .timeline-content {
+    background: #1a1a1a;
+    border-color: #444;
+    transform: translateY(-5px);
+}
+
+.timeline-date {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #222;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: #bbb;
+    margin-bottom: 12px;
+}
+
+.timeline-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.timeline-content p {
+    color: #888;
+}
+
+.timeline-detail {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 30px;
+    }
+    .timeline-item {
         width: 100%;
+        left: 0;
+        padding-left: 60px;
+        padding-right: 20px;
+        text-align: left;
+    }
+    .timeline-item.right {
+        left: 0;
+    }
+    .timeline-item.left .timeline-dot,
+    .timeline-item.right .timeline-dot {
+        left: 22px; 
+        right: auto;
     }
 }
