@@ -3,108 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vizcom - AI Creative Tools</title>
-    <meta name="description" content="Visualizing construction responsibly.">
+    <title>Naseer | Creative Developer</title>
+    <meta name="description" content="Building the digital future with premium aesthetics.">
     <link rel="stylesheet" href="style.css">
     
-    <!-- Preload Fonts (Inter for premium feel) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* Critical CSS to prevent FOUC */
-        html.lenis {
-            height: auto;
-        }
-        .lenis.lenis-smooth {
-            scroll-behavior: auto;
-        }
-        .lenis.lenis-smooth [data-lenis-prevent] {
-            overscroll-behavior: contain;
-        }
-        .lenis.lenis-stopped {
-            overflow: hidden;
-        }
-        .lenis.lenis-scrolling iframe {
-            pointer-events: none;
-        }
-    </style>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Head-specific critical styles if any, mostly moved to style.css */
+        html.lenis { height: auto; }
+    </style>
 </head>
 <body>
 
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
+    <!-- Floating HUD Navigation -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">NASEER</div>
-            <div class="nav-links">
-                <a href="#work" class="nav-link">Work</a>
-                <a href="#expertise" class="nav-link">Expertise</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <div class="nav-actions">
-                <a href="mailto:n763122562@gmail.com" class="btn btn-primary">Let's Talk</a>
-            </div>
+        <div class="logo">NASEER</div>
+        <div class="nav-links">
+            <a href="#work" class="nav-link">Work</a>
+            <a href="#expertise" class="nav-link">Expertise</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#about" class="nav-link">About</a>
         </div>
+        <a href="#contact" class="btn-magnetic">Let's Talk <div class="btn-fill"></div></a>
     </nav>
 
     <main id="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section sticky-section" id="hero">
+        <!-- Hero Section: Kinetic Typography -->
+        <section class="hero-section" id="hero">
+            <div class="hero-bg"></div>
+            
             <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        <span class="line-mask"><span class="reveal-text">Building</span></span>
-                        <span class="line-mask"><span class="reveal-text">the digital</span></span>
-                        <span class="line-mask"><span class="reveal-text">future.</span></span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        <span class="line-mask"><span class="reveal-text delay-1">Information Science Engineering Student | Full Stack Developer |</span></span>
-                        <span class="line-mask"><span class="reveal-text delay-1">Tech Enthusiast Passionate about building innovative solutions.</span></span>
-                    </p>
-                    <div class="hero-cta-wrapper">
-                        <a href="#work" class="btn btn-large btn-primary-glow magnetic-btn">
-                            <span>View Projects</span>
-                            <div class="btn-glow"></div>
-                            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                        <a href="#about" class="btn btn-large btn-outline magnetic-btn">
-                            <span>Resume</span>
-                        </a>
-                    </div>
+                <h1 class="hero-title">
+                    <span class="word-mask"><span class="reveal-text">Building</span></span>
+                    <span class="word-mask"><span class="reveal-text text-outline" style="-webkit-text-stroke: 1px rgba(255,255,255,0.3); color: transparent;">The Digital</span></span>
+                    <span class="word-mask"><span class="reveal-text gradient-text">Future</span></span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Full Stack Developer & UI/UX Enthusiast crafting <span class="neon-text-cyan">god-level</span> digital experiences.
+                </p>
+                
+                <div class="hero-cta">
+                    <a href="#work" class="btn-magnetic">
+                        View Work
+                        <div class="btn-fill"></div>
+                    </a>
                 </div>
-                <div class="hero-visual">
-                    <div class="visual-wrapper" data-speed="0.5">
-                        <!-- Code Editor Mockup instead of Cards -->
-                        <div class="code-window">
-                            <div class="window-header">
-                                <div class="window-buttons">
-                                    <span class="win-btn red"></span>
-                                    <span class="win-btn yellow"></span>
-                                    <span class="win-btn green"></span>
-                                </div>
-                                <div class="window-title">portfolio.tsx</div>
-                            </div>
-                            <div class="window-body">
-                                <div class="code-line"><span class="k">const</span> <span class="f">Naseer</span> = () => {</div>
-                                <div class="code-line indent-1"><span class="k">return</span> (</div>
-                                <div class="code-line indent-2">&lt;<span class="t">Developer</span></div>
-                                <div class="code-line indent-3"><span class="p">focus</span>=<span class="s">"Premium UI"</span></div>
-                                <div class="code-line indent-3"><span class="p">stack</span>={[<span class="s">"React"</span>, <span class="s">"GSAP"</span>]}</div>
-                                <div class="code-line indent-3"><span class="p">status</span>=<span class="s">"Open to Work"</span></div>
-                                <div class="code-line indent-2">/&gt;</div>
-                                <div class="code-line indent-1">);</div>
-                                <div class="code-line">};</div>
-                                <div class="code-cursor">|</div>
-                            </div>
-                        </div>
+
+                <div class="scroll-indicator">
+                    <div class="mouse">
+                        <div class="wheel"></div>
                     </div>
+                    <span style="font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;">Scroll</span>
                 </div>
             </div>
         </section>
