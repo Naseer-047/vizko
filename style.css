@@ -2381,37 +2381,11 @@ section {
 @media (max-width: 768px) {
     .hz-item { min-width: 85vw; height: auto; }
 }
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(1.5); opacity: 0; }
-}
 
 @media (max-width: 900px) {
-    .circuit-container {
-        flex-direction: column;
-        padding-left: 20px;
-    }
-    .circuit-line-bg {
-        width: 2px;
-        height: 100%;
-        left: 20px;
-        top: 0;
-    }
-    .circuit-step {
-        width: 100%;
-        flex-direction: row;
-        align-items: flex-start;
-        margin-bottom: 40px;
-        text-align: left;
-    }
-    .step-marker {
-        margin-right: 24px;
-        margin-bottom: 0;
-        min-width: 40px; /* Prevent shrink */
-    }
-
-    .step-card {
-        transform: none;
-        width: 100%;
+    .hz-track {
+        padding-left: 5vw;
+        gap: 40px;
     }
 }
 
