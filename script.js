@@ -585,6 +585,49 @@ function initProjects() {
 }
 
 
+// 3.8 Magnetic Button Interaction
+function initMagneticButton() {
+    const btn = document.getElementById('viewMoreBtn');
+    if (!btn) return;
+    
+    const wrapper = btn.closest('.magnetic-button-wrapper');
+    
+    wrapper.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const btnCenterX = rect.left + rect.width / 2;
+        const btnCenterY = rect.top + rect.height / 2;
+        
+        const deltaX = e.clientX - btnCenterX;
+        const deltaY = e.clientY - btnCenterY;
+        
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const maxDistance = 150; // Magnetic effect range
+        
+        if (distance < maxDistance) {
+            const strength = 1 - (distance / maxDistance);
+            const moveX = deltaX * strength * 0.3;
+            const moveY = deltaY * strength * 0.3;
+            
+            gsap.to(btn, {
+                x: moveX,
+                y: moveY,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        }
+    });
+    
+    wrapper.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: 'elastic.out(1, 0.5)'
+        });
+    });
+}
+
+
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Register
@@ -595,6 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAbout(); // New 3D Section
     initResume(); // Resume section with skills/timeline
     initProjects(); // Project showcase sections
+    initMagneticButton(); // Magnetic button interaction
     initServices(); 
     initVelocityText(); // New Velocity Text
     initBento();     
