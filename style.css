@@ -2336,11 +2336,22 @@ section {
 /* Connecting Line */
 .circuit-line-bg {
     position: absolute;
-    top: 60px; /* Adjust based on marker center */
+    top: 60px;
     left: 0;
     width: 100%;
     height: 2px;
     background: #222;
+    z-index: 0;
+}
+
+.circuit-line-active {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 0%; /* Starts empty */
+    height: 2px;
+    background: linear-gradient(90deg, #00ff85, #3b82f6);
+    box-shadow: 0 0 10px rgba(0, 255, 133, 0.5);
     z-index: 0;
 }
 
