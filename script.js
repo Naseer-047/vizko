@@ -733,6 +733,84 @@ function initMagneticButton() {
 }
 
 
+// 3.10 Achievements Section with Animated Counters
+function initAchievements() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+        let hasAnimated = false;
+        
+        const updateCounter = () => {
+            if (hasAnimated) return;
+            hasAnimated = true;
+            
+            const animate = () => {
+                current += increment;
+                if (current < target) {
+                    stat.textContent = Math.floor(current);
+                    requestAnimationFrame(animate);
+                } else {
+                    stat.textContent = target;
+                }
+            };
+            animate();
+        };
+        
+        // Trigger animation on scroll
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.achievements-section',
+                start: 'top 70%',
+                onEnter: () => updateCounter()
+            }
+        });
+    });
+    
+    // Animate stat cards
+    gsap.from('.stat-card', {
+        scrollTrigger: {
+            trigger: '.stats-grid',
+            start: 'top 75%'
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+    
+    // Animate badges
+    gsap.from('.badge-item', {
+        scrollTrigger: {
+            trigger: '.badges-grid',
+            start: 'top 80%'
+        },
+        y: 30,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.6,
+        ease: 'power2.out'
+    });
+    
+    // Animate client logos
+    gsap.from('.client-logo', {
+        scrollTrigger: {
+            trigger: '.clients-grid',
+            start: 'top 80%'
+        },
+        scale: 0.8,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.5,
+        ease: 'back.out(1.7)'
+    });
+}
+
+
 // 3.9 Testimonial Auto-Scroll Carousel
 function initTestimonialsNew() {
     const track = document.querySelector('.testimonial-track');
@@ -774,6 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHero();
     initAbout(); // New 3D Section
     initResume(); // Resume section with skills/timeline
+    initAchievements(); // Achievements & Impact section
     initProjects(); // Project showcase sections
     initMagneticButton(); // Magnetic button interaction
     initTestimonialsNew(); // Testimonial section
