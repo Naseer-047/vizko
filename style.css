@@ -205,7 +205,7 @@ section {
 /* Ensure all subsequent sections have a background to cover the hero */
 .features-section, .product-section, .marquee-section, 
 .workflow-section, .comparison-section, .gallery-section,
-.style-selector-section, .pricing-section, .video-window-section,
+.style-selector-section, .pricing-section, .value-section, .video-window-section,
 .stats-section, .mesh-section, .faq-section, .team-section,
 .orbit-section, .velocity-section, .cta-section, .site-footer {
     position: relative;
@@ -2053,7 +2053,6 @@ section {
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    group: hover;
 }
 
 .value-card:hover {
