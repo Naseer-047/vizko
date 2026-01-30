@@ -2697,68 +2697,51 @@ section {
     background-position: center bottom;
 }
 
-/* Atomic Rings (Fixed Logic) */
+/* Atomic Rings (Static Visuals) */
 .atom-ring {
     position: absolute;
     top: 50%; left: 50%;
-    width: 400px; /* Circle Diameter */
+    width: 400px;
     height: 400px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Premium thin line */
     border-radius: 50%;
     transform-style: preserve-3d;
     pointer-events: none;
 }
 
-/* Squash circles into ellipses using Scale */
-.ring-1 { transform: translate(-50%, -50%) rotate(0deg) scaleY(0.4); }
+/* Position Rings without Scale Distortions - We rotate the visual plane */
+.ring-1 { transform: translate(-50%, -50%) rotate(0deg) scaleY(0.4); } 
 .ring-2 { transform: translate(-50%, -50%) rotate(60deg) scaleY(0.4); }
 .ring-3 { transform: translate(-50%, -50%) rotate(-60deg) scaleY(0.4); }
 
-/* Electron Container (Spins the position) */
+/* Electron Container (Reset for JS) */
 .electron {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    border-radius: 50%;
-    animation: atomSpin 12s linear infinite;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    /* JS will animate transform: translate3d(...) */
+    z-index: 5; 
 }
 
-.electron.delay-1 { animation-delay: -6s; }
-
-/* The visible badge (Counter-scales and Counter-rotates) */
-.electron .tech-icon {
+/* The Icon Badge */
+.tech-icon {
     position: absolute;
-    top: 50%; right: -25px; /* On the rim */
-    width: 50px; height: 50px;
-    margin-top: -25px;
-    background: #111;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%); /* Centered on electron point */
+    width: 44px; height: 44px;
+    background: #0a0a0a;
     border: 1px solid #333;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 15px rgba(0,0,0,0.8);
-    
-    /* 
-       1. scaleY(2.5) to un-squash the parent's scaleY(0.4). 
-       2. rotate to billboard against the spin.
-    */
-    animation: atomCounterSpin 12s linear infinite;
 }
 
-.electron .tech-icon img {
+.tech-icon img {
     width: 60%;
     height: 60%;
     object-fit: contain;
-}
-
-@keyframes atomSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes atomCounterSpin {
-    0% { transform: scaleY(2.5) rotate(0deg); }
-    100% { transform: scaleY(2.5) rotate(-360deg); }
 }
 
 /* 11. Atmosphere Mesh (Background) */

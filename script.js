@@ -385,9 +385,55 @@ function initAbout() {
         },
         scale: 0.5,
         autoAlpha: 0,
-        rotation: 180, // Spin in effect
         duration: 1.2,
         ease: "back.out(1.2)"
+    });
+    
+    initAtomicOrbit();
+}
+
+function initAtomicOrbit() {
+    const rings = [
+        { el: document.querySelector('.ring-1'), angle: 0 },
+        { el: document.querySelector('.ring-2'), angle: 60 },
+        { el: document.querySelector('.ring-3'), angle: -60 }
+    ];
+
+    const radius = 200; // Match CSS Width/2
+    const ySquash = 0.4; // Match CSS scaleY
+    
+    // Animate each electron
+    rings.forEach((ring, i) => {
+        if(!ring.el) return;
+        const electrons = ring.el.querySelectorAll('.electron');
+        
+        electrons.forEach((electron, j) => {
+            // Offset starting angles so they don't clump
+            let progress = j * 0.5; // 0, 0.5 (180 deg apart)
+            
+            gsap.to({}, {
+                duration: 15, // Orbit speed
+                repeat: -1,
+                ease: "none",
+                onUpdate: function() {
+                    // Update progress 0 -> 1
+                    progress += 0.002; // Speed factor (approx 1/frame)
+                    const rad = progress * Math.PI * 2;
+                    
+                    // 1. Calculate Un-Rotated Ellipse Position
+                    const ex = Math.cos(rad) * radius;
+                    const ey = Math.sin(rad) * radius * ySquash;
+                    
+                    // 2. Rotate to match Ring alignment (Manual 2D Rotation)
+                    const ringRad = ring.angle * (Math.PI / 180);
+                    const finalX = ex * Math.cos(ringRad) - ey * Math.sin(ringRad);
+                    const finalY = ex * Math.sin(ringRad) + ey * Math.cos(ringRad);
+                    
+                    // 3. Apply
+                    gsap.set(electron, { x: finalX, y: finalY });
+                }
+            });
+        });
     });
 }
 
