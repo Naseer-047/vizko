@@ -3833,7 +3833,7 @@ section {
 /* 17. Testimonial Section - Auto-Scrolling Carousel */
 .testimonial-section {
     padding: 80px 0;
-    background: #fff;
+    background: #0a0a0a;
     overflow: hidden;
 }
 
@@ -3847,7 +3847,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 4rem;
     font-weight: 800;
-    color: #000;
+    color: #fff;
     line-height: 1;
     margin-bottom: 15px;
     letter-spacing: -0.01em;
@@ -3856,7 +3856,7 @@ section {
 .testi-subtitle {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
-    color: #666;
+    color: #888;
 }
 
 /* Carousel */
@@ -3874,10 +3874,18 @@ section {
 
 .testi-card {
     flex: 0 0 350px;
-    background: #fafafa;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
     padding: 30px 25px;
     border-radius: 12px;
     text-align: center;
+    transition: all 0.3s ease;
+}
+
+.testi-card:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(46, 76, 158, 0.4);
+    transform: translateY(-5px);
 }
 
 .testi-photo {
@@ -3886,7 +3894,7 @@ section {
     margin: 0 auto 20px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid #fff;
+    border: 2px solid rgba(255,255,255,0.2);
 }
 
 .testi-photo img {
@@ -3900,7 +3908,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.9rem;
     font-weight: 700;
-    color: #000;
+    color: #fff;
     margin-bottom: 5px;
     letter-spacing: 0.1em;
 }
@@ -3917,7 +3925,7 @@ section {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.85rem;
     line-height: 1.6;
-    color: #555;
+    color: #aaa;
 }
 
 /* Responsive */
