@@ -666,36 +666,35 @@ function initEducation() {
     });
 }
 
-// 17. Workflow Horizontal Scroll
+// 17. Workflow Horizontal Scroll (Fixed)
 function initWorkflow() {
     const track = document.querySelector('.hz-track');
     const wrapper = document.querySelector('.hz-wrapper');
     
     if(!track || !wrapper) return;
     
-    // Calculate total scroll distance
-    // We want to scroll until the end of the track is visible
-    function getScrollAmount() {
-        let trackWidth = track.scrollWidth;
-        return -(trackWidth - window.innerWidth + 100); // 100px padding
+    // Smooth Horizontal Scroll
+    // We explicitly calculate the distance to scroll
+    function getScrollDistance() {
+        return -(track.scrollWidth - window.innerWidth);
     }
-    
-    // Create the Tween
-    const tween = gsap.to(track, {
-        x: getScrollAmount,
-        ease: "none"
-    });
-    
-    // Create the Trigger
-    ScrollTrigger.create({
-        trigger: ".workflow-section",
-        start: "top 20%",
-        end: () => `+=${getScrollAmount() * -1}`, // Scroll duration = length of horizontal scroll
-        pin: true,
-        animation: tween,
-        scrub: 1,
-        invalidateOnRefresh: true // Recalculate on resize
-    });
+
+    // Only enable if track is wider than viewport
+    if(track.scrollWidth > window.innerWidth) {
+        gsap.to(track, {
+            x: getScrollDistance,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".workflow-section",
+                start: "center center", // Lock when center hits center
+                end: () => "+=" + (track.scrollWidth - window.innerWidth), // Scroll length matches track
+                pin: true,
+                scrub: 1,
+                invalidateOnRefresh: true,
+                anticipatePin: 1
+            }
+        });
+    }
 }
 
 // 18. Orbit Interaction (Solar System Tilt)
