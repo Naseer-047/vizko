@@ -2754,186 +2754,354 @@ section {
 }
 
 /* 15. Resume Section (Reference Design) */
-.resume-section {
-    position: relative;
-    padding: 120px 80px;
-    background: #0a0a0a;
-    min-height: 100vh;
+/* 19A. SKILLS Section (New) - First Split */
+.skills-section-new {
+    padding: 100px 80px;
+    background: #fff;
 }
 
-.resume-container {
-    max-width: 1400px;
+.skills-container-new {
+    max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 28% 44% 28%;
-    gap: 40px;
-    width: 100%;
 }
 
-/* Column Headings */
-.column-heading {
+.skills-header-new {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.skills-title-new {
     font-family: 'Space Grotesk', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 15px;
+    letter-spacing: -0.01em;
+}
+
+.skills-subtitle-new {
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
+    color: #666;
+}
+
+.skills-grid-new {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+}
+
+.skills-category {
+    padding: 0;
+}
+
+.category-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.15em;
-    margin-bottom: 30px;
-    margin-top: 40px;
+    color: #000;
+    margin-bottom: 25px;
+    letter-spacing: 0.05em;
 }
 
-.column-heading:first-child {
-    margin-top: 0;
+.skill-item-new {
+    margin-bottom: 22px;
 }
 
-/* Skills Column */
-.skills-column {
-    padding-right: 20px;
-}
-
-.skill-item {
-    margin-bottom: 24px;
-}
-
-.skill-header {
+.skill-header-new {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
 }
 
-.skill-name {
+.skill-name-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #ccc;
-    font-weight: 400;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
 }
 
-.skill-percent {
+.skill-percent-new {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: #888;
+    font-size: 0.9rem;
+    color: #666;
     font-weight: 600;
 }
 
-.skill-bar {
+.skill-bar-new {
     width: 100%;
-    height: 6px;
-    background: #1a1a1a;
-    border-radius: 3px;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
     overflow: hidden;
-    position: relative;
 }
 
-.skill-fill {
+.skill-fill-new {
     height: 100%;
-    width: 0%; /* Start at 0 for animation */
-    background: linear-gradient(90deg, #666 0%, #999 100%);
-    border-radius: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #2E4C9E, #4A6FC9);
+    border-radius: 4px;
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Text Lists */
-.text-list {
+.strengths-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.text-list li {
+.strengths-list li {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #aaa;
-    line-height: 1.8;
-    padding-left: 0;
+    font-size: 0.95rem;
+    color: #555;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-/* Experience Column */
-.experience-column {
-    padding: 0 30px;
-    border-left: 1px solid rgba(255,255,255,0.08);
-    border-right: 1px solid rgba(255,255,255,0.08);
+.strengths-list i {
+    color: #2E4C9E;
+    font-size: 0.85rem;
 }
 
-.timeline {
+/* 19B. EXPERIENCE Section (New) - Second Split */
+.experience-section-new {
+    padding: 100px 80px;
+    background: #0a0a0a;
+}
+
+.experience-container-new {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.experience-header-new {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.experience-title-new {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 15px;
+    letter-spacing: -0.01em;
+}
+
+.experience-subtitle-new {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    color: #888;
+}
+
+.timeline-new {
     position: relative;
-    padding-left: 30px;
+    padding-left: 50px;
 }
 
-.timeline::before {
+.timeline-new::before {
     content: '';
     position: absolute;
     left: 0;
     top: 10px;
     bottom: 10px;
-    width: 1px;
-    background: rgba(255,255,255,0.15);
+    width: 2px;
+    background: linear-gradient(180deg, #2E4C9E, transparent);
 }
 
-.timeline-item {
+.timeline-item-new {
     position: relative;
-    margin-bottom: 40px;
-    opacity: 0; /* Start hidden for animation */
-    transform: translateY(20px);
+    margin-bottom: 50px;
+    opacity: 0;
+    transform: translateX(-30px);
 }
 
-.timeline-marker {
+.timeline-marker-new {
     position: absolute;
-    left: -34px;
+    left: -55px;
     top: 6px;
-    width: 8px;
-    height: 8px;
-    background: #888;
+    width: 12px;
+    height: 12px;
+    background: #2E4C9E;
     border-radius: 50%;
-    border: 2px solid #0a0a0a;
+    border: 3px solid #0a0a0a;
+    box-shadow: 0 0 0 1px #2E4C9E;
 }
 
-.timeline-content {
+.timeline-content-new {
     padding-left: 0;
 }
 
-.company-name {
+.company-name-new {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: #fff;
-    margin-bottom: 6px;
-    line-height: 1.4;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
 }
 
-.job-role {
+.job-role-new {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.job-duration-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.85rem;
-    color: #999;
-    margin-bottom: 4px;
-}
-
-.job-duration {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.8rem;
     color: #666;
-}
-
-/* Education */
-.education-block {
-    margin-bottom: 30px;
-}
-
-.degree-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem;
     font-weight: 600;
-    color: #fff;
-    margin-bottom: 6px;
 }
 
-.university-name {
+/* 19C. EDUCATION & CAPABILITIES Section (New) - Third Split */
+.education-section-new {
+    padding: 100px 80px;
+    background: #fafafa;
+}
+
+.education-container-new {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.education-grid-new {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 80px;
+}
+
+.edu-section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+    letter-spacing: 0.02em;
+}
+
+.degree-block {
+    margin-bottom: 40px;
+}
+
+.degree-name-new {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.university-name-new {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.graduation-year {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.9rem;
-    color: #888;
+    color: #999;
 }
 
-/* Capabilities Column */
-.capabilities-column {
-    padding-left: 20px;
+.capabilities-list, .design-skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.capabilities-list li, .design-skills-list li {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.capabilities-list i {
+    color: #2E4C9E;
+    font-size: 0.5rem;
+}
+
+.design-skills-list i {
+    color: #FFD700;
+    font-size: 0.8rem;
+}
+
+.hobbies-grid-new {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.hobby-item-new {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 15px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.hobby-item-new:hover {
+    transform: translateY(-5px);
+    border-color: #2E4C9E;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.hobby-item-new i {
+    font-size: 2rem;
+    color: #2E4C9E;
+    margin-bottom: 12px;
+}
+
+.hobby-item-new p {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media(max-width: 1024px) {
+    .skills-grid-new,
+    .education-grid-new {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .skills-title-new,
+    .experience-title-new {
+        font-size: 3rem;
+    }
+    
+    .hobbies-grid-new {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 768px) {
+    .skills-section-new,
+    .experience-section-new,
+    .education-section-new {
+        padding: 60px 40px;
+    }
+    
+    .skills-title-new,
+    .experience-title-new {
+        font-size: 2.5rem;
+    }
 }
 
 /* 18. Services Section - Modern Redesign */
