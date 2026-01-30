@@ -809,26 +809,6 @@ function initAchievements() {
             }
         );
     }
-    
-    // Animate client logos
-    const logos = document.querySelectorAll('.client-logo');
-    if (logos.length > 0) {
-        gsap.fromTo('.client-logo',
-            { opacity: 1, scale: 1 },
-            {
-                scrollTrigger: {
-                    trigger: '.clients-grid',
-                    start: 'top 80%',
-                    once: true
-                },
-                scale: 1,
-                opacity: 1,
-                stagger: 0.05,
-                duration: 0.5,
-                ease: 'back.out(1.7)'
-            }
-        );
-    }
 }
 
 
@@ -903,7 +883,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTestimonialsNew(); // Testimonial section
     initVelocityText(); // New Velocity Text
     initBento();     
-    initSkills();    
     initProcess();
     initTestimonials();
     initSpotlight(); 
