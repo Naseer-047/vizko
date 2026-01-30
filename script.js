@@ -496,6 +496,53 @@ function initAtomicOrbit() {
 }
 
 
+// 3.6 Resume Section Animations
+function initResume() {
+    // Animate skill bars
+    const skillFills = document.querySelectorAll('.skill-fill');
+    skillFills.forEach(fill => {
+        const percent = fill.getAttribute('data-percent');
+        
+        gsap.to(fill, {
+            scrollTrigger: {
+                trigger: '.resume-section',
+                start: 'top 60%',
+            },
+            width: percent + '%',
+            duration: 1.5,
+            ease: 'power3.out',
+            delay: 0.2
+        });
+    });
+    
+    // Animate timeline items
+    gsap.to('.timeline-item', {
+        scrollTrigger: {
+            trigger: '.timeline',
+            start: 'top 70%',
+        },
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: 'power2.out'
+    });
+    
+    // Animate hobby icons
+    gsap.to('.hobby-item', {
+        scrollTrigger: {
+            trigger: '.hobbies-grid',
+            start: 'top 80%',
+        },
+        opacity: 1,
+        scale: 1,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+    });
+}
+
+
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Register
@@ -504,6 +551,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Initialize Components
     initHero();
     initAbout(); // New 3D Section
+    initResume(); // Resume section with skills/timeline
     initServices(); 
     initVelocityText(); // New Velocity Text
     initBento();     
