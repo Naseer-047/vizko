@@ -2671,33 +2671,63 @@ section {
 }
 
 .about-text h2 { 
-    font-size: 4.5rem; 
-    font-weight: 800; 
-    line-height: 1.05; 
-    margin-bottom: 32px; 
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 7.5rem; /* Massive Scale */
+    font-weight: 800;  /* Extra Bold */
+    line-height: 0.9; 
+    margin-bottom: 40px; 
     color: #fff; 
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+}
+
+/* Gradient Text Fix for new font */
+.about-text h2 .gradient-text {
+    background: linear-gradient(135deg, #fff 0%, #666 100%);
+    background-clip: text; /* Standard */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: normal; /* Remove italic, keep blocky */
 }
 
 .about-bio { 
-    color: #888; 
-    font-size: 1.25rem; 
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #d4d4d4; /* Brighter, more visible */
+    font-size: 1.25rem; /* Larger body */
     line-height: 1.6; 
-    margin-bottom: 48px; 
-    font-weight: 300;
+    margin-bottom: 56px; 
+    font-weight: 400;
+    max-width: 550px; /* Slight increase width */
 }
-.about-bio .highlight { color: #fff; font-weight: 500; }
+.about-bio .highlight { color: #fff; font-weight: 600; text-decoration: underline; text-decoration-color: #333; }
 
-/* Clean Stats */
+/* Clean Stats - New Font */
 .stats-minimal {
     display: flex;
-    gap: 60px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 32px;
+    gap: 80px; /* More spacing */
+    border-top: 1px solid rgba(255,255,255,0.15); /* Brighter line */
+    padding-top: 40px;
 }
 
 .stat-block { display: flex; flex-direction: column; }
-.stat-num { font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-.stat-desc { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.4; }
+.stat-num { 
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.5rem; /* Huge Numbers */
+    font-weight: 800; 
+    color: #fff; 
+    margin-bottom: 8px; 
+    line-height: 1;
+    letter-spacing: -2px;
+}
+.stat-desc { 
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem; 
+    color: #888; 
+    text-transform: uppercase; 
+    letter-spacing: 3px; 
+    line-height: 1.4; 
+    font-weight: 700;
+}
 
 
 /* --- Pure 3D Atom --- */
