@@ -85,35 +85,42 @@ function initServices() {
     const cards = document.querySelectorAll('.glass-card');
     if (!cards.length) return;
 
-    gsap.from(cards, {
-        scrollTrigger: {
-            trigger: ".services-section",
-            start: "top 80%",
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out"
-    });
+    gsap.fromTo(cards, 
+        { y: 50, autoAlpha: 0 },
+        {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".services-section",
+                start: "top 95%", // Triggers almost immediately when section enters
+                toggleActions: "play none none reverse"
+            }
+        }
+    );
 }
 // 5. Projects: Bento Grid Pop-in
 function initBento() {
-    // This targets the new Projects Grid which uses .project-card but we can animate the container
     const items = document.querySelectorAll('.project-card');
     if (!items.length) return;
 
-    gsap.from(items, {
-        scrollTrigger: {
-            trigger: ".projects-section",
-            start: "top 75%",
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out"
-    });
+    gsap.fromTo(items,
+        { y: 50, autoAlpha: 0 },
+        {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".projects-section",
+                start: "top 95%",
+                toggleActions: "play none none reverse"
+            }
+        }
+    );
 }
 
 // 6. Contact Terminal Effect (Consolidated)
@@ -124,17 +131,20 @@ function initProcess() {
     const steps = document.querySelectorAll('.process-step');
     if (!steps.length) return;
 
-    gsap.from(steps, {
-        scrollTrigger: {
-            trigger: ".process-section",
-            start: "top 80%"
-        },
-        y: 50,
-        opacity: 0,
-        stagger: 0.3,
-        duration: 1,
-        ease: "power2.out"
-    });
+    gsap.fromTo(steps,
+        { y: 50, autoAlpha: 0 },
+        {
+            y: 0,
+            autoAlpha: 1,
+            stagger: 0.3,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".process-section",
+                start: "top 95%"
+            }
+        }
+    );
 }
 
 // 8. Testimonials Section
@@ -159,17 +169,19 @@ function initContact() {
     const form = document.querySelector('.contact-container');
     if (!form) return;
 
-    // Contact form slide up
-    gsap.from(form, {
-        scrollTrigger: {
-            trigger: ".contact-section",
-            start: "top 75%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-    });
+    gsap.fromTo(form, 
+        { y: 30, autoAlpha: 0 },
+        {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".contact-section",
+                start: "top 90%"
+            }
+        }
+    );
 
     // We can also add the typing effect here if desired, 
     // but the pure CSS/HTML structure of the terminal often looks good enough.
@@ -177,16 +189,18 @@ function initContact() {
 
 // 10. Footer: Parallax Reveal
 function initFooter() {
-    // Target the correct class from index.html
-    gsap.from(".footer-big-text", {
-        scrollTrigger: {
-            trigger: ".site-footer",
-            start: "top 90%",
-            scrub: 1
-        },
-        y: 100,
-        opacity: 0,
-    });
+    gsap.fromTo(".footer-big-text", 
+        { y: 100, autoAlpha: 0 },
+        {
+            y: 0,
+            autoAlpha: 1,
+            scrollTrigger: {
+                trigger: ".site-footer",
+                start: "top 95%",
+                scrub: 1
+            }
+        }
+    );
 }
 
 // 11. Atmosphere
@@ -210,14 +224,24 @@ function initAtmosphere() {
 }
 
 // Master Init
+// Master Init
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Register
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 2. Initialize Components
     initHero();
-    initServices(); // Now exists in HTML
-    initBento();    // Animates Projects
-    // initTerminal(); // Removed (covered by Contact)
+    initServices(); 
+    initBento();    
     initProcess();
     initTestimonials();
     initContact();
     initFooter();
     initAtmosphere();
+
+    // 3. Force Layout Recalculation (Fixes 'Invisible' bugs)
+    // Wait a tick for DOM to settle
+    setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 500);
 });
