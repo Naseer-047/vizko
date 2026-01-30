@@ -642,21 +642,21 @@ function initTestimonialsNew() {
         }
     });
     
-    tl.from('.section-title-large', {
+    tl.from('.testi-title', {
         x: -50,
         opacity: 0,
         duration: 0.6,
         ease: 'power2.out'
     })
-    .from('.testimonial-subtitle', {
+    .from('.testi-desc', {
         x: -30,
         opacity: 0,
         duration: 0.5,
         ease: 'power2.out'
     }, '-=0.3')
-    .to('.testimonial-card', {
-        opacity: 1,
-        y: 0,
+    .from('.testi-card', {
+        y: 30,
+        opacity: 0,
         stagger: 0.2,
         duration: 0.7,
         ease: 'power2.out'
