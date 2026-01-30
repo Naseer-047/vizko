@@ -1,1520 +1,833 @@
+// Vizcom Recreation - Animation Orchestration
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Initialize everything
-        initLoader();
-        initTheme();
-        initNavigation();
-        initTypewriter();
-        initScrollAnimations();
-        initHeroAnimation();
-        initMobileNavigation(); // NEW: Initialize mobile navigation
-        initScrollProgress();
-        initBackToTop();
-        initFormSubmission();
-        initViewMoreProjects();
-        initFloatingElements();
-      });
+// 1. Initialize Lenis for Smooth Scroll
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple-like easing
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+});
 
-      function initHeroAnimation() {
-        // subtle floating animation for the profile card
-        const profile = document.querySelector(".profile-card");
-        if (!profile || typeof gsap === "undefined") return;
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
 
-        gsap.to(profile, {
-          y: -8,
-          duration: 3.5,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
+requestAnimationFrame(raf);
+
+// Integrate Lenis with GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Update ScrollTrigger on Lenis scroll
+// lenis.on('scroll', ScrollTrigger.update); // Not strictly clear if this is needed with latest versions, but good practice if syncing is off
+
+// Connect GSAP ticker to Lenis for seamless sync
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+});
+
+// Disable GSAP's lag smoothing to prevent stutter causing jumps
+gsap.ticker.lagSmoothing(0);
+
+
+// 2. Cursor Animation
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorOutline = document.querySelector('.cursor-outline');
+
+window.addEventListener('mousemove', (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
+
+    // Dot follows immediately
+    cursorDot.style.left = `${posX}px`;
+    cursorDot.style.top = `${posY}px`;
+
+    // Outline follows with slight delay (using GSAP for smoothness)
+    gsap.to(cursorOutline, {
+        x: posX - 20, // Offset by half width/height (handled in CSS transform, but GSAP overwrites so we need to be careful. Actually CSS translate is -50%)
+        // Let's rely on left/top GSAP animation
+        left: posX,
+        top: posY,
+        duration: 0.15,
+        ease: "power2.out"
+    });
+});
+
+// Hover states for cursor
+document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        gsap.to(cursorOutline, {
+            scale: 1.5,
+            backgroundColor: 'rgba(0,0,0,0.1)',
+            borderColor: 'transparent',
+            duration: 0.3
         });
-      }
-
-      function initLoader() {
-        const loader = document.getElementById("loader");
-        const loaderText = document.querySelector(".loader-text");
-        const loaderSubtitle = document.querySelector(".loader-subtitle");
-        const progressBar = document.querySelector(".loader-progress-bar");
-
-        // Animate loader text
-        gsap.to(loaderText, {
-          duration: 1.5,
-          scale: 1.2,
-          rotation: 360,
-          ease: "power2.inOut",
-          repeat: 1,
-          yoyo: true,
-        });
-
-        // Animate progress bar
-        gsap.to(progressBar, {
-          width: "100%",
-          duration: 2,
-          ease: "power2.inOut",
-          delay: 0.5,
-          onComplete: () => {
-            // Animate subtitle
-            gsap.to(loaderSubtitle, {
-              duration: 0.5,
-              opacity: 1,
-              onComplete: () => {
-                // Hide loader
-                setTimeout(() => {
-                  gsap.to(loader, {
-                    duration: 0.8,
-                    opacity: 0,
-                    onComplete: () => {
-                      loader.style.display = "none";
-                      // Animate hero section
-                      animateHero();
-                    },
-                  });
-                }, 1000);
-              },
-            });
-          },
-        });
-      }
-
-      function initTheme() {
-        const themeToggle = document.getElementById("themeToggle");
-        const mobileThemeToggle = document.getElementById("mobileThemeToggle");
-
-        // Check saved theme
-        let savedTheme = localStorage.getItem("theme");
-        // Default to light if not set
-        if (!savedTheme) {
-          savedTheme = "light";
-          localStorage.setItem("theme", "light");
-        }
-        if (savedTheme === "dark") {
-          document.body.classList.add("dark");
-        } else {
-          document.body.classList.remove("dark");
-        }
-
-        // reflect initial aria state on the toggle
-        if (themeToggle) {
-          themeToggle.setAttribute(
-            "aria-pressed",
-            document.body.classList.contains("dark") ? "true" : "false",
-          );
-        }
-        if (mobileThemeToggle) {
-          mobileThemeToggle.setAttribute(
-            "aria-pressed",
-            document.body.classList.contains("dark") ? "true" : "false",
-          );
-        }
-
-        // Toggle theme with animation and update aria state
-        function toggleTheme() {
-          gsap.to(document.body, {
-            duration: 0.45,
-            ease: "power2.inOut",
-            onStart: () => {
-              document.body.classList.toggle("dark");
-              const isDarkNow = document.body.classList.contains("dark");
-              
-              // Update both theme toggles
-              if (themeToggle) {
-                themeToggle.setAttribute(
-                  "aria-pressed",
-                  isDarkNow ? "true" : "false",
-                );
-              }
-              if (mobileThemeToggle) {
-                mobileThemeToggle.setAttribute(
-                  "aria-pressed",
-                  isDarkNow ? "true" : "false",
-                );
-              }
-              
-              localStorage.setItem("theme", isDarkNow ? "dark" : "light");
-            },
-          });
-        }
-
-        // Add event listeners to both theme toggles
-        if (themeToggle) {
-          themeToggle.addEventListener("click", toggleTheme);
-        }
-        if (mobileThemeToggle) {
-          mobileThemeToggle.addEventListener("click", toggleTheme);
-        }
-      }
-
-      function initNavigation() {
-        const navItems = document.querySelectorAll(".nav-item");
-        const navIndicator = document.getElementById("navIndicator");
-        const sections = document.querySelectorAll("section");
-
-        // Set initial active nav item
-        updateNavIndicator("home");
-
-        // Nav item click handlers with rolling animation
-        navItems.forEach((item) => {
-          const text = item.querySelector(".nav-text:first-child");
-          const clone = item.querySelector(".nav-text.clone");
-
-          // Hover animation
-          item.addEventListener("mouseenter", () => {
-            gsap.to(text, {
-              duration: 0.3,
-              y: -30,
-              ease: "power2.out",
-            });
-            gsap.to(clone, {
-              duration: 0.3,
-              y: -30,
-              ease: "power2.out",
-            });
-          });
-
-          item.addEventListener("mouseleave", () => {
-            gsap.to(text, {
-              duration: 0.3,
-              y: 0,
-              ease: "power2.out",
-            });
-            gsap.to(clone, {
-              duration: 0.3,
-              y: 30,
-              ease: "power2.out",
-            });
-          });
-
-          // Click handler
-          item.addEventListener("click", () => {
-            const targetId = item.getAttribute("data-target");
-            scrollToSection(targetId);
-          });
-        });
-
-        // Button hover animations
-        document.querySelectorAll(".btn").forEach((btn) => {
-          const text = btn.querySelector(".btn-text:first-child");
-          const clone = btn.querySelector(".btn-text.clone");
-
-          btn.addEventListener("mouseenter", () => {
-            gsap.to(text, {
-              duration: 0.3,
-              y: -24,
-              ease: "power2.out",
-            });
-            gsap.to(clone, {
-              duration: 0.3,
-              y: -24,
-              ease: "power2.out",
-            });
-          });
-
-          btn.addEventListener("mouseleave", () => {
-            gsap.to(text, {
-              duration: 0.3,
-              y: 0,
-              ease: "power2.out",
-            });
-            gsap.to(clone, {
-              duration: 0.3,
-              y: 24,
-              ease: "power2.out",
-            });
-          });
-        });
-
-        // Update nav indicator on scroll
-        window.addEventListener("scroll", updateActiveSection);
-
-        // Header scroll effect
-        window.addEventListener("scroll", () => {
-          const header = document.getElementById("header");
-          if (window.scrollY > 100) {
-            header.classList.add("scrolled");
-          } else {
-            header.classList.remove("scrolled");
-          }
-        });
-      }
-
-      function updateActiveSection() {
-        const sections = document.querySelectorAll("section");
-        const scrollPosition = window.scrollY + 100;
-
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          const sectionId = section.getAttribute("id");
-
-          if (
-            scrollPosition >= sectionTop &&
-            scrollPosition < sectionTop + sectionHeight
-          ) {
-            updateNavIndicator(sectionId);
-            updateMobileNavActive(sectionId);
-          }
-        });
-      }
-
-      function updateNavIndicator(sectionId) {
-        const navItems = document.querySelectorAll(".nav-item");
-        const navIndicator = document.getElementById("navIndicator");
-        const activeItem = document.querySelector(
-          `.nav-item[data-target="${sectionId}"]`,
-        );
-
-        if (activeItem) {
-          const rect = activeItem.getBoundingClientRect();
-          const headerRect = document
-            .getElementById("header")
-            .getBoundingClientRect();
-
-          gsap.to(navIndicator, {
-            duration: 0.3,
-            left: rect.left - headerRect.left,
-            width: rect.width,
-            ease: "power2.out",
-          });
-
-          navItems.forEach((item) => {
-            if (item.getAttribute("data-target") === sectionId) {
-              item.classList.add("active");
-            } else {
-              item.classList.remove("active");
-            }
-          });
-        }
-      }
-
-      function scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          window.scrollTo({
-            top: section.offsetTop,
-            behavior: "smooth",
-          });
-
-          // Close mobile menu if open
-          closeMobileMenu();
-        }
-      }
-
-      function initTypewriter() {
-        const typewriter = document.getElementById("typewriter");
-        if (!typewriter) return;
-
-        const texts = [
-          "Information Science Student",
-          "Full Stack Developer",
-          "Engineering Student",
-          "Tech Enthusiast",
-          "Problem Solver",
-          "UI/UX Designer",
-          "JavaScript Developer",
-        ];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let isPaused = false;
-
-        function type() {
-          if (isPaused) return;
-
-          const currentText = texts[textIndex];
-
-          if (isDeleting) {
-            typewriter.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-          } else {
-            typewriter.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-          }
-
-          let speed = isDeleting ? 50 : 100;
-
-          if (!isDeleting && charIndex === currentText.length) {
-            isPaused = true;
-            setTimeout(() => {
-              isPaused = false;
-              isDeleting = true;
-              type();
-            }, 2000);
-            return;
-          } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            speed = 500;
-          }
-
-          setTimeout(type, speed);
-        }
-
-        // Start typing after hero animation
-        setTimeout(type, 2000);
-      }
-
-      function animateHero() {
-        const heroText = document.querySelector(".hero-text h1");
-        const spans = heroText.querySelectorAll("span");
-        const subtitle = document.querySelector(".hero-text .section-subtitle");
-        const buttons = document.querySelector(".hero-buttons");
-
-        // Animate name
-        gsap.fromTo(
-          spans,
-          { opacity: 0, y: 100 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power4.out",
-            delay: 0.5,
-          },
-        );
-
-        // Animate subtitle
-        gsap.fromTo(
-          subtitle,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            delay: 1.2,
-            ease: "power2.out",
-          },
-        );
-
-        // Animate buttons
-        gsap.fromTo(
-          buttons.children,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            delay: 1.8,
-            ease: "power2.out",
-          },
-        );
-
-        // Animate profile image (subtle fade + scale)
-        const profileCard = document.querySelector(".profile-card");
-        gsap.fromTo(
-          profileCard,
-          { opacity: 0, scale: 0.95 },
-          {
-            opacity: 1,
+    });
+    el.addEventListener('mouseleave', () => {
+        gsap.to(cursorOutline, {
             scale: 1,
-            duration: 0.9,
-            delay: 0.6,
-            ease: "power2.out",
-          },
-        );
-      }
+            backgroundColor: 'transparent',
+            borderColor: 'rgba(0,0,0,0.5)',
+            duration: 0.3
+        });
+    });
+});
 
-      function initScrollAnimations() {
-        // Initialize GSAP ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
 
-        // Animate section headings
-        gsap.utils.toArray(".section-heading").forEach((heading) => {
-          gsap.from(heading, {
+// Utility: Split Text into Spans
+function splitTextToSpans(selector) {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(el => {
+        const text = el.innerText;
+        el.innerHTML = '';
+        text.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.innerText = char === ' ' ? '&nbsp;' : char;
+            span.style.display = 'inline-block';
+            span.style.opacity = '0';
+            span.style.transform = 'translateY(120%)';
+            if (char === ' ') span.style.width = '0.3em'; // Adjust space width
+            el.appendChild(span);
+        });
+    });
+}
+
+// 3. Hero Setup & Animation
+function initHero() {
+    initCodeWindow(); // New function for code interactions
+
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+    // Hero Title Reveal
+    tl.to('.reveal-text', {
+        y: 0,
+        opacity: 1,
+        duration: 1.8,
+        stagger: 0.2
+    })
+    .to('.hero-cta-wrapper', {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out"
+    }, "-=1.2");
+
+    // Parallax
+    gsap.to('.visual-wrapper', {
+        yPercent: 30, // Increased parallax depth
+        ease: "none",
+        scrollTrigger: {
+            trigger: '.hero-section',
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+        }
+    });
+
+}
+
+function initCodeWindow() {
+    // 3a. Magnetic Follow Effect
+    const heroSection = document.querySelector('.hero-section');
+    const codeWindow = document.querySelector('.code-window');
+
+    if (heroSection && codeWindow) {
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            // Calculate mouse position relative to center of hero section
+            const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2); // -1 to 1
+            const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2); // -1 to 1
+
+            // Move window slightly (Magnetic feel)
+            gsap.to(codeWindow, {
+                x: x * 30, // Move 30px max
+                y: y * 30, // Move 30px max
+                rotationY: x * 10, // Tilt 10deg
+                rotationX: -y * 10, // Tilt 10deg
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            gsap.to(codeWindow, {
+                x: 0,
+                y: 0,
+                rotationY: -10, // Return to default CSS skew
+                rotationX: 5,
+                duration: 1,
+                ease: "elastic.out(1, 0.5)"
+            });
+        });
+    }
+
+    // 3b. Typewriter Effect
+    const codeLines = document.querySelectorAll('.code-line');
+    
+    // reset text to hidden first
+    gsap.set(codeLines, { autoAlpha: 0, x: -10 });
+
+    const typeTl = gsap.timeline({ delay: 0.5 }); // Start quickly
+    codeLines.forEach((line) => {
+        typeTl.to(line, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.05,
+            ease: "none"
+        }, "+=0.08"); 
+    });
+}
+
+// 4. Feature Section & Card Glow
+function initFeatures() {
+    // Divider Animation
+    gsap.to('.section-divider', {
+        scaleX: 1,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.features-section',
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Scroll Reveal for cards - Added Depth (Scale)
+    const cards = gsap.utils.toArray('.feature-card');
+    cards.forEach((card, i) => {
+        gsap.from(card, {
+            y: 100,
+            opacity: 0,
+            scale: 0.92, // Z-depth illusion
+            duration: 1.2,
+            ease: "power3.out",
             scrollTrigger: {
-              trigger: heading,
-              start: "top 80%",
-              end: "bottom 20%",
-              toggleActions: "play none none reverse",
-            },
+                trigger: card,
+                start: "top 90%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Mouse Move Glow Effect
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            gsap.to(card, {
+                "--mouse-x": `${x}px`,
+                "--mouse-y": `${y}px`,
+                duration: 0.1,
+                overwrite: true
+            });
+        });
+    });
+}
+
+
+// 5. Product Image Blur Reveal
+function initProductReveal() {
+    // Pin the section while the reveal happens
+    gsap.to('.product-image-wrapper', {
+        opacity: 1,
+        filter: "blur(0px)",
+        scale: 1,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: '.product-section',
+            start: "top top", // Pin immediately when it hits top
+            end: "+=100%", // Pin for 1 screen height duration
+            pin: true,
+            scrub: true // Scrub the animation while pinned
+        }
+    });
+
+    // Also animate text slightly for parallax
+    gsap.from('.product-text', {
+        y: 50,
+        opacity: 0,
+        scrollTrigger: {
+            trigger: '.product-section',
+            start: "top top",
+            end: "+=50%",
+            scrub: true
+        }
+    });
+}
+
+// 6. 3D Workflow Animation
+// 6. Engineering Approach Animation (Stacked Cards)
+function initWorkflow() {
+    const cards = gsap.utils.toArray('.step-card');
+    
+    cards.forEach((card, i) => {
+        // 1. Smooth Entry: Standard fade up as they come into view
+        gsap.from(card, {
             y: 100,
             opacity: 0,
             duration: 1,
-            ease: "power3.out",
-          });
-        });
-
-        // Animate cards
-        gsap.utils
-          .toArray(
-            ".stat-card, .skill-category, .project-card, .achievement-card, .highlight-card, .tool-card",
-          )
-          .forEach((card) => {
-            gsap.from(card, {
-              scrollTrigger: {
+            ease: "power2.out",
+            scrollTrigger: {
                 trigger: card,
-                start: "top 85%",
-                end: "bottom 15%",
-                toggleActions: "play none none reverse",
-              },
-              y: 50,
-              opacity: 0,
-              duration: 0.8,
-              ease: "power2.out",
-            });
-          });
-
-        // Animate timeline items (use fromTo so CSS-hidden items animate to visible)
-        gsap.utils.toArray(".timeline-item").forEach((item, i) => {
-          gsap.fromTo(
-            item,
-            { x: i % 2 === 0 ? -100 : 100, opacity: 0 },
-            {
-              scrollTrigger: {
-                trigger: item,
-                start: "top 85%",
-                end: "bottom 15%",
-                toggleActions: "play none none reverse",
-              },
-              x: 0,
-              opacity: 1,
-              duration: 1,
-              ease: "power3.out",
-              delay: i * 0.2,
-            },
-          );
-        });
-
-        // Animate skill bars
-        gsap.utils.toArray(".skill-progress").forEach((bar) => {
-          const width = bar.getAttribute("data-width");
-          gsap.to(bar, {
-            scrollTrigger: {
-              trigger: bar,
-              start: "top 85%",
-              end: "bottom 15%",
-              toggleActions: "play none none reverse",
-            },
-            width: `${width}%`,
-            duration: 1.5,
-            ease: "power2.out",
-          });
-        });
-
-        // Animate contact items
-        gsap.utils.toArray(".contact-item").forEach((item, i) => {
-          gsap.from(item, {
-            scrollTrigger: {
-              trigger: item,
-              start: "top 90%",
-              end: "bottom 10%",
-              toggleActions: "play none none reverse",
-            },
-            x: -50,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            delay: i * 0.1,
-          });
-        });
-
-        // Animate social links
-        gsap.utils.toArray(".social-link").forEach((link, i) => {
-          gsap.from(link, {
-            scrollTrigger: {
-              trigger: link,
-              start: "top 90%",
-              end: "bottom 10%",
-              toggleActions: "play none none reverse",
-            },
-            scale: 0,
-            rotation: 180,
-            opacity: 0,
-            duration: 0.6,
-            ease: "back.out(1.7)",
-            delay: i * 0.1,
-          });
-        });
-      }
-
-      // NEW: Mobile Navigation Functions
-      function initMobileNavigation() {
-        const mobileMenuToggle = document.getElementById("mobileMenuToggle");
-        const mobileNavOverlay = document.getElementById("mobileNavOverlay");
-        const mobileNavMenu = document.getElementById("mobileNavMenu");
-        const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
-
-        // Toggle mobile menu
-        function toggleMobileMenu() {
-          mobileMenuToggle.classList.toggle("active");
-          mobileNavOverlay.classList.toggle("active");
-          mobileNavMenu.classList.toggle("active");
-          
-          // Prevent body scroll when menu is open
-          document.body.style.overflow = mobileNavMenu.classList.contains("active") ? "hidden" : "";
-        }
-
-        // Close mobile menu
-        function closeMobileMenu() {
-          mobileMenuToggle.classList.remove("active");
-          mobileNavOverlay.classList.remove("active");
-          mobileNavMenu.classList.remove("active");
-          document.body.style.overflow = "";
-        }
-
-        // Update active mobile nav link
-        function updateMobileNavActive(sectionId) {
-          mobileNavLinks.forEach(link => {
-            link.classList.remove("active");
-            if (link.getAttribute("data-target") === sectionId) {
-              link.classList.add("active");
+                start: "top 95%", // Trigger earlier
+                toggleActions: "play none none reverse" 
             }
-          });
+        });
+
+        // 2. Stack Effect: Scale down previous card when next one overlaps
+        if (i < cards.length - 1) { 
+            const nextCard = cards[i + 1];
+            
+            gsap.to(card, {
+                scale: 0.9,
+                filter: "brightness(0.5) blur(5px)", // Darken and blur
+                transformOrigin: "center top",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: nextCard,
+                    start: "top bottom", // Start scaling as soon as next card enters viewport
+                    end: "top 150px", // Finish when next card hits the sticky top
+                    scrub: true
+                }
+            });
         }
+    });
+}
 
-        // Event listeners
-        if (mobileMenuToggle) {
-          mobileMenuToggle.addEventListener("click", toggleMobileMenu);
+// 7. Interactive Comparison Slider
+function initSlider() {
+    const container = document.querySelector('.comparison-container');
+    const afterImage = document.querySelector('.after-image');
+    const handle = document.querySelector('.slider-handle');
+
+    if (!container) return;
+
+    function moveSlider(e) {
+        const rect = container.getBoundingClientRect();
+        // Calculate position (clamp between 0 and width)
+        let x = (e.clientX || e.touches[0].clientX) - rect.left;
+        x = Math.max(0, Math.min(x, rect.width));
+        
+        const percentage = (x / rect.width) * 100;
+
+        // Update width of the Top image (After Image usually, or Before depending on layer order)
+        // Here .after-image is the one on top (z-index 2), covering the sketch.
+        // It has overflow hidden. 
+        // So resizing width reveals/hides it.
+        // If width is 100%, we see full render. If 0%, full sketch.
+        
+        gsap.to(afterImage, {
+            width: `${percentage}%`,
+            duration: 0.1, // Quick follow
+            ease: "none"
+        });
+        
+        gsap.to(handle, {
+            left: `${percentage}%`,
+            duration: 0.1,
+            ease: "none"
+        });
+    }
+
+    container.addEventListener('mousemove', moveSlider);
+    container.addEventListener('touchmove', moveSlider);
+}
+
+// 8. Projects Grid (Filterable + Animation)
+function initProjectsGrid() {
+    const filters = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
+    
+    // Initial Reveal
+    gsap.from(cards, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        scrollTrigger: {
+            trigger: ".project-grid",
+            start: "top 80%"
         }
+    });
 
-        if (mobileNavOverlay) {
-          mobileNavOverlay.addEventListener("click", closeMobileMenu);
-        }
+    filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1. Update Active State
+            filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-        // Mobile nav link clicks
-        mobileNavLinks.forEach(link => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute("data-target");
-            scrollToSection(targetId);
-            closeMobileMenu();
-          });
-        });
+            const category = btn.dataset.filter;
+            
+            // 2. Filter Logic (Fade Out -> Layout Change -> Fade In)
+            // Ideally we'd use GSAP Flip here, but without the plugin loaded, 
+            // a robust "animate out, switch, animate in" is safest.
+            
+            const tl = gsap.timeline();
 
-        // Close menu on escape key
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && mobileNavMenu.classList.contains("active")) {
-            closeMobileMenu();
-          }
-        });
-
-        // Expose closeMobileMenu function globally
-        window.closeMobileMenu = closeMobileMenu;
-        window.updateMobileNavActive = updateMobileNavActive;
-      }
-
-      function initScrollProgress() {
-        const progressBar = document.querySelector(".scroll-progress-bar");
-
-        window.addEventListener("scroll", () => {
-          const windowHeight =
-            document.documentElement.scrollHeight -
-            document.documentElement.clientHeight;
-          const scrolled = (window.scrollY / windowHeight) * 100;
-
-          gsap.to(progressBar, {
-            width: `${scrolled}%`,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-          // Show/hide scroll indicator
-          const scrollIndicator = document.getElementById("scrollIndicator");
-          if (window.scrollY > 100) {
-            scrollIndicator.style.opacity = "0";
-          } else {
-            scrollIndicator.style.opacity = "0.7";
-          }
-        });
-      }
-
-      function initBackToTop() {
-        const backToTop = document.getElementById("backToTop");
-
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 500) {
-            backToTop.classList.add("visible");
-          } else {
-            backToTop.classList.remove("visible");
-          }
-        });
-
-        backToTop.addEventListener("click", () => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        });
-      }
-
-      function initFormSubmission() {
-        const contactForm = document.getElementById("contactForm");
-
-        contactForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const submitBtn = this.querySelector('button[type="submit"]');
-          const originalContent = submitBtn.innerHTML;
-
-          // Show loading state
-          submitBtn.innerHTML =
-            '<i class="fas fa-spinner fa-spin"></i> SENDING...';
-          submitBtn.disabled = true;
-
-          // Simulate API call
-          setTimeout(() => {
-            // Show success animation
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> SENT!';
-
-            // Add confetti effect
-            createConfetti();
-
-            // Reset form
-            this.reset();
-
-            // Reset button after 2 seconds
-            setTimeout(() => {
-              submitBtn.innerHTML = originalContent;
-              submitBtn.disabled = false;
-            }, 2000);
-          }, 1500);
-        });
-      }
-
-      // Create a project-card element matching existing layout
-      function createProjectCard(title, techs, description) {
-        const card = document.createElement("div");
-        card.className = "project-card";
-
-        const h3 = document.createElement("h3");
-        h3.textContent = title;
-        card.appendChild(h3);
-
-        const techWrap = document.createElement("div");
-        techWrap.className = "project-tech";
-        techs.forEach((t) => {
-          const span = document.createElement("span");
-          span.className = "tech-tag";
-          span.textContent = t;
-          techWrap.appendChild(span);
-        });
-        card.appendChild(techWrap);
-
-        const p = document.createElement("p");
-        p.className = "project-description";
-        p.textContent = description;
-        card.appendChild(p);
-
-        const a = document.createElement("a");
-        a.href = "#";
-        a.className = "btn btn-secondary";
-        a.style.marginTop = "20px";
-        a.style.width = "auto";
-        a.innerHTML = `
-                <i class="fas fa-external-link-alt"></i>
-                <span>
-                    <div class="btn-text">VIEW PROJECT</div>
-                    <div class="btn-text clone">VIEW PROJECT</div>
-                </span>`;
-        card.appendChild(a);
-
-        return card;
-      }
-
-      function initViewMoreProjects() {
-        const btn = document.getElementById("viewMoreBtn");
-        if (!btn) return;
-
-        const projectsGrid = document.querySelector(".projects-grid");
-        let extraAdded = false;
-        let extraElements = [];
-
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          const primaryText = btn.querySelector(".btn-text");
-          const cloneText = btn.querySelector(".btn-text.clone");
-
-          if (!extraAdded) {
-            // Create 3 extra projects
-            const p1 = createProjectCard(
-              "Campus Analytics Dashboard",
-              ["React", "D3.js", "PostgreSQL"],
-              "Data visualization dashboard for campus metrics and analytics.",
-            );
-            const p2 = createProjectCard(
-              "Mobile Attendance App",
-              ["React Native", "Firebase"],
-              "Mobile app for students to mark attendance and receive updates.",
-            );
-            const p3 = createProjectCard(
-              "AI Tutor Chatbot",
-              ["Python", "TensorFlow", "Flask"],
-              "An intelligent chatbot to assist students with course queries and practice problems.",
-            );
-
-            extraElements = [p1, p2, p3];
-            extraElements.forEach((el) => projectsGrid.appendChild(el));
-
-            // Animate them into view
-            gsap.from(extraElements, {
-              y: 30,
-              opacity: 0,
-              stagger: 0.1,
-              duration: 0.6,
-              ease: "power2.out",
+            // Step A: Hide all current cards
+            tl.to(cards, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: () => {
+                    // Step B: Update DOM layout (Display None/Block)
+                    cards.forEach(card => {
+                        if (category === 'all' || card.dataset.category === category) {
+                            card.style.display = "block";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                }
             });
 
-            primaryText.textContent = "VIEW LESS";
-            cloneText.textContent = "VIEW LESS";
-            extraAdded = true;
-          } else {
-            // Remove appended elements
-            extraElements.forEach((el) => el.remove());
-            extraElements = [];
-            primaryText.textContent = "VIEW MORE";
-            cloneText.textContent = "VIEW MORE";
-            extraAdded = false;
-          }
+            // Step C:  Animate visible cards back in (New Layout)
+            tl.to(cards, {
+                 scale: 1,
+                 opacity: 1,
+                 duration: 0.4,
+                 ease: "power2.out",
+                 stagger: 0.05,
+                 clearProps: "scale" // Ensure hover effects work later
+            }); // This runs after A completes due to timeline
         });
-      }
+    });
+}
 
-      function initFloatingElements() {
-        const container = document.querySelector(".floating-elements");
-
-        // Create additional floating elements
-        for (let i = 0; i < 8; i++) {
-          const element = document.createElement("div");
-          element.className = "floating-element";
-
-          // Random properties
-          const size = Math.random() * 150 + 50;
-          const colors = [
-            "var(--primary)",
-            "var(--secondary)",
-            "var(--accent)",
-            "var(--success)",
-          ];
-          const color = colors[Math.floor(Math.random() * colors.length)];
-
-          element.style.width = `${size}px`;
-          element.style.height = `${size}px`;
-          element.style.background = color;
-          element.style.top = `${Math.random() * 100}%`;
-          element.style.left = `${Math.random() * 100}%`;
-          element.style.animationDelay = `${Math.random() * -20}s`;
-          element.style.animationDuration = `${Math.random() * 20 + 20}s`;
-
-          container.appendChild(element);
+// 9. Footer Parallax
+function initFooter() {
+    gsap.from('.footer-big-text span', {
+        yPercent: 50,
+        opacity: 0,
+        scrollTrigger: {
+            trigger: '.site-footer',
+            start: "top 80%",
+            end: "bottom bottom",
+            scrub: 1
         }
+    });
+}
 
-        // Create larger decorative background spheres
-        const sphereColors = [
-          "radial-gradient(circle at 30% 30%, rgba(139,92,246,0.9), rgba(139,92,246,0.2))",
-          "radial-gradient(circle at 60% 40%, rgba(59,130,246,0.9), rgba(59,130,246,0.18))",
-          "radial-gradient(circle at 40% 70%, rgba(6,182,212,0.9), rgba(6,182,212,0.12))",
-          "radial-gradient(circle at 70% 20%, rgba(16,185,129,0.9), rgba(16,185,129,0.12))",
-        ];
+// 10. Tech Ecosystem Logic
+function initStyleSelector() {
+    const tabs = document.querySelectorAll('.style-tab');
+    const images = document.querySelectorAll('.style-image');
 
-        // (removed background spheres)
-      }
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active
+            tabs.forEach(t => t.classList.remove('active'));
+            images.forEach(img => img.classList.remove('active'));
 
-      function createConfetti() {
-        const colors = ["#8B5CF6", "#3B82F6", "#06B6D4", "#10B981"];
-
-        for (let i = 0; i < 100; i++) {
-          const confetti = document.createElement("div");
-          confetti.style.position = "fixed";
-          confetti.style.width = "10px";
-          confetti.style.height = "10px";
-          confetti.style.background =
-            colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.borderRadius = "50%";
-          confetti.style.left = `${Math.random() * 100}vw`;
-          confetti.style.top = "0";
-          confetti.style.zIndex = "9999";
-          confetti.style.pointerEvents = "none";
-
-          document.body.appendChild(confetti);
-
-          // Animate confetti
-          gsap.to(confetti, {
-            y: window.innerHeight,
-            x: Math.random() * 400 - 200,
-            rotation: Math.random() * 360,
-            duration: Math.random() * 2 + 1,
-            ease: "power2.out",
-            onComplete: () => confetti.remove(),
-          });
-        }
-      }
-
-      // Parallax effect for floating elements
-      window.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth) * 20 - 10;
-        const y = (e.clientY / window.innerHeight) * 20 - 10;
-
-        gsap.to(".floating-element", {
-          x: x,
-          y: y,
-          duration: 1,
-          ease: "power2.out",
+            // Add active
+            tab.classList.add('active');
+            // ID format is style-[name] e.g. style-cyberpunk
+            const targetId = `style-${tab.dataset.style}`;
+            const target = document.getElementById(targetId);
+            if(target) target.classList.add('active');
         });
-      });
-
-      // Initialize scroll indicator visibility
-      window.dispatchEvent(new Event("scroll"));
-// ... [Previous code remains exactly the same until after the initFloatingElements function]
-
-function initFloatingElements() {
-  const container = document.querySelector(".floating-elements");
-  
-  // Keep your existing 2D elements
-  for (let i = 0; i < 8; i++) {
-    const element = document.createElement("div");
-    element.className = "floating-element";
-
-    const size = Math.random() * 150 + 50;
-    const colors = [
-      "var(--primary)",
-      "var(--secondary)",
-      "var(--accent)",
-      "var(--success)",
-    ];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
-    element.style.width = `${size}px`;
-    element.style.height = `${size}px`;
-    element.style.background = color;
-    element.style.top = `${Math.random() * 100}%`;
-    element.style.left = `${Math.random() * 100}%`;
-    element.style.animationDelay = `${Math.random() * -20}s`;
-    element.style.animationDuration = `${Math.random() * 20 + 20}s`;
-
-    container.appendChild(element);
-  }
-
-  // Initialize Three.js - FIXED VERSION
-  initThreeJSBackground();
-}
-
-function initThreeJSBackground() {
-  // Only proceed if Three.js is available
-  if (typeof THREE === 'undefined') {
-    console.log('Three.js not loaded');
-    return;
-  }
-
-  const container = document.querySelector('.floating-elements');
-  if (!container) return;
-
-  // Scene setup
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ 
-    alpha: true, 
-    antialias: true
-  });
-  
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
-  
-  const canvas = renderer.domElement;
-  canvas.style.position = 'fixed';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.zIndex = '-1';
-  canvas.style.pointerEvents = 'auto'; // Enable interaction
-  container.appendChild(canvas);
-  
-  // Camera setup - ZOOM will be controlled by scroll
-  camera.position.set(0, 0, 30); // Start further back
-
-  // Get theme colors
-  const rootStyles = getComputedStyle(document.documentElement);
-  const themeColors = [
-    parseInt(rootStyles.getPropertyValue('--primary').replace('#', '0x')),
-    parseInt(rootStyles.getPropertyValue('--secondary').replace('#', '0x')),
-    parseInt(rootStyles.getPropertyValue('--accent').replace('#', '0x')),
-    parseInt(rootStyles.getPropertyValue('--success').replace('#', '0x'))
-  ];
-
-  // Create GALAXY structure (without round particles)
-  createGalaxyStructure(scene, themeColors);
-  
-  // Create WAVE particles (not round spheres)
-  createWaveParticles(scene, themeColors);
-
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-  scene.add(ambientLight);
-  
-  // Multiple colored lights
-  themeColors.forEach((color, i) => {
-    const light = new THREE.PointLight(color, 0.5, 100);
-    const angle = (i / themeColors.length) * Math.PI * 2;
-    light.position.set(
-      Math.cos(angle) * 20,
-      Math.sin(angle) * 15,
-      15
-    );
-    scene.add(light);
-  });
-
-  // Interactive variables
-  let mouseX = 0;
-  let mouseY = 0;
-  let isDragging = false;
-  let dragStart = { x: 0, y: 0 };
-  let rotation = { x: 0, y: 0 };
-  let targetRotation = { x: 0, y: 0 };
-  
-  // Scroll variables for ZOOM
-  let scrollY = 0;
-  let targetScrollY = 0;
-  let scrollProgress = 0;
-  let zoomLevel = 30; // Camera Z position
-  
-  // Mouse interaction - DRAG TO ROTATE
-  canvas.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    dragStart.x = e.clientX;
-    dragStart.y = e.clientY;
-    canvas.style.cursor = 'grabbing';
-  });
-  
-  document.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-    
-    if (isDragging) {
-      const deltaX = e.clientX - dragStart.x;
-      const deltaY = e.clientY - dragStart.y;
-      
-      targetRotation.y = deltaX * 0.01;
-      targetRotation.x = deltaY * 0.01;
-      
-      dragStart.x = e.clientX;
-      dragStart.y = e.clientY;
-    }
-  });
-  
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-    canvas.style.cursor = 'grab';
-    // Smooth return to center
-    targetRotation.x *= 0.5;
-    targetRotation.y *= 0.5;
-  });
-  
-  // Touch support
-  canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    isDragging = true;
-    dragStart.x = e.touches[0].clientX;
-    dragStart.y = e.touches[0].clientY;
-  });
-  
-  canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    if (isDragging) {
-      const deltaX = e.touches[0].clientX - dragStart.x;
-      const deltaY = e.touches[0].clientY - dragStart.y;
-      
-      targetRotation.y = deltaX * 0.01;
-      targetRotation.x = deltaY * 0.01;
-      
-      dragStart.x = e.touches[0].clientX;
-      dragStart.y = e.touches[0].clientY;
-    }
-  });
-  
-  canvas.addEventListener('touchend', () => {
-    isDragging = false;
-    targetRotation.x *= 0.5;
-    targetRotation.y *= 0.5;
-  });
-  
-  // Scroll interaction - ZOOM CONTROL
-  window.addEventListener('scroll', () => {
-    targetScrollY = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    scrollProgress = maxScroll > 0 ? targetScrollY / maxScroll : 0;
-    
-    // ZOOM based on scroll - as you scroll down, zoom in
-    zoomLevel = 30 - (scrollProgress * 15); // From 30 to 15 (zooming in)
-  });
-
-  // Animation loop
-  const clock = new THREE.Clock();
-  
-  function animate() {
-    requestAnimationFrame(animate);
-    
-    const time = clock.getElapsedTime();
-    const delta = clock.getDelta();
-    
-    // Smooth rotation interpolation
-    rotation.x += (targetRotation.x - rotation.x) * 0.1;
-    rotation.y += (targetRotation.y - rotation.y) * 0.1;
-    
-    // Update galaxy
-    updateGalaxyStructure(time, rotation, mouseX, mouseY, scrollProgress);
-    
-    // Update wave particles
-    updateWaveParticles(time, mouseX, mouseY, scrollProgress);
-    
-    // Camera ZOOM based on scroll
-    camera.position.z += (zoomLevel - camera.position.z) * 0.1;
-    
-    // Camera look at with smooth follow
-    const lookAtX = rotation.y * 5;
-    const lookAtY = rotation.x * 3;
-    camera.lookAt(lookAtX, lookAtY, 0);
-    
-    // Scene rotation
-    scene.rotation.x = rotation.x;
-    scene.rotation.y = rotation.y;
-    
-    // Add gentle auto-rotation when not dragging
-    if (!isDragging) {
-      scene.rotation.y += 0.001;
-      scene.rotation.x = Math.sin(time * 0.1) * 0.05;
-    }
-    
-    renderer.render(scene, camera);
-  }
-
-  // Handle window resize
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
-
-  window.addEventListener('resize', onWindowResize, false);
-  
-  // Start animation
-  animate();
-  
-  // Set initial cursor
-  canvas.style.cursor = 'grab';
-}
-
-// GALAXY STRUCTURE - NO ROUND SPHERES
-function createGalaxyStructure(scene, colors) {
-  const galaxy = new THREE.Group();
-  
-  // Create TORUS KNOT structure (not spheres)
-  const knotGeometry = new THREE.TorusKnotGeometry(8, 3, 256, 32, 3, 4);
-  const knotMaterial = new THREE.MeshBasicMaterial({
-    color: colors[0],
-    transparent: true,
-    opacity: 0.15,
-    wireframe: true
-  });
-  
-  const mainKnot = new THREE.Mesh(knotGeometry, knotMaterial);
-  galaxy.add(mainKnot);
-  
-  // Create smaller inner knot
-  const innerKnotGeometry = new THREE.TorusKnotGeometry(5, 2, 128, 24, 2, 3);
-  const innerKnotMaterial = new THREE.MeshBasicMaterial({
-    color: colors[1],
-    transparent: true,
-    opacity: 0.2,
-    wireframe: true
-  });
-  
-  const innerKnot = new THREE.Mesh(innerKnotGeometry, innerKnotMaterial);
-  galaxy.add(innerKnot);
-  
-  // Create GEOMETRIC LINES network (not spheres)
-  const lines = new THREE.Group();
-  
-  // Create a dodecahedron wireframe
-  const dodecaGeometry = new THREE.DodecahedronGeometry(6, 0);
-  const dodecaEdges = new THREE.EdgesGeometry(dodecaGeometry);
-  const dodecaLine = new THREE.LineSegments(
-    dodecaEdges,
-    new THREE.LineBasicMaterial({ 
-      color: colors[2], 
-      transparent: true, 
-      opacity: 0.3,
-      linewidth: 1 
-    })
-  );
-  lines.add(dodecaLine);
-  
-  // Create an icosahedron wireframe
-  const icosaGeometry = new THREE.IcosahedronGeometry(4, 0);
-  const icosaEdges = new THREE.EdgesGeometry(icosaGeometry);
-  const icosaLine = new THREE.LineSegments(
-    icosaEdges,
-    new THREE.LineBasicMaterial({ 
-      color: colors[3], 
-      transparent: true, 
-      opacity: 0.4,
-      linewidth: 1 
-    })
-  );
-  lines.add(icosaLine);
-  
-  galaxy.add(lines);
-  
-  // Create ENERGY RIBBONS (not spheres)
-  const ribbons = new THREE.Group();
-  const ribbonCount = 6;
-  
-  for (let i = 0; i < ribbonCount; i++) {
-    const points = [];
-    const ribbonLength = 50;
-    
-    for (let j = 0; j < ribbonLength; j++) {
-      const t = j / ribbonLength;
-      const angle = t * Math.PI * 4 + (i / ribbonCount) * Math.PI * 2;
-      const radius = 7 + Math.sin(t * Math.PI * 2) * 2;
-      
-      points.push(new THREE.Vector3(
-        Math.cos(angle) * radius,
-        (t - 0.5) * 15,
-        Math.sin(angle) * radius
-      ));
-    }
-    
-    const ribbonGeometry = new THREE.BufferGeometry().setFromPoints(points);
-    const ribbonMaterial = new THREE.LineBasicMaterial({
-      color: colors[i % colors.length],
-      transparent: true,
-      opacity: 0.15,
-      linewidth: 2
     });
-    
-    const ribbon = new THREE.Line(ribbonGeometry, ribbonMaterial);
-    ribbons.add(ribbon);
-    
-    ribbon.userData = {
-      index: i,
-      speed: 0.02 + i * 0.005
-    };
-  }
-  
-  galaxy.add(ribbons);
-  
-  // Create FLOATING TRIANGLES (not spheres)
-  const triangles = new THREE.Group();
-  const triangleCount = 100;
-  
-  for (let i = 0; i < triangleCount; i++) {
-    const triangleGeometry = new THREE.BufferGeometry();
-    const vertices = new Float32Array([
-      -0.1, 0.17, 0,
-      0.1, 0.17, 0,
-      0, -0.17, 0
-    ]);
-    
-    triangleGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    
-    const triangleMaterial = new THREE.MeshBasicMaterial({
-      color: colors[i % colors.length],
-      transparent: true,
-      opacity: 0.4,
-      side: THREE.DoubleSide
-    });
-    
-    const triangle = new THREE.Mesh(triangleGeometry, triangleMaterial);
-    
-    // Position in sphere
-    const radius = 12 + Math.random() * 8;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    
-    triangle.position.set(
-      radius * Math.sin(phi) * Math.cos(theta),
-      radius * Math.sin(phi) * Math.sin(theta),
-      radius * Math.cos(phi)
-    );
-    
-    // Random rotation
-    triangle.rotation.x = Math.random() * Math.PI * 2;
-    triangle.rotation.y = Math.random() * Math.PI * 2;
-    triangle.rotation.z = Math.random() * Math.PI * 2;
-    
-    triangle.userData = {
-      originalPos: triangle.position.clone(),
-      rotationSpeed: new THREE.Vector3(
-        (Math.random() - 0.5) * 0.02,
-        (Math.random() - 0.5) * 0.02,
-        (Math.random() - 0.5) * 0.02
-      ),
-      floatSpeed: 0.5 + Math.random() * 0.5,
-      floatOffset: Math.random() * Math.PI * 2
-    };
-    
-    triangles.add(triangle);
-  }
-  
-  galaxy.add(triangles);
-  
-  // Store references
-  window.galaxy = galaxy;
-  window.mainKnot = mainKnot;
-  window.innerKnot = innerKnot;
-  window.lines = lines;
-  window.ribbons = ribbons;
-  window.triangles = triangles;
-  
-  scene.add(galaxy);
 }
 
-// WAVE PARTICLES - NO ROUND SPHERES
-function createWaveParticles(scene, colors) {
-  const waveParticles = new THREE.Group();
-  
-  // Create WAVE LINES instead of round particles
-  const waveCount = 8;
-  const pointsPerWave = 100;
-  
-  for (let w = 0; w < waveCount; w++) {
-    const wavePoints = [];
-    const waveAmplitude = 3 + w * 0.5;
-    const waveFrequency = 0.5 + w * 0.1;
-    
-    for (let i = 0; i < pointsPerWave; i++) {
-      const t = i / pointsPerWave;
-      const x = (t - 0.5) * 40;
-      const y = Math.sin(t * Math.PI * waveFrequency + w) * waveAmplitude;
-      const z = Math.cos(w) * 5;
-      
-      wavePoints.push(new THREE.Vector3(x, y, z));
-    }
-    
-    const waveGeometry = new THREE.BufferGeometry().setFromPoints(wavePoints);
-    const waveMaterial = new THREE.LineBasicMaterial({
-      color: colors[w % colors.length],
-      transparent: true,
-      opacity: 0.2 + w * 0.05,
-      linewidth: 1
+// 11. 3D Pricing Tilt
+function initPricingTilt() {
+    const cards = document.querySelectorAll('.pricing-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Normalize to -1 to 1
+            const xPct = (x / rect.width - 0.5) * 20; // 20deg max
+            const yPct = (y / rect.height - 0.5) * -20; 
+
+            gsap.to(card, {
+                rotationY: xPct,
+                rotationX: yPct,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                rotationY: 0,
+                rotationX: 0,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
     });
-    
-    const waveLine = new THREE.Line(waveGeometry, waveMaterial);
-    
-    waveLine.userData = {
-      waveIndex: w,
-      amplitude: waveAmplitude,
-      frequency: waveFrequency,
-      speed: 0.05 + w * 0.01,
-      offset: Math.random() * Math.PI * 2
-    };
-    
-    waveParticles.add(waveLine);
-  }
-  
-  // Create FLOATING SQUARES grid
-  const squares = new THREE.Group();
-  const gridSize = 20;
-  
-  for (let x = -gridSize; x <= gridSize; x += 2) {
-    for (let z = -gridSize; z <= gridSize; z += 2) {
-      const squareGeometry = new THREE.PlaneGeometry(0.3, 0.3);
-      const squareMaterial = new THREE.MeshBasicMaterial({
-        color: colors[Math.abs(x + z) % colors.length],
-        transparent: true,
-        opacity: 0.2,
-        side: THREE.DoubleSide
-      });
-      
-      const square = new THREE.Mesh(squareGeometry, squareMaterial);
-      square.position.set(x, 0, z);
-      
-      square.userData = {
-        originalX: x,
-        originalZ: z,
-        speed: 0.02 + Math.random() * 0.03,
-        offset: Math.random() * Math.PI * 2
-      };
-      
-      squares.add(square);
-    }
-  }
-  
-  waveParticles.add(squares);
-  
-  window.waveParticles = waveParticles;
-  window.waveLines = waveParticles.children.slice(0, waveCount);
-  window.squaresGrid = squares;
-  
-  scene.add(waveParticles);
 }
 
-function updateGalaxyStructure(time, rotation, mouseX, mouseY, scrollProgress) {
-  if (!window.galaxy) return;
-  
-  const { mainKnot, innerKnot, lines, ribbons, triangles } = window;
-  
-  // Scale based on scroll (ZOOM effect)
-  const scale = 0.8 + scrollProgress * 0.4;
-  window.galaxy.scale.set(scale, scale, scale);
-  
-  // Rotate knots
-  if (mainKnot) {
-    mainKnot.rotation.x = time * 0.1;
-    mainKnot.rotation.y = time * 0.15;
-    mainKnot.rotation.z = time * 0.05;
-    
-    // Mouse affects opacity
-    const mouseDist = Math.sqrt(mouseX * mouseX + mouseY * mouseY);
-    mainKnot.material.opacity = 0.15 + mouseDist * 0.1;
-  }
-  
-  if (innerKnot) {
-    innerKnot.rotation.x = -time * 0.08;
-    innerKnot.rotation.y = -time * 0.12;
-    innerKnot.rotation.z = -time * 0.03;
-    
-    // Scroll affects color intensity
-    const hue = scrollProgress;
-    innerKnot.material.color.setHSL(hue, 0.8, 0.6);
-  }
-  
-  // Rotate geometric lines
-  if (lines) {
-    lines.rotation.y = time * 0.05;
-    lines.rotation.x = Math.sin(time * 0.1) * 0.1;
-    
-    // Scale lines with scroll
-    const lineScale = 0.9 + scrollProgress * 0.2;
-    lines.scale.set(lineScale, lineScale, lineScale);
-  }
-  
-  // Animate ribbons
-  if (ribbons && ribbons.children) {
-    ribbons.children.forEach(ribbon => {
-      if (ribbon.userData) {
-        const t = time * ribbon.userData.speed + ribbon.userData.index;
-        
-        // Move ribbon points
-        const positions = ribbon.geometry.attributes.position.array;
-        const pointCount = positions.length / 3;
-        
-        for (let i = 0; i < pointCount; i++) {
-          const t2 = i / pointCount;
-          const angle = t2 * Math.PI * 4 + ribbon.userData.index;
-          const radius = 7 + Math.sin(t2 * Math.PI * 2 + t) * 2;
-          
-          const idx = i * 3;
-          positions[idx] = Math.cos(angle) * radius; // x
-          positions[idx + 1] = (t2 - 0.5) * 15 + Math.sin(t + i * 0.1) * 0.5; // y
-          positions[idx + 2] = Math.sin(angle) * radius; // z
+// 12. Video Window Parallax
+function initVideoParallax() {
+    gsap.to('.video-scale-wrapper', {
+        scale: 1,
+        borderRadius: "0px", // Optional: go full bleed
+        scrollTrigger: {
+            trigger: '.video-window-section',
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true
         }
-        
-        ribbon.geometry.attributes.position.needsUpdate = true;
-        
-        // Pulse opacity
-        ribbon.material.opacity = 0.15 + Math.sin(t * 2) * 0.1;
-      }
     });
-  }
-  
-  // Animate triangles
-  if (triangles && triangles.children) {
-    triangles.children.forEach(triangle => {
-      if (triangle.userData) {
-        const data = triangle.userData;
-        const t = time * data.floatSpeed + data.floatOffset;
-        
-        // Floating motion
-        triangle.position.x = data.originalPos.x + Math.sin(t) * 0.5;
-        triangle.position.y = data.originalPos.y + Math.cos(t * 1.3) * 0.5;
-        triangle.position.z = data.originalPos.z + Math.sin(t * 0.7) * 0.5;
-        
-        // Rotation
-        triangle.rotation.x += data.rotationSpeed.x;
-        triangle.rotation.y += data.rotationSpeed.y;
-        triangle.rotation.z += data.rotationSpeed.z;
-        
-        // Mouse influence
-        const dx = triangle.position.x - mouseX * 10;
-        const dy = triangle.position.y - mouseY * 10;
-        const mouseDist = Math.sqrt(dx*dx + dy*dy);
-        const mouseForce = 1 / (mouseDist + 1);
-        
-        triangle.position.x += (dx / mouseDist) * mouseForce * 0.5;
-        triangle.position.y += (dy / mouseDist) * mouseForce * 0.5;
-        
-        // Scroll affects scale
-        const triangleScale = 0.8 + scrollProgress * 0.4;
-        triangle.scale.set(triangleScale, triangleScale, triangleScale);
-        
-        // Scroll affects opacity
-        triangle.material.opacity = 0.4 + scrollProgress * 0.3;
-      }
-    });
-  }
 }
 
-function updateWaveParticles(time, mouseX, mouseY, scrollProgress) {
-  if (!window.waveParticles) return;
-  
-  const { waveLines, squaresGrid } = window;
-  
-  // Animate wave lines
-  if (waveLines) {
-    waveLines.forEach(waveLine => {
-      if (waveLine.userData) {
-        const t = time * waveLine.userData.speed + waveLine.userData.offset;
+
+// 13. Animated Stats
+function initStats() {
+    gsap.utils.toArray('.stat-number').forEach(stat => {
+        const target = parseInt(stat.dataset.target);
+        gsap.to(stat, {
+            innerText: target,
+            duration: 2,
+            snap: { innerText: 1 },
+            scrollTrigger: {
+                trigger: stat,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+}
+
+// 14. Smooth FAQ
+function initFAQ() {
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all
+            items.forEach(i => {
+                i.classList.remove('active');
+                gsap.to(i.querySelector('.faq-answer'), { height: 0, duration: 0.3 });
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                // Auto height animation
+                gsap.set(answer, { height: "auto" });
+                gsap.from(answer, { height: 0, duration: 0.3 });
+            }
+        });
+    });
+}
+
+// 15. Velocity Scroll Text (Global)
+// 15. Velocity Scroll Text (Global Infinite Loop)
+// 15. Velocity Scroll Text (Global Infinite Loop)
+function initVelocityText() {
+    const sections = document.querySelectorAll('.velocity-section');
+    
+    sections.forEach((section, index) => {
+        const track = section.querySelector('.velocity-track');
+        if (!track) return;
+
+        // 1. Duplicate content: We need at least 2 full widths to loop seamlessly.
+        // The HTML already has some text. Let's replicate it enough times.
+        track.innerHTML += track.innerHTML; 
+        track.innerHTML += track.innerHTML; // 4x original content
         
-        // Update wave points
-        const positions = waveLine.geometry.attributes.position.array;
-        const pointCount = positions.length / 3;
+        // 2. Setup Variables
+        let xPos = 0;
+        const direction = index % 2 === 0 ? -1 : 1; // -1 = Left, 1 = Right
+        const baseSpeed = 1.5 * direction; // Constant movement speed
+        let scrollVelocity = 0;
         
-        for (let i = 0; i < pointCount; i++) {
-          const x = (i / pointCount - 0.5) * 40;
-          const y = Math.sin(i / pointCount * Math.PI * waveLine.userData.frequency + t) * waveLine.userData.amplitude;
-          const z = Math.cos(waveLine.userData.waveIndex) * 5;
-          
-          const idx = i * 3;
-          positions[idx] = x; // x
-          positions[idx + 1] = y + mouseY * 2; // y with mouse influence
-          positions[idx + 2] = z + mouseX * 2; // z with mouse influence
+        // 3. Ticker for Infinite Movement
+        gsap.ticker.add(() => {
+            // Calculate movement: Base Speed + Boost from Scroll
+            const movement = baseSpeed + (scrollVelocity * direction * 0.5);
+            xPos += movement;
+            
+            // 4. Wrap Logic (Infinite)
+            // We wrap around half the total scrollWidth (since we duplicated content)
+            // Actually, we wrap around the width of ONE Set of content.
+            // Since we did 4x, we can wrap at 25% or 50% safely.
+            const wrapWidth = track.scrollWidth / 2; 
+            
+            if (direction === -1) {
+                // Moving Left
+                if (xPos < -wrapWidth) xPos = 0;
+            } else {
+                // Moving Right
+                if (xPos > 0) xPos = -wrapWidth;
+            }
+            
+            // Apply
+            gsap.set(track, { x: xPos });
+            
+            // Decay scroll velocity
+            scrollVelocity *= 0.9;
+        });
+        
+        // 5. Scroll Interaction (Boost)
+        ScrollTrigger.create({
+            trigger: section,
+            onUpdate: (self) => {
+                // self.getVelocity() gives pixels/second.
+                // We add this impulse to our separate velocity variable
+                // We limit the impulse to prevent glitching
+                const v = self.getVelocity() / 50; 
+                if (v !== 0) {
+                     scrollVelocity = v; 
+                }
+            }
+        });
+    });
+}
+
+// 16. Optimized Atmosphere (Scroll + Hover)
+function initAtmosphere() {
+    const section = document.querySelector('.mesh-section');
+    const mesh = document.querySelector('.mesh-gradient');
+    
+    if(!section || !mesh) return;
+
+    // 1. Scroll Interaction (Parallax & Rotation)
+    gsap.to(mesh, {
+        rotation: 45,
+        scale: 1.5,
+        yPercent: 20,
+        ease: "none",
+        scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
         }
-        
-        waveLine.geometry.attributes.position.needsUpdate = true;
-        
-        // Scroll affects wave amplitude
-        waveLine.userData.amplitude = 3 + waveLine.userData.waveIndex * 0.5 + scrollProgress * 2;
-        
-        // Pulse opacity
-        waveLine.material.opacity = 0.2 + waveLine.userData.waveIndex * 0.05 + Math.sin(t) * 0.1;
-      }
     });
-  }
-  
-  // Animate squares grid
-  if (squaresGrid && squaresGrid.children) {
-    squaresGrid.children.forEach(square => {
-      if (square.userData) {
-        const t = time * square.userData.speed + square.userData.offset;
-        
-        // Floating motion
-        const floatY = Math.sin(t + square.userData.originalX * 0.1 + square.userData.originalZ * 0.1) * 2;
-        square.position.y = floatY;
-        
-        // Mouse influence
-        const dx = square.position.x - mouseX * 15;
-        const dz = square.position.z - mouseY * 15;
-        const mouseDist = Math.sqrt(dx*dx + dz*dz);
-        const mouseForce = 1 / (mouseDist + 1);
-        
-        square.position.y += Math.sin(mouseDist * 0.5 + t) * mouseForce * 3;
-        
-        // Rotation based on position
-        square.rotation.x = time * 0.1 + square.userData.originalX * 0.05;
-        square.rotation.y = time * 0.15 + square.userData.originalZ * 0.05;
-        
-        // Scroll affects scale and opacity
-        const squareScale = 0.8 + scrollProgress * 0.4;
-        square.scale.set(squareScale, squareScale, squareScale);
-        
-        square.material.opacity = 0.2 + Math.sin(t) * 0.1 + scrollProgress * 0.3;
-        
-        // Scroll affects color
-        const hue = (square.position.y + 10) / 20 + scrollProgress * 0.3;
-        square.material.color.setHSL(hue, 0.8, 0.6);
-      }
+
+    // 2. Hover Interaction (Mouse Follow)
+    section.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 50; 
+        const y = (e.clientY / window.innerHeight - 0.5) * 50;
+
+        gsap.to(mesh, {
+            x: x,
+            y: y,
+            duration: 1,
+            ease: "power2.out"
+        });
     });
-  }
 }
 
-// ... [Rest of the code remains exactly the same]
+// 17. Team Section Reveal
+function initTeam() {
+    gsap.from('.team-card', {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.team-section',
+            start: "top 80%"
+        }
+    });
+}
+
+// 18. Orbit Interaction (Mouse Tilt)
+function initOrbit() {
+    const container = document.querySelector('.orbit-container');
+    if(!container) return;
+    
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        gsap.to(container, {
+            rotationY: x * 30,
+            rotationX: -y * 30,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+    
+    // Reset on leave
+    container.addEventListener('mouseleave', () => {
+        gsap.to(container, {
+            rotationY: 0,
+            rotationX: 0,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+}
+
+// 19. CTA Reveal
+function initCTA() {
+    gsap.from('.cta-content > *', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.cta-section',
+            start: "top 70%"
+        }
+    });
+}
+
+// 20. Spotlight Mouse Tracker
+function initSpotlight() {
+    const section = document.querySelector('.spotlight-section');
+    const text = document.querySelector('.spotlight-text');
+    
+    section.addEventListener('mousemove', (e) => {
+        // We can just use a simple mask or color switch
+        // But for "flashlight" effect, we might need a clip-path or complex mask
+        // Simpler premium feel: The text is dark grey (#333) and the beam lightens it?
+        // Actually CSS overlay mix-blend-mode handles the beam visual.
+        // Let's just make the text light up close to mouse?
+        // Or simple: Text is dark, Beam is white overlay with exclusion? 
+        // Let's stick to the CSS beam following mouse.
+        
+        const rect = section.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        gsap.to('.spotlight-beam', {
+            x: e.clientX, // Fixed position based on viewport
+            y: e.clientY,
+            duration: 0.1,
+            ease: "power1.out"
+        });
+        
+        // Dynamic text color shift
+        const textRect = text.getBoundingClientRect();
+        const relX = e.clientX - textRect.left;
+        const relY = e.clientY - textRect.top;
+        
+        // Advanced: Use CSS variables to update radial gradient on text itself
+        text.style.backgroundImage = `radial-gradient(circle at ${relX}px ${relY}px, white 0%, #333 150px)`;
+        text.style.webkitBackgroundClip = "text";
+        text.style.webkitTextFillColor = "transparent";
+    });
+}
+
+// 21. Testimonial Stack Swipe
+function initStack() {
+    const cards = document.querySelectorAll('.stack-card');
+    
+    // Pin section
+    ScrollTrigger.create({
+        trigger: '.stack-section',
+        start: "top top",
+        end: "+=200%", // 3 cards
+        pin: true,
+        scrub: 1,
+        onUpdate: (self) => {
+            // Logic to peel off cards
+            const progress = self.progress; // 0 to 1
+            const total = cards.length;
+            const index = Math.floor(progress * total);
+            
+            // Current card flies away? 
+            // Better: Stack logic. 
+            // All start visible. As we scroll, top one slides up/out.
+            
+            cards.forEach((card, i) => {
+                // Determine phase for this card
+                const start = i / total;
+                const end = (i + 1) / total;
+                const cardProgress = (progress - start) / (end - start); // 0 to 1 within its slot
+                
+                if (progress > start) {
+                    // Card is active or done
+                    // Animate it out
+                    gsap.to(card, {
+                        y: -50 * cardProgress + (i * 10), // slight offset
+                        scale: 1 - (cardProgress * 0.1),
+                        opacity: 1 - cardProgress,
+                        rotation: cardProgress * 5,
+                        duration: 0, // Scrub controlled
+                        overwrite: true
+                    });
+                } else {
+                    // Reset
+                    gsap.to(card, { y: i * 10, scale: 1 - (i * 0.05), opacity: 1, rotation: 0, duration: 0.1, overwrite: true });
+                }
+            });
+        }
+    });
+}
+
+// 22. Device Parallax
+function initDevices() {
+    gsap.from('.device-laptop', {
+        y: 100,
+        scrollTrigger: { trigger: '.device-section', scrub: true }
+    });
+    gsap.from('.device-tablet', {
+        y: 200,
+        scrollTrigger: { trigger: '.device-section', scrub: true }
+    });
+    gsap.from('.device-phone', {
+        y: 300,
+        scrollTrigger: { trigger: '.device-section', scrub: true }
+    });
+}
+
+// 23. Magnetic Button
+function initMagnetic() {
+    const btns = document.querySelectorAll('.magnetic-btn');
+    
+    btns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+        });
+    });
+}
+
+// Initialize
+window.addEventListener('load', () => {
+    initHero();
+    initFeatures();
+    initProductReveal();
+    initWorkflow();
+    initSlider();
+    initProjectsGrid();
+    initStyleSelector();
+    initPricingTilt();
+    initVideoParallax();
+    initStats();
+    initAtmosphere();
+    initMagnetic();
+    initFAQ();
+    initTeam();
+    initOrbit();
+    initVelocityText();
+    
+    // Batch 3
+    initSpotlight();
+    initStack();
+    initDevices();
+    initMagnetic();
+    
+    initCTA();
+    initFooter();
+});
