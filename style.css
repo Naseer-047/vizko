@@ -2409,14 +2409,23 @@ section {
 }
 
 .step-card {
-    background: #111; /* Brightened from #0a0a0a */
-    border: 1px solid #333; /* Brightened from #1a1a1a */
+    background: #111;
+    border: 1px solid #333;
     border-radius: 16px;
     padding: 24px;
     opacity: 1; 
     transform: none; 
     transition: all 0.4s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3); /* Added subtle shadow */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    /* Ensure content clipping for collapse */
+    overflow: hidden; 
+}
+
+.circuit-step:hover .step-card {
+    border-color: #fff;
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0,255,133,0.1);
+    transform: translateY(-5px); /* Slight lift on expand */
 }
 
 .circuit-step:hover .step-card {
@@ -2427,14 +2436,32 @@ section {
 
 .step-card h3 {
     font-size: 1.2rem;
-    margin-bottom: 8px;
+    margin-bottom: 0; /* Align perfectly when collapsed */
     color: white;
+    transition: margin-bottom 0.4s ease;
+}
+
+.circuit-step:hover .step-card h3 {
+    margin-bottom: 8px; /* Restore spacing on expand */
+    color: #00ff85; /* Highlight title */
 }
 
 .step-card p {
     font-size: 0.9rem;
-    color: #888;
+    color: #bbb;
     line-height: 1.5;
+    /* Collapsed State */
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.circuit-step:hover .step-card p {
+    /* Expanded State */
+    max-height: 150px; /* Enough for content */
+    opacity: 1;
+    margin-top: 8px;
 }
 
 @keyframes ping {
