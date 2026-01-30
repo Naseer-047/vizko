@@ -628,6 +628,42 @@ function initMagneticButton() {
 }
 
 
+// 3.9 Testimonial Section Animations
+function initTestimonialsNew() {
+    const section = document.querySelector('.testimonial-section');
+    if (!section) return;
+    
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: section,
+            start: 'top 70%',
+            end: 'top 20%',
+            scrub: 1
+        }
+    });
+    
+    tl.from('.section-title-large', {
+        x: -50,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+    })
+    .from('.testimonial-subtitle', {
+        x: -30,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+    }, '-=0.3')
+    .to('.testimonial-card', {
+        opacity: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 0.7,
+        ease: 'power2.out'
+    }, '-=0.2');
+}
+
+
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Register
@@ -639,6 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initResume(); // Resume section with skills/timeline
     initProjects(); // Project showcase sections
     initMagneticButton(); // Magnetic button interaction
+    initTestimonialsNew(); // Testimonial section
     initServices(); 
     initVelocityText(); // New Velocity Text
     initBento();     

@@ -3207,6 +3207,134 @@ section {
     }
 }
 
+/* 17. Testimonial Section */
+.testimonial-section {
+    position: relative;
+    padding: 120px 80px;
+    background: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 80px;
+    width: 100%;
+}
+
+/* Left: Heading */
+.testimonial-heading {
+    padding-right: 40px;
+}
+
+.section-title-large {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 6rem;
+    font-weight: 800;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.testimonial-subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #666;
+    max-width: 400px;
+}
+
+/* Right: Cards */
+.testimonial-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.testimonial-card {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.testimonial-image {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.testimonial-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.testimonial-card:hover .testimonial-image img {
+    filter: grayscale(0%);
+}
+
+.testimonial-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 15px;
+    letter-spacing: 0.1em;
+}
+
+.testimonial-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #555;
+    font-style: italic;
+}
+
+/* Responsive */
+@media(max-width: 1024px) {
+    .testimonial-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    .testimonial-heading {
+        text-align: center;
+        padding-right: 0;
+    }
+    
+    .section-title-large {
+        font-size: 4rem;
+    }
+    
+    .testimonial-subtitle {
+        margin: 0 auto;
+    }
+    
+    .testimonial-cards {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
 /* 11. Atmosphere Mesh (Background) */
 .mesh-section {
     position: fixed;
