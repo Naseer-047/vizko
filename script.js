@@ -1,4 +1,4 @@
-// Vizcom Recreation - Animation Orchestration
+// Naseer Portfolio - Animation Orchestration
 
 // 1. Initialize Lenis for Smooth Scroll
 const lenis = new Lenis({
@@ -131,9 +131,11 @@ function initHero() {
 }
 
 function initCodeWindow() {
-    // 3a. Magnetic Follow Effect
+    // 3a. Magnetic Follow Effect + Glare
     const heroSection = document.querySelector('.hero-section');
     const codeWindow = document.querySelector('.code-window');
+    const glare = document.querySelector('.window-glare');
+    const heroGlow = document.querySelector('.hero-background-glow');
 
     if (heroSection && codeWindow) {
         heroSection.addEventListener('mousemove', (e) => {
@@ -151,9 +153,27 @@ function initCodeWindow() {
                 duration: 0.5,
                 ease: "power2.out"
             });
+
+            // Glare Effect
+            gsap.to(glare, {
+                x: x * 80, // Glare moves opposite/more
+                opacity: 0.5 + (x * 0.3), // Brightens on side
+                duration: 0.5
+            });
+
+            // Hero Glow Follow
+            if(heroGlow) {
+                 gsap.to(heroGlow, {
+                    x: x * 50, 
+                    y: y * 50,
+                    duration: 1.5,
+                    ease: "power2.out"
+                });
+            }
         });
 
         heroSection.addEventListener('mouseleave', () => {
+             // Reset Window
             gsap.to(codeWindow, {
                 x: 0,
                 y: 0,
@@ -162,6 +182,8 @@ function initCodeWindow() {
                 duration: 1,
                 ease: "elastic.out(1, 0.5)"
             });
+            // Reset Glare
+             gsap.to(glare, { opacity: 0, duration: 0.5 });
         });
     }
 
@@ -798,36 +820,88 @@ function initMagnetic() {
         });
         
         btn.addEventListener('mouseleave', () => {
+             // Reset
             gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
         });
     });
 }
 
-// Initialize
-window.addEventListener('load', () => {
+// 24. Project Modal Logic
+function initProjectModal() {
+    const modal = document.querySelector('.project-modal');
+    const closeBtn = document.querySelector('.modal-close');
+    const overlay = document.querySelector('.modal-overlay');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    if (!modal) return;
+
+    // Open Modal
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Get content from card
+            const title = card.querySelector('h3') ? card.querySelector('h3').innerText : 'Project';
+            const tags = card.querySelector('.project-info p') ? card.querySelector('.project-info p').innerText : 'Tech';
+            
+            // Populate Modal
+            const modalTitle = modal.querySelector('.modal-title');
+            const modalTags = modal.querySelector('.modal-tags');
+            
+            if(modalTitle) modalTitle.innerText = title;
+            if(modalTags) modalTags.innerHTML = tags.split(',').map(t => `<span>${t.trim()}</span>`).join('');
+            
+            // Show
+            modal.classList.add('active');
+            gsap.to('.modal-content', { 
+                scale: 1, 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.4, 
+                ease: "back.out(1.2)" 
+            });
+        });
+    });
+
+    // Close Modal
+    function closeModal() {
+        modal.classList.remove('active');
+        gsap.to('.modal-content', { 
+            scale: 0.95, 
+            opacity: 0, 
+            y: 50, 
+            duration: 0.3 
+        });
+    }
+
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    if(overlay) overlay.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+}
+
+// --- Main Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Run all inits
     initHero();
     initFeatures();
     initProductReveal();
     initWorkflow();
     initSlider();
     initProjectsGrid();
+    initFooter();
     initStyleSelector();
     initPricingTilt();
     initVideoParallax();
     initStats();
-    initAtmosphere();
-    initMagnetic();
     initFAQ();
+    initVelocityText();
+    initAtmosphere();
     initTeam();
     initOrbit();
-    initVelocityText();
-    
-    // Batch 3
+    initCTA();
     initSpotlight();
     initStack();
     initDevices();
     initMagnetic();
-    
-    initCTA();
-    initFooter();
+    initProjectModal();
 });
