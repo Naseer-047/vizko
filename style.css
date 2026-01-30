@@ -2319,158 +2319,68 @@ section {
     }
 }
 
-/* --- Workflow Section (Vertical Quantum Timeline) --- */
-.vertical-timeline {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 0;
-}
-
-/* Central Line */
-.v-line-bg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 4px;
-    background: #222;
-    transform: translateX(-50%);
-    border-radius: 2px;
-}
-
-.v-line-progress {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 4px;
-    height: 0%; /* JS Animate */
-    background: linear-gradient(180deg, #00ff85, #3b82f6);
-    transform: translateX(-50%);
-    box-shadow: 0 0 15px rgba(0, 255, 133, 0.5);
-    border-radius: 2px;
-    z-index: 1;
-}
-
-/* Steps */
-.v-step {
+/* --- Workflow Section (Horizontal Scroll) --- */
+.hz-wrapper {
+    width: 100%;
+    height: 60vh; /* Viewport for the scroll */
+    overflow: hidden;
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 80px;
-    z-index: 2;
 }
 
-.v-step.left { flex-direction: row; }
-.v-step.right { flex-direction: row-reverse; }
+.hz-track {
+    display: flex;
+    gap: 100px;
+    padding-left: 10vw; /* Start with offset */
+    /* Width is derived from content */
+}
 
-.v-content {
-    width: 45%;
-    background: #0a0a0a;
-    border: 1px solid #1a1a1a;
-    border-radius: 16px;
-    padding: 30px;
+.hz-item {
+    min-width: 60vw;
+    height: 400px;
+    background: #0f0f0f;
+    border: 1px solid #222;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
     position: relative;
-    transition: all 0.4s ease;
-    overflow: hidden; /* For shine effect */
+    transition: transform 0.3s;
 }
 
-.v-content:hover {
+.hz-item:hover {
     border-color: #444;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    transform: scale(1.02);
 }
 
-.v-number {
-    font-size: 3rem;
+.hz-number {
+    font-size: 6rem;
     font-weight: 800;
-    color: rgba(255,255,255,0.05); /* Stealth looking */
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    transition: color 0.4s;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
 }
 
-.v-content:hover .v-number {
-    color: rgba(0, 255, 133, 0.1);
-}
-
-.v-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 12px;
-    background: linear-gradient(90deg, #fff, #bbb);
+.hz-content h3 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #fff, #888);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.v-content p {
+.hz-content p {
+    font-size: 1.1rem;
     color: #888;
+    max-width: 500px;
     line-height: 1.6;
 }
 
-/* Nodes */
-.v-node {
-    width: 20px;
-    height: 20px;
-    background: #111;
-    border: 3px solid #333;
-    border-radius: 50%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: all 0.4s;
-    z-index: 5;
-}
-
-.v-step:hover .v-node {
-    background: #00ff85;
-    border-color: #fff;
-    box-shadow: 0 0 20px #00ff85;
-    transform: translateX(-50%) scale(1.3);
-}
-
-/* Mobile */
 @media (max-width: 768px) {
-    .v-line-bg, .v-line-progress { left: 20px; }
-    .v-node { left: 20px; }
-    .v-step { flex-direction: column; align-items: flex-start; padding-left: 50px; }
-    .v-step.right { flex-direction: column; }
-    .v-content { width: 100%; }
+    .hz-item { min-width: 85vw; height: auto; }
 }
-
-.step-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0; /* Align perfectly when collapsed */
-    color: white;
-    transition: margin-bottom 0.4s ease;
-}
-
-.circuit-step:hover .step-card h3 {
-    margin-bottom: 8px; /* Restore spacing on expand */
-    color: #00ff85; /* Highlight title */
-}
-
-.step-card p {
-    font-size: 0.9rem;
-    color: #bbb;
-    line-height: 1.5;
-    /* Collapsed State */
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.circuit-step:hover .step-card p {
-    /* Expanded State */
-    max-height: 150px; /* Enough for content */
-    opacity: 1;
-    margin-top: 8px;
-}
-
-@keyframes ping {
     0% { transform: scale(1); opacity: 0.5; }
     100% { transform: scale(1.5); opacity: 0; }
 }

@@ -666,33 +666,35 @@ function initEducation() {
     });
 }
 
-// 17. Workflow Circuit Animation (Vertical)
+// 17. Workflow Horizontal Scroll
 function initWorkflow() {
-    // Animate the vertical line
-    gsap.to('.v-line-progress', {
-        height: "100%",
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".vertical-timeline",
-            start: "top 70%",
-            end: "bottom 70%",
-            scrub: 1
-        }
+    const track = document.querySelector('.hz-track');
+    const wrapper = document.querySelector('.hz-wrapper');
+    
+    if(!track || !wrapper) return;
+    
+    // Calculate total scroll distance
+    // We want to scroll until the end of the track is visible
+    function getScrollAmount() {
+        let trackWidth = track.scrollWidth;
+        return -(trackWidth - window.innerWidth + 100); // 100px padding
+    }
+    
+    // Create the Tween
+    const tween = gsap.to(track, {
+        x: getScrollAmount,
+        ease: "none"
     });
-
-    // Animate Steps Entry (Staggered Fade Up)
-    const steps = document.querySelectorAll('.v-step');
-    steps.forEach((step, i) => {
-        const isLeft = step.classList.contains('left');
-        gsap.from(step, {
-            x: isLeft ? -50 : 50,
-            opacity: 0,
-            duration: 0.8,
-            scrollTrigger: {
-                trigger: step,
-                start: "top 85%"
-            }
-        });
+    
+    // Create the Trigger
+    ScrollTrigger.create({
+        trigger: ".workflow-section",
+        start: "top 20%",
+        end: () => `+=${getScrollAmount() * -1}`, // Scroll duration = length of horizontal scroll
+        pin: true,
+        animation: tween,
+        scrub: 1,
+        invalidateOnRefresh: true // Recalculate on resize
     });
 }
 
