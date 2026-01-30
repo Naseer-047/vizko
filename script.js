@@ -97,10 +97,10 @@ function initServices() {
         ease: "power2.out"
     });
 }
-
 // 5. Projects: Bento Grid Pop-in
 function initBento() {
-    const items = document.querySelectorAll('.bento-item');
+    // This targets the new Projects Grid which uses .project-card but we can animate the container
+    const items = document.querySelectorAll('.project-card');
     if (!items.length) return;
 
     gsap.from(items, {
@@ -108,32 +108,18 @@ function initBento() {
             trigger: ".projects-section",
             start: "top 75%",
         },
-        scale: 0.9,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "back.out(1.7)"
-    });
-}
-
-// 6. Tech Stack: Terminal Typing
-function initTerminal() {
-    const terminal = document.querySelector('.terminal-container');
-    if (!terminal) return;
-
-    gsap.from(terminal, {
-        scrollTrigger: {
-            trigger: ".tech-terminal-section",
-            start: "top 80%",
-        },
         y: 50,
         opacity: 0,
-        duration: 1,
-        ease: "power3.out"
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
     });
 }
 
-// 7. Process Section (New)
+// 6. Contact Terminal Effect (Consolidated)
+// (Renamed from initTerminal to avoid confusion, logic moved to initContact)
+
+// 7. Process Section
 function initProcess() {
     const steps = document.querySelectorAll('.process-step');
     if (!steps.length) return;
@@ -151,7 +137,7 @@ function initProcess() {
     });
 }
 
-// 8. Testimonials Section (New - Marquee)
+// 8. Testimonials Section
 function initTestimonials() {
     const track = document.querySelector('.testimonial-track');
     if(!track) return;
@@ -173,6 +159,7 @@ function initContact() {
     const form = document.querySelector('.contact-container');
     if (!form) return;
 
+    // Contact form slide up
     gsap.from(form, {
         scrollTrigger: {
             trigger: ".contact-section",
@@ -183,11 +170,15 @@ function initContact() {
         duration: 0.8,
         ease: "power2.out"
     });
+
+    // We can also add the typing effect here if desired, 
+    // but the pure CSS/HTML structure of the terminal often looks good enough.
 }
 
 // 10. Footer: Parallax Reveal
 function initFooter() {
-    gsap.from(".footer-text", {
+    // Target the correct class from index.html
+    gsap.from(".footer-big-text", {
         scrollTrigger: {
             trigger: ".site-footer",
             start: "top 90%",
@@ -198,7 +189,7 @@ function initFooter() {
     });
 }
 
-// 11. Mouse Gradient Atmosphere (Global Mesh)
+// 11. Atmosphere
 function initAtmosphere() {
     const section = document.querySelector('.mesh-section');
     const mesh = document.querySelector('.mesh-gradient');
@@ -221,9 +212,9 @@ function initAtmosphere() {
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
     initHero();
-    initServices();
-    initBento();
-    initTerminal();
+    initServices(); // Now exists in HTML
+    initBento();    // Animates Projects
+    // initTerminal(); // Removed (covered by Contact)
     initProcess();
     initTestimonials();
     initContact();
