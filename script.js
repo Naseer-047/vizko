@@ -283,6 +283,42 @@ function initTestimonials() {
     });
 }
 
+// 10. Global Magnetic 3D Effect for Cards & Images
+function initGlobalMagnetic3D() {
+    const magneticElements = document.querySelectorAll('.magnetic-3d');
+
+    if (!magneticElements.length) return;
+
+    magneticElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            // Calculate mouse position relative to center of element
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            // GSAP for smooth interpolation
+            gsap.to(el, {
+                rotationX: -y / 10,  // Tilt based on Y axis
+                rotationY: x / 10,   // Tilt based on X axis
+                scale: 1.05,         // Slight zoom
+                transformPerspective: 1000,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+        });
+
+        el.addEventListener('mouseleave', () => {
+            gsap.to(el, {
+                rotationX: 0,
+                rotationY: 0,
+                scale: 1,
+                duration: 0.6,
+                ease: "elastic.out(1, 0.4)"
+            });
+        });
+    });
+}
+
 // 9. Contact: CLI Form Slide Up
 function initContact() {
     const form = document.querySelector('.contact-container');
