@@ -239,7 +239,7 @@ function initExpertise() {
     
     gsap.from(cards, {
         y: 50,
-        opacity: 0,
+        opacity: 1, // FORCE VISIBLE
         scale: 0.95,
         duration: 0.8,
         stagger: 0.15,
