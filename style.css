@@ -2633,92 +2633,77 @@ section {
 .copyright { text-align: center; color: #444; margin-top: 40px; font-family: 'Fira Code', monospace; font-size: 0.8rem; }
 
 
-/* 14. About Me (Complex Sci-Fi Ops) */
+/* 14. About Me (Cinematic Minimal) */
 .about-section {
     position: relative;
     padding: var(--section-padding) 48px;
-    background: #030303;
+    background: #000;
     overflow: hidden;
     min-height: 90vh;
     display: flex;
     align-items: center;
-    border-top: 1px solid #111;
-    border-bottom: 1px solid #111;
 }
 
-/* Moving Cyber Grid */
-.cyber-grid {
+.spotlight-bg {
     position: absolute;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background-image: 
-        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    transform: perspective(500px) rotateX(60deg);
-    animation: gridMove 20s linear infinite;
-    z-index: 0;
+    top: -20%; left: -20%;
+    width: 140%; height: 140%;
+    background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.05), transparent 60%);
     pointer-events: none;
+    z-index: 0;
 }
-@keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 40px; } }
 
-/* HUD Decor */
-.hud-corner {
-    position: absolute;
-    width: 40px; height: 40px;
-    border: 2px solid rgba(0, 255, 136, 0.3);
-    z-index: 10;
-}
-.top-left { top: 30px; left: 30px; border-right: none; border-bottom: none; }
-.bottom-right { bottom: 30px; right: 30px; border-left: none; border-top: none; }
-
-.tech-badge {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.8rem;
-    color: #00ff88;
-    background: rgba(0, 255, 136, 0.05);
-    padding: 6px 12px;
-    border: 1px solid rgba(0, 255, 136, 0.2);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 24px;
-}
-.blinking-dot { width: 6px; height: 6px; background: #00ff88; border-radius: 50%; animation: pulse 1s infinite; }
-
-.about-text h2 { font-size: 4rem; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 24px; color: #fff; }
-.bracket { color: #444; font-weight: 300; }
-
-/* Data Dashboard */
-.data-dashboard {
-    margin-top: 40px;
-    border: 1px solid #222;
-    background: #080808;
-    padding: 20px;
+.about-container {
     position: relative;
-    max-width: 380px;
+    z-index: 2;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    width: 100%;
 }
-.data-dashboard::before {
-    content: ''; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px;
-    background: #00ff88; box-shadow: 0 0 10px #00ff88;
+
+.about-content {
+    display: flex; flex-direction: column; justify-content: center;
+    padding-right: 40px;
 }
-.dash-header {
-    font-family: 'Fira Code', monospace;
-    color: #666; font-size: 0.75rem;
-    display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+
+.about-text h2 { 
+    font-size: 4.5rem; 
+    font-weight: 800; 
+    line-height: 1.05; 
+    margin-bottom: 32px; 
+    color: #fff; 
 }
-.dash-line { height: 1px; background: #222; flex-grow: 1; }
 
-.dash-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.dash-item { display: flex; flex-direction: column; }
-.dash-val { font-size: 1.8rem; font-weight: 700; color: #fff; font-family: 'Inter', sans-serif; }
-.dash-val small { font-size: 0.9rem; color: #666; }
-.dash-label { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-top: 4px; }
+.about-bio { 
+    color: #888; 
+    font-size: 1.25rem; 
+    line-height: 1.6; 
+    margin-bottom: 48px; 
+    font-weight: 300;
+}
+.about-bio .highlight { color: #fff; font-weight: 500; }
+
+/* Clean Stats */
+.stats-minimal {
+    display: flex;
+    gap: 60px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 32px;
+}
+
+.stat-block { display: flex; flex-direction: column; }
+.stat-num { font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.stat-desc { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.4; }
 
 
-/* --- Hyper-Complex Reactor Visual --- */
+/* --- Pure 3D Atom --- */
 .about-visual {
     height: 600px;
-    display: flex;
+    display: flex; border: none;
     justify-content: center;
     align-items: center;
     perspective: 1000px;
@@ -2729,72 +2714,64 @@ section {
     transform-style: preserve-3d;
 }
 
-/* Reactor Decor Rings */
-.reactor-ring {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.05);
-    pointer-events: none;
-}
-.reactor-ring.dashed {
-    width: 550px; height: 550px;
-    border: 1px dashed rgba(255,255,255,0.1);
-    animation: spinSlow 60s linear infinite;
-}
-.reactor-ring.solid {
-    width: 380px; height: 380px;
-    border: 1px solid rgba(0, 255, 136, 0.1);
-    animation: spinSlow 40s linear infinite reverse;
-}
-
 /* Core */
 .atom-core {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 320px; height: 320px;
+    width: 340px; height: 340px;
     z-index: 20;
-    
-    /* Cutout */
     background-image: url('https://api.dicebear.com/9.x/micah/svg?seed=Naseer&backgroundColor=transparent'); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
 }
 
-/* Spinning Markers inside Core */
-.core-marker {
+/* Clean Rings */
+.atom-ring {
+    position: absolute; /* Fix: was missing in CSS cleanup */
+    top: 50%; left: 50%; /* Fix centering */
+    width: 450px; height: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+/* 0.5 squash */
+.ring-1 { transform: translate(-50%, -50%) rotate(0deg) scaleY(0.5); } 
+.ring-2 { transform: translate(-50%, -50%) rotate(60deg) scaleY(0.5); }
+.ring-3 { transform: translate(-50%, -50%) rotate(-60deg) scaleY(0.5); }
+
+/* Electron */
+.electron {
+    position: absolute;
+    top: 0; left: 0; /* Reset */
+    /* JS sets x/y */
+    z-index: 25;
+}
+
+.tech-icon {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 1px solid transparent;
-    border-top-color: rgba(0, 255, 136, 0.4);
-    border-bottom-color: rgba(0, 255, 136, 0.4);
-}
-.spin-cw { width: 340px; height: 340px; animation: spinFast 10s linear infinite; }
-.spin-ccw { width: 350px; height: 350px; animation: spinFast 15s linear infinite reverse; border-left-color: rgba(0, 132, 255, 0.3); border-top-color: transparent; }
-
-@keyframes spinSlow { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-@keyframes spinFast { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-
-/* Rings & Electrons (Reused but refined) */
-.atom-ring {
-    width: 450px; height: 450px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.05); /* Slight green glow */
-}
-.tech-icon {
-    width: 44px; height: 44px;
+    width: 40px; height: 40px; /* Refined size */
     background: #000;
     border: 1px solid #222;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2); /* Tech glow */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
-.electron::before {
-    /* Trail effect? Maybe too complex/perf heavy. Start simpler. */
-    content: '';
+.tech-icon img { width: 55%; height: 55%; object-fit: contain; }
+
+@media(max-width: 900px) {
+    .about-container { grid-template-columns: 1fr; text-align: center; }
+    .about-content { align-items: center; padding-right: 0; }
+    .stats-minimal { justify-content: center; }
+    .about-text h2 { font-size: 3rem; }
 }
 
 /* 11. Atmosphere Mesh (Background) */
