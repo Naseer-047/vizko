@@ -101,7 +101,8 @@ function initServices() {
         }
     );
 }
-// 5. Projects: Bento Grid Pop-in
+
+// 5. Projects: Works Grid Pop-in
 function initBento() {
     const items = document.querySelectorAll('.project-card');
     if (!items.length) return;
@@ -118,6 +119,45 @@ function initBento() {
                 trigger: ".projects-section",
                 start: "top 95%",
                 toggleActions: "play none none reverse"
+            }
+        }
+    );
+}
+
+// 5.5 Skills: Bento Grid Pop-in (New)
+function initSkills() {
+    const items = document.querySelectorAll('.bento-item');
+    if (!items.length) return;
+
+    gsap.fromTo(items,
+        { scale: 0.9, autoAlpha: 0 },
+        {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+                trigger: ".bento-section", // Target the Skills section
+                start: "top 90%"
+            }
+        }
+    );
+}
+
+// 5.6 Spotlight Text (New)
+function initSpotlight() {
+    gsap.fromTo(".spotlight-text",
+        { scale: 0.8, autoAlpha: 0 },
+        {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 1.5,
+            ease: "power4.out",
+            scrollTrigger: {
+                trigger: ".spotlight-section",
+                start: "top 80%",
+                scrub: 1
             }
         }
     );
@@ -232,9 +272,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Initialize Components
     initHero();
     initServices(); 
-    initBento();    
+    initBento();     // Projects
+    initSkills();    // Skills (New)
     initProcess();
     initTestimonials();
+    initSpotlight(); // Spotlight (New)
     initContact();
     initFooter();
     initAtmosphere();

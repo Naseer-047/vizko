@@ -2577,7 +2577,26 @@ section {
 .copyright { text-align: center; color: #444; margin-top: 40px; font-family: 'Fira Code', monospace; font-size: 0.8rem; }
 
 
-/* 6. Process Section */
+/* 11. Atmosphere Mesh (Background) */
+.mesh-section {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1; /* Behind everything */
+    pointer-events: none;
+    overflow: hidden;
+}
+.mesh-gradient {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%; left: -25%;
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 133, 0.05), transparent 40%);
+    filter: blur(80px);
+}
+
+/* 12. Process Section */
 .process-section { padding: 100px 5%; background: #000; }
 .process-grid { display: flex; justify-content: space-between; gap: 40px; margin-top: 60px; }
 .process-step { text-align: center; flex: 1; }
