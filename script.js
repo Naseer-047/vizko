@@ -375,80 +375,49 @@ function initAbout() {
             `<span class="char" style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
         ).join('');
         
-        // Animate each character
-        gsap.from('.about-heading .char', {
+        // Create timeline with scrub for flexible scroll-linked animation
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.about-section',
                 start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
+                end: 'top 30%',
+                scrub: 1 // Smooth scrubbing, takes 1 second to "catch up"
+            }
+        });
+        
+        tl.from('.about-heading .char', {
             y: 100,
             opacity: 0,
             rotationX: -90,
-            stagger: 0.08, // Slower character reveal
-            duration: 1.2, // Increased from 0.8
+            stagger: 0.08,
+            duration: 0.8,
             ease: 'back.out(1.7)'
-        });
-    }
-    
-    // Animate email
-    gsap.from('.about-email', {
-        scrollTrigger: {
-            trigger: '.about-section',
-            start: 'top 70%',
-            toggleActions: 'play none none reverse'
-        },
-        x: -30,
-        opacity: 0,
-        duration: 1.2, // Increased from 0.8
-        delay: 0.6, // Increased delay
-        ease: 'power2.out'
-    });
-    
-    // Animate description paragraphs
-    const description = document.querySelector('.about-description');
-    if (description) {
-        gsap.from('.about-description', {
-            scrollTrigger: {
-                trigger: '.about-section',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
+        })
+        .from('.about-email', {
+            x: -30,
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power2.out'
+        }, '-=0.3')
+        .from('.about-description', {
             y: 30,
             opacity: 0,
-            duration: 1.5, // Increased from 1
-            delay: 0.9, // Increased delay
+            duration: 0.7,
             ease: 'power2.out'
-        });
+        }, '-=0.2')
+        .from('.about-location', {
+            y: 20,
+            opacity: 0,
+            duration: 0.6,
+            ease: 'power2.out'
+        }, '-=0.3')
+        .from('.about-image img', {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        }, '-=0.5');
     }
-    
-    // Animate location
-    gsap.from('.about-location', {
-        scrollTrigger: {
-            trigger: '.about-section',
-            start: 'top 70%',
-            toggleActions: 'play none none reverse'
-        },
-        y: 20,
-        opacity: 0,
-        duration: 1.2, // Increased from 0.8
-        delay: 1.2, // Increased delay
-        ease: 'power2.out'
-    });
-    
-    // Animate portrait image
-    gsap.from('.about-image img', {
-        scrollTrigger: {
-            trigger: '.about-section',
-            start: 'top 70%',
-            toggleActions: 'play none none reverse'
-        },
-        scale: 0.8,
-        opacity: 0,
-        duration: 1.8, // Increased from 1.2
-        delay: 0.4,
-        ease: 'power3.out'
-    });
 }
 
 function initAtomicOrbit() {
@@ -503,49 +472,54 @@ function initAtomicOrbit() {
 
 // 3.6 Resume Section Animations
 function initResume() {
-    // Animate skill bars
+    // Animate skill bars with scroll-scrubbing
     const skillFills = document.querySelectorAll('.skill-fill');
     skillFills.forEach(fill => {
         const percent = fill.getAttribute('data-percent');
         
-        gsap.to(fill, {
+        gsap.timeline({
             scrollTrigger: {
                 trigger: '.resume-section',
                 start: 'top 60%',
-                toggleActions: 'play none none reverse'
-            },
+                end: 'top 20%',
+                scrub: 1
+            }
+        }).to(fill, {
             width: percent + '%',
-            duration: 2.5, // Increased from 1.5 for slower, more visible fill
-            ease: 'power3.out',
-            delay: 0.3
+            duration: 1,
+            ease: 'power3.out'
         });
     });
     
-    // Animate timeline items
-    gsap.to('.timeline-item', {
+    // Animate timeline items with scroll-scrubbing
+    gsap.timeline({
         scrollTrigger: {
             trigger: '.timeline',
             start: 'top 70%',
-            toggleActions: 'play none none reverse'
-        },
+            end: 'top 30%',
+            scrub: 1
+        }
+    }).to('.timeline-item', {
         opacity: 1,
         y: 0,
-        stagger: 0.2, // Increased from 0.15 for clearer sequencing
-        duration: 1.2, // Increased from 0.8
+        stagger: 0.2,
+        duration: 0.8,
         ease: 'power2.out'
     });
     
-    // Animate hobby icons
-    gsap.to('.hobby-item', {
+    // Animate hobby icons with scroll-scrubbing
+    gsap.timeline({
         scrollTrigger: {
             trigger: '.hobbies-grid',
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
-        },
+            end: 'top 40%',
+            scrub: 1
+        }
+    }).to('.hobby-item', {
         opacity: 1,
         scale: 1,
-        stagger: 0.15, // Increased from 0.1
-        duration: 1.0, // Increased from 0.6
+        stagger: 0.15,
+        duration: 0.6,
         ease: 'back.out(1.7)'
     });
 }
@@ -553,74 +527,60 @@ function initResume() {
 
 // 3.7 Project Sections Animations
 function initProjects() {
-    // Animate project content (text)
-    gsap.utils.toArray('.project-content').forEach(content => {
-        // Project number
-        gsap.from(content.querySelector('.project-number'), {
+    // Animate each project section with scroll-scrubbing
+    gsap.utils.toArray('.project-section').forEach(section => {
+        const content = section.querySelector('.project-content');
+        const visual = section.querySelector('.project-visual');
+        
+        // Create timeline for this project
+        const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: content,
+                trigger: section,
                 start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
+                end: 'top 20%',
+                scrub: 1
+            }
+        });
+        
+        // Animate content
+        tl.from(content.querySelector('.project-number'), {
             x: -50,
             opacity: 0,
-            duration: 1.2,
+            duration: 0.6,
             ease: 'power2.out'
-        });
-        
-        // Project subtitle
-        gsap.from(content.querySelector('.project-subtitle'), {
-            scrollTrigger: {
-                trigger: content,
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
+        })
+        .from(content.querySelector('.project-subtitle'), {
             opacity: 0,
-            duration: 1.2,
-            delay: 0.3,
+            duration: 0.5,
             ease: 'power2.out'
-        });
-        
-        // Project description
-        gsap.from(content.querySelector('.project-description'), {
-            scrollTrigger: {
-                trigger: content,
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
+        }, '-=0.3')
+        .from(content.querySelector('.project-description'), {
             y: 30,
             opacity: 0,
-            duration: 1.2,
-            delay: 0.6,
+            duration: 0.6,
             ease: 'power2.out'
-        });
-    });
-    
-    // Animate single project image
-    gsap.from('.project-image-single', {
-        scrollTrigger: {
-            trigger: '.project-image-single',
-            start: 'top 75%',
-            toggleActions: 'play none none reverse'
-        },
-        scale: 0.9,
-        opacity: 0,
-        duration: 1.5,
-        ease: 'power3.out'
-    });
-    
-    // Animate multi-image grid
-    gsap.from('.project-images-grid img', {
-        scrollTrigger: {
-            trigger: '.project-images-grid',
-            start: 'top 75%',
-            toggleActions: 'play none none reverse'
-        },
-        scale: 0.8,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1.2,
-        ease: 'back.out(1.7)'
+        }, '-=0.2');
+        
+        // Animate images
+        const singleImage = visual.querySelector('.project-image-single img');
+        const gridImages = visual.querySelectorAll('.project-images-grid img');
+        
+        if (singleImage) {
+            tl.from(singleImage, {
+                scale: 0.9,
+                opacity: 0,
+                duration: 0.7,
+                ease: 'power3.out'
+            }, '-=0.5');
+        } else if (gridImages.length > 0) {
+            tl.from(gridImages, {
+                scale: 0.8,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.6,
+                ease: 'back.out(1.7)'
+            }, '-=0.5');
+        }
     });
 }
 
