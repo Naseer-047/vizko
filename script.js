@@ -666,35 +666,38 @@ function initEducation() {
     });
 }
 
-// 17. Workflow Horizontal Scroll (Fixed)
+// 17. Workflow Horizontal Scroll (Stabilized)
 function initWorkflow() {
     const track = document.querySelector('.hz-track');
-    const wrapper = document.querySelector('.hz-wrapper');
+    const items = gsap.utils.toArray('.hz-item');
     
-    if(!track || !wrapper) return;
+    if(!track || items.length === 0) return;
     
-    // Smooth Horizontal Scroll
-    // We explicitly calculate the distance to scroll
-    function getScrollDistance() {
+    // Use xPercent for safer responsive behavior
+    // We move the track to the left by (number of items - 1) * 100% ? 
+    // No, track contains items. We slide the track itself.
+    
+    // Calculate how far to move: 
+    // Total Width - Viewport Width
+    // But to be super safe against "0 width" bugs:
+    
+    // We will use a function-based value for the tween to recalculate on resize
+    function getScrollWidth() {
         return -(track.scrollWidth - window.innerWidth);
     }
 
-    // Only enable if track is wider than viewport
-    if(track.scrollWidth > window.innerWidth) {
-        gsap.to(track, {
-            x: getScrollDistance,
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".workflow-section",
-                start: "center center", // Lock when center hits center
-                end: () => "+=" + (track.scrollWidth - window.innerWidth), // Scroll length matches track
-                pin: true,
-                scrub: 1,
-                invalidateOnRefresh: true,
-                anticipatePin: 1
-            }
-        });
-    }
+    gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth),
+        ease: "none",
+        scrollTrigger: {
+            trigger: ".workflow-section",
+            start: "top top", // Lock exactly when top hits top
+            end: () => "+=" + (track.scrollWidth), // Scroll distance proportional to width
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true // Recalculate on window resize
+        }
+    });
 }
 
 // 18. Orbit Interaction (Solar System Tilt)
