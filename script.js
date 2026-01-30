@@ -448,58 +448,185 @@ function initAtomicOrbit() {
 }
 
 
-// 3.6 Resume Section Animations
+// 3.6 Skills, Experience, Education Sections (New Split Sections)
 function initResume() {
-    // Animate skill bars with scroll-scrubbing
-    const skillFills = document.querySelectorAll('.skill-fill');
-    skillFills.forEach(fill => {
-        const percent = fill.getAttribute('data-percent');
-        
-        gsap.timeline({
+    // SECTION 1: SKILLS - Animate progress bars and content
+    const skillsSection = document.querySelector('.skills-section-new');
+    if (skillsSection) {
+        const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: '.resume-section',
-                start: 'top 60%',
+                trigger: skillsSection,
+                start: 'top 70%',
                 end: 'top 20%',
                 scrub: 1
             }
-        }).to(fill, {
-            width: percent + '%',
-            duration: 1,
-            ease: 'power3.out'
         });
-    });
+        
+        // Header animation
+        tl.from('.skills-title-new', {
+            y: 40,
+            opacity: 0,
+            duration: 0.6
+        })
+        .from('.skills-subtitle-new', {
+            y: 20,
+            opacity: 0,
+            duration: 0.4
+        }, '-=0.3');
+        
+        // Animate each skill category
+        const categories = document.querySelectorAll('.skills-category');
+        categories.forEach((category, index) => {
+            const categoryTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: category,
+                    start: 'top 80%',
+                    end: 'top 40%',
+                    scrub: 1
+                }
+            });
+            
+            categoryTl.from(category.querySelector('.category-heading'), {
+                x: -30,
+                opacity: 0,
+                duration: 0.5
+            });
+            
+            // Animate skill bars filling
+            const skillBars = category.querySelectorAll('.skill-fill-new');
+            skillBars.forEach(bar => {
+                const percent = bar.getAttribute('data-percent');
+                categoryTl.to(bar, {
+                    width: percent + '%',
+                    duration: 1.2,
+                    ease: 'power3.out'
+                }, '-=0.4');
+            });
+        });
+        
+        // Animate strengths list
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.strengths-list',
+                start: 'top 80%',
+                end: 'top 50%',
+                scrub: 1
+            }
+        }).from('.strengths-list li', {
+            x: -20,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.5
+        });
+    }
     
-    // Animate timeline items with scroll-scrubbing
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: '.timeline',
-            start: 'top 70%',
-            end: 'top 30%',
-            scrub: 1
-        }
-    }).to('.timeline-item', {
-        opacity: 1,
-        y: 0,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: 'power2.out'
-    });
+    // SECTION 2: EXPERIENCE - Animate timeline
+    const expSection = document.querySelector('.experience-section-new');
+    if (expSection) {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: expSection,
+                start: 'top 70%',
+                end: 'top 20%',
+                scrub: 1
+            }
+        });
+        
+        tl.from('.experience-title-new', {
+            y: 40,
+            opacity: 0,
+            duration: 0.6
+        })
+        .from('.experience-subtitle-new', {
+            y: 20,
+            opacity: 0,
+            duration: 0.4
+        }, '-=0.3');
+        
+        // Animate timeline items
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.timeline-new',
+                start: 'top 70%',
+                end: 'top 20%',
+                scrub: 1
+            }
+        }).to('.timeline-item-new', {
+            opacity: 1,
+            x: 0,
+            stagger: 0.2,
+            duration: 0.8,
+            ease: 'power2.out'
+        });
+    }
     
-    // Animate hobby icons with scroll-scrubbing
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: '.hobbies-grid',
-            start: 'top 80%',
-            end: 'top 40%',
-            scrub: 1
-        }
-    }).to('.hobby-item', {
-        opacity: 1,
-        scale: 1,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: 'back.out(1.7)'
-    });
+    // SECTION 3: EDUCATION & CAPABILITIES - Animate content and hobbies
+    const eduSection = document.querySelector('.education-section-new');
+    if (eduSection) {
+        // Animate left column
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.edu-left',
+                start: 'top 70%',
+                end: 'top 30%',
+                scrub: 1
+            }
+        }).from('.edu-left .edu-section-title', {
+            x: -40,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.6
+        })
+        .from('.degree-block', {
+            y: 30,
+            opacity: 0,
+            duration: 0.6
+        }, '-=0.3')
+        .from('.capabilities-list li', {
+            x: -20,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.5
+        }, '-=0.3');
+        
+        // Animate right column
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.edu-right',
+                start: 'top 70%',
+                end: 'top 30%',
+                scrub: 1
+            }
+        }).from('.edu-right .edu-section-title', {
+            x: 40,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.6
+        })
+        .from('.design-skills-list li', {
+            x: 20,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.5
+        }, '-=0.3');
+        
+        // Animate hobbies grid
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.hobbies-grid-new',
+                start: 'top 80%',
+                end: 'top 40%',
+                scrub: 1
+            }
+        }).from('.hobby-item-new', {
+            y: 30,
+            opacity: 0,
+            scale: 0.8,
+            stagger: 0.1,
+            duration: 0.6,
+            ease: 'back.out(1.7)'
+        });
+    }
 }
 
 
