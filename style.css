@@ -2241,6 +2241,13 @@ section {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
     }
+    .expertise-card.large {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 300px;
+    }
+}
+
 /* --- Workflow Section (Circuit Timeline) --- */
 .circuit-header {
     margin-bottom: 80px;
