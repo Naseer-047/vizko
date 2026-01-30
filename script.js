@@ -108,38 +108,60 @@ function splitTextToSpans(selector) {
     });
 }
 
-// 3. Hero Setup & Animation
+// 3. Hero Setup & Animation (LIQUID CHROME EDITION)
 function initHero() {
-    initCodeWindow(); // New function for code interactions
+    // Note: initCodeWindow removed as we are now God-Tier Liquid.
 
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-    // Hero Title Reveal
-    tl.to('.reveal-text', {
-        y: 0,
-        opacity: 1,
-        duration: 1.8,
-        stagger: 0.2
+    // 1. Title: Cinematic Blur Zoom Reveal
+    tl.from('.liquid-title', {
+        duration: 2.5,
+        scale: 1.2,
+        filter: "blur(20px)",
+        opacity: 0,
+        ease: "expo.out"
     })
-    .to('.hero-cta-wrapper', {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power3.out"
-    }, "-=1.2");
+    // 2. Subtitle & Label: Clean Slide
+    .from('.hero-label', {
+        y: -30,
+        opacity: 0,
+        duration: 1.2
+    }, "-=2.0")
+    .from('.hero-sub', {
+        y: 30,
+        opacity: 0,
+        duration: 1.2
+    }, "-=2.2")
+    // 3. Button: Elastic Pop
+    .from('.btn-liquid', {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1.5,
+        ease: "elastic.out(1, 0.5)"
+    }, "-=1.5");
 
-    // Parallax
-    gsap.to('.visual-wrapper', {
-        yPercent: 30, // Increased parallax depth
+    // 4. Spotlight Beam Initialization (Expand from center)
+    gsap.from('.spotlight-beam', {
+        width: 0,
+        height: 0,
+        opacity: 0,
+        duration: 2,
+        ease: "power2.out",
+        delay: 0.5
+    });
+
+    // 5. Parallax Effect for the Liquid Title on Scroll
+    gsap.to('.liquid-title', {
+        yPercent: 50,
         ease: "none",
         scrollTrigger: {
-            trigger: '.hero-section',
+            trigger: '.hero-liquid',
             start: "top top",
             end: "bottom top",
             scrub: true
         }
     });
-
 }
 
 function initCodeWindow() {

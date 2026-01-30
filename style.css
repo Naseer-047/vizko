@@ -307,6 +307,20 @@ section {
     transition: all 0.4s;
 }
 
+    background: linear-gradient(90deg, #fff, #aaa, #fff); /* Metallic Gradient */
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
 /* Liquid Fill Animation */
 .liquid-title::before {
     content: 'NASEER';
@@ -314,16 +328,18 @@ section {
     top: 0; left: 0;
     width: 0%;
     height: 100%;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.1); /* Subtle ghost fill */
     overflow: hidden;
     transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
     border-right: 6px solid #00ff85; /* Cursor Line */
     filter: drop-shadow(0 0 40px rgba(0, 255, 133, 0.6));
+    opacity: 0; /* Hidden by default until hover */
 }
 
 .liquid-title:hover::before {
     width: 100%;
+    opacity: 1;
 }
 
 .hero-sub {
