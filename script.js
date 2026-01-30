@@ -319,6 +319,25 @@ function initGlobalMagnetic3D() {
     });
 }
 
+// 11. Spotlight/Glow Effect for Service & Cert Cards (New Diversity)
+function initSpotlightCards() {
+    const cards = document.querySelectorAll('.service-card, .cert-card, .stat-card, .badge-item');
+
+    if (!cards.length) return;
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Set CSS variables for the glow position
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
 // 9. Contact: CLI Form Slide Up
 function initContact() {
     const form = document.querySelector('.contact-container');
@@ -902,6 +921,39 @@ function initTestimonialsNew() {
     });
 }
 
+// 11. Spotlight/Glow Effect for Service & Cert Cards (New Diversity)
+function initSpotlightCards() {
+    const cards = document.querySelectorAll('.service-card, .cert-card, .stat-card, .badge-item');
+
+    if (!cards.length) return;
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Set CSS variables for the glow position
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
+// 9. Contact: CLI Form Slide Up
+function initContact() {
+    gsap.from(".terminal-container", {
+        scrollTrigger: {
+            trigger: ".contact-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+}
 
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
@@ -925,6 +977,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initContact();
     initFooter();
     initAtmosphere();
+    initGlobalMagnetic3D(); // Activate 3D Effects
+    initSpotlightCards(); // Activate Spotlight Effects (Services, Stats, Certs)
 
     // 3. Force Layout Recalculation (Fixes 'Invisible' bugs)
     // Wait a tick for DOM to settle
