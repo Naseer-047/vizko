@@ -114,31 +114,26 @@ function initHero() {
 
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-    // 1. Title: Cinematic Blur Zoom Reveal
-    tl.from('.liquid-title', {
-        duration: 2.5,
-        scale: 1.2,
-        filter: "blur(20px)",
-        opacity: 0,
-        ease: "expo.out"
+    // 1. Classical Curtain Rise
+    tl.from('.meta-tag', {
+        y: -50, opacity: 0, duration: 1.5, ease: "power3.out"
     })
-    // 2. Subtitle & Label: Clean Slide
-    .from('.hero-label', {
-        y: -30,
-        opacity: 0,
-        duration: 1.2
-    }, "-=2.0")
+    .from('.liquid-title', {
+        y: 100, opacity: 0, scale: 0.9,
+        duration: 2, ease: "power4.out",
+        blur: 10
+    }, "-=1.2")
+    .from('.period', {
+        scale: 0, rotation: 180, duration: 1, ease: "back.out(1.7)"
+    }, "-=1.0")
     .from('.hero-sub', {
-        y: 30,
-        opacity: 0,
-        duration: 1.2
-    }, "-=2.2")
-    // 3. Button: Elastic Pop
+        y: 20, opacity: 0, duration: 1.5
+    }, "-=1.5")
+    .from('.floating-shard', {
+        y: 100, opacity: 0, stagger: 0.2, duration: 2, ease: "power2.out"
+    }, "-=2.0")
     .from('.btn-liquid', {
-        scale: 0.8,
-        opacity: 0,
-        duration: 1.5,
-        ease: "elastic.out(1, 0.5)"
+        y: 50, opacity: 0, duration: 1, ease: "power2.out"
     }, "-=1.5");
 
     // 4. Spotlight Beam Initialization (Expand from center)

@@ -305,8 +305,6 @@ section {
     position: relative;
     cursor: crosshair;
     transition: all 0.4s;
-}
-
     background: linear-gradient(90deg, #fff, #aaa, #fff); /* Metallic Gradient */
     background-size: 200% auto;
     -webkit-background-clip: text;
