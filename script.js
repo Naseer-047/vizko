@@ -399,8 +399,8 @@ function initAtomicOrbit() {
         { el: document.querySelector('.ring-3'), angle: -60 }
     ];
 
-    const radius = 200; // Match CSS Width/2
-    const ySquash = 0.4; // Match CSS scaleY
+    const radius = 225; // 450px / 2
+    const ySquash = 0.5; // Match CSS scaleY
     
     // Animate each electron
     rings.forEach((ring, i) => {
