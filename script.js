@@ -666,6 +666,34 @@ function initEducation() {
     });
 }
 
+// 17. Workflow Circuit Animation
+function initWorkflow() {
+    // Animate the connection line
+    gsap.to('.circuit-line-active', {
+        width: "100%",
+        ease: "none",
+        scrollTrigger: {
+            trigger: ".circuit-container",
+            start: "top 70%",
+            end: "bottom 70%",
+            scrub: 1
+        }
+    });
+
+    // Animate Steps Entry (Staggered Fade Up)
+    gsap.from('.circuit-step', {
+        y: 50,
+        opacity: 1, // FORCE VISIBLE to avoid invisible state
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: ".circuit-container",
+            start: "top 85%"
+        }
+    });
+}
+
 // 18. Orbit Interaction (Solar System Tilt)
 function initOrbit() {
     const section = document.querySelector('.orbit-section');
