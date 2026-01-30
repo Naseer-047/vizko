@@ -864,6 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAtmosphere();
     initEducation(); // New Timeline
     initOrbit();
+    initWorkflow(); // Added
     initCTA();
     initSpotlight();
     initSpotlight();
