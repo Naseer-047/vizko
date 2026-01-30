@@ -221,13 +221,13 @@ function initFeatures() {
     // Animate the numbers and titles
     gsap.from('.value-item', {
         y: 30,
-        opacity: 0,
+        opacity: 1, // FORCE VISIBLE
         duration: 0.8,
         stagger: 0.2,
         ease: "power2.out",
         scrollTrigger: {
             trigger: '.features-section',
-            start: "top 95%" // Trigger almost immediately when section enters
+            start: "top 95%" 
         }
     });
 }
