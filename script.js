@@ -1,4 +1,17 @@
 // 1. Initialize Lenis Smooth Scroll
+console.log("SCRIPT STARTED"); // Debug Log
+
+// Visual Debugger
+const debugFlag = document.createElement('div');
+debugFlag.style.position = 'fixed';
+debugFlag.style.top = '0';
+debugFlag.style.left = '0';
+debugFlag.style.width = '100%';
+debugFlag.style.height = '5px';
+debugFlag.style.background = 'red';
+debugFlag.style.zIndex = '99999';
+document.body.appendChild(debugFlag);
+
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -80,26 +93,45 @@ function initHero() {
     });
 }
 
-// 4. Services: Glass Grid Reveal
+// 4. Services: Glass Grid Reveal (Section 2)
 function initServices() {
     const cards = document.querySelectorAll('.glass-card');
     if (!cards.length) return;
 
     gsap.fromTo(cards, 
-        { y: 50, autoAlpha: 0 },
+        { y: 80, autoAlpha: 0 },
         {
             y: 0,
             autoAlpha: 1,
             duration: 0.8,
-            stagger: 0.2,
-            ease: "power2.out",
+            stagger: 0.15,
+            ease: "power3.out",
             scrollTrigger: {
                 trigger: ".services-section",
-                start: "top 95%", // Triggers almost immediately when section enters
+                start: "top 85%", 
                 toggleActions: "play none none reverse"
             }
         }
     );
+}
+
+// 4.5 Velocity Scroll Text (Global)
+function initVelocityText() {
+    const tracks = document.querySelectorAll('.velocity-track');
+    
+    tracks.forEach((track, i) => {
+        // Clone for infinite loop (double up to ensure width)
+        track.innerHTML += track.innerHTML; 
+        
+        const direction = i % 2 === 0 ? -1 : 1; // Alternate directions
+        
+        gsap.to(track, {
+            xPercent: direction * -50, // Move half its total width (which is 1 original width)
+            ease: "none",
+            duration: 15,
+            repeat: -1
+        });
+    });
 }
 
 // 5. Projects: Works Grid Pop-in
@@ -145,22 +177,41 @@ function initSkills() {
     );
 }
 
-// 5.6 Spotlight Text (New)
+// 5.6 Spotlight Text (New Problem Solver)
 function initSpotlight() {
-    gsap.fromTo(".spotlight-text",
-        { scale: 0.8, autoAlpha: 0 },
+    const section = document.querySelector('.spotlight-section');
+    const text = document.querySelector('.spotlight-text');
+    
+    if (!section || !text) return;
+
+    gsap.fromTo(text,
+        { scale: 0.8, autoAlpha: 0, y: 50 },
         {
             scale: 1,
             autoAlpha: 1,
-            duration: 1.5,
-            ease: "power4.out",
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
             scrollTrigger: {
-                trigger: ".spotlight-section",
-                start: "top 80%",
+                trigger: section,
+                start: "top 75%",
+                end: "bottom 80%",
                 scrub: 1
             }
         }
     );
+    
+    // Animate the beam light if it exists
+    gsap.to('.spotlight-beam', {
+        rotation: 20,
+        opacity: 0.8,
+        scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+        }
+    });
 }
 
 // 6. Contact Terminal Effect (Consolidated)
@@ -264,7 +315,6 @@ function initAtmosphere() {
 }
 
 // Master Init
-// Master Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Register
     gsap.registerPlugin(ScrollTrigger);
@@ -272,11 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Initialize Components
     initHero();
     initServices(); 
-    initBento();     // Projects
-    initSkills();    // Skills (New)
+    initVelocityText(); // New Velocity Text
+    initBento();     
+    initSkills();    
     initProcess();
     initTestimonials();
-    initSpotlight(); // Spotlight (New)
+    initSpotlight(); 
     initContact();
     initFooter();
     initAtmosphere();
