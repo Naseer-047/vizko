@@ -364,40 +364,98 @@ function initAtmosphere() {
     });
 }
 
-// 3.5 About Me 3D Entrance (Atomic)
+// 3.5 About Section GSAP Animations
 function initAbout() {
-    gsap.from(".about-text > *", {
+    // Character-by-character animation for "ABOUT" heading
+    const heading = document.querySelector('.about-heading');
+    if (heading) {
+        // Split text into characters
+        const text = heading.textContent;
+        heading.innerHTML = text.split('').map(char => 
+            `<span class="char" style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
+        ).join('');
+        
+        // Animate each character
+        gsap.from('.about-heading .char', {
+            scrollTrigger: {
+                trigger: '.about-section',
+                start: 'top 70%',
+            },
+            y: 100,
+            opacity: 0,
+            rotationX: -90,
+            stagger: 0.05, // 50ms delay between each character
+            duration: 0.8,
+            ease: 'back.out(1.7)'
+        });
+    }
+    
+    // Animate email
+    gsap.from('.about-email', {
         scrollTrigger: {
-            trigger: ".about-section",
-            start: "top 80%"
+            trigger: '.about-section',
+            start: 'top 70%',
         },
-        x: -50,
-        autoAlpha: 0,
-        stagger: 0.1,
+        x: -30,
+        opacity: 0,
         duration: 0.8,
-        ease: "power2.out"
-    });
-
-    gsap.from(".atom-system", {
-        scrollTrigger: {
-            trigger: ".about-section",
-            start: "top 80%"
-        },
-        scale: 0.5,
-        autoAlpha: 0,
-        duration: 1.2,
-        ease: "back.out(1.2)"
+        delay: 0.4,
+        ease: 'power2.out'
     });
     
-    initAtomicOrbit();
+    // Animate description paragraphs (split into words for cooler effect)
+    const description = document.querySelector('.about-description');
+    if (description) {
+        gsap.from('.about-description', {
+            scrollTrigger: {
+                trigger: '.about-section',
+                start: 'top 70%',
+            },
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            delay: 0.6,
+            ease: 'power2.out'
+        });
+    }
+    
+    // Animate location
+    gsap.from('.about-location', {
+        scrollTrigger: {
+            trigger: '.about-section',
+            start: 'top 70%',
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.9,
+        ease: 'power2.out'
+    });
+    
+    // Animate portrait image
+    gsap.from('.about-image img', {
+        scrollTrigger: {
+            trigger: '.about-section',
+            start: 'top 70%',
+        },
+        scale: 0.8,
+        opacity: 0,
+        duration: 1.2,
+        delay: 0.3,
+        ease: 'power3.out'
+    });
 }
 
 function initAtomicOrbit() {
+    // Check if atomic orbit elements exist (they've been removed now)
     const rings = [
         { el: document.querySelector('.ring-1'), angle: 0 },
         { el: document.querySelector('.ring-2'), angle: 60 },
         { el: document.querySelector('.ring-3'), angle: -60 }
     ];
+    
+    // Only run if elements exist
+    if (!rings[0].el) return;
 
     const radius = 225; // 450px / 2
     const ySquash = 0.5; // Match CSS scaleY
