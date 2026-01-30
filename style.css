@@ -2117,6 +2117,76 @@ section {
     }
 }
 
+/* --- Restored Features Section (Second Section) --- */
+.features-section {
+    padding: 80px 48px;
+    background: #050505;
+    border-bottom: 1px solid #111;
+}
+
+.values-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.value-item {
+    flex: 1;
+    padding: 24px;
+    border-left: 1px solid #222;
+    transition: all 0.3s;
+}
+
+.value-item:hover {
+    border-left-color: #fff;
+    background: linear-gradient(90deg, #111, transparent);
+}
+
+.value-left {
+    margin-bottom: 16px;
+}
+
+.value-number {
+    font-family: 'Fira Code', monospace;
+    color: #444;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.value-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.value-desc {
+    color: #888;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .values-list {
+        flex-direction: column;
+        gap: 0;
+    }
+    .value-item {
+        border-left: none;
+        border-top: 1px solid #222;
+        padding: 40px 0;
+    }
+    .value-item:hover {
+        border-top-color: #fff;
+        border-left-color: transparent;
+        background: linear-gradient(180deg, #111, transparent);
+    }
+}
+
 /* --- Expertise Section (Bento Grid) --- */
 .expertise-section {
     padding: var(--section-padding) 48px;
@@ -2326,13 +2396,14 @@ section {
 }
 
 .step-card {
-    background: #0a0a0a;
-    border: 1px solid #1a1a1a;
+    background: #111; /* Brightened from #0a0a0a */
+    border: 1px solid #333; /* Brightened from #1a1a1a */
     border-radius: 16px;
     padding: 24px;
-    opacity: 1; /* Made fully visible */
-    transform: none; /* Removed offset */
+    opacity: 1; 
+    transform: none; 
     transition: all 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3); /* Added subtle shadow */
 }
 
 .circuit-step:hover .step-card {
