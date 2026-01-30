@@ -238,112 +238,134 @@ section {
     transform: translateX(-2px); /* Subtle shift to counter arrow movement balance */
 }
 
-/* Hero Section Refinements */
-.hero-section {
+/* --- Liquid Chrome Hero --- */
+.hero-liquid {
     height: 100vh;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: sticky; /* Part of the logic */
-    top: 0;
-    padding-top: 80px;
-    overflow: hidden;
-    /* Subtle premium grid background - Light lines on dark */
-    background-image: 
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-}
-
-.hero-container {
-    max-width: var(--container-width);
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
     position: relative;
-    z-index: 2;
-}
-
-.hero-content {
-    max-width: 600px;
-}
-
-.hero-visual {
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 1000px; /* For 3D tilts */
-}
-
-/* Code Window Styles */
-.code-window {
-    width: 400px;
-    background: #1e1e1e; /* VS Code Dark */
-    border-radius: 12px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
     overflow: hidden;
-    font-family: 'Fira Code', monospace;
-    color: #d4d4d4;
-    border: 1px solid rgba(255,255,255,0.1);
-    transform: rotateY(-10deg) rotateX(5deg); /* Slight 3D tilt */
+    background: #000;
 }
 
-.window-header {
-    background: #252526;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #333;
+.noise-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0.07;
+    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    pointer-events: none;
+    z-index: 10;
 }
 
-.window-buttons {
-    display: flex;
-    gap: 8px;
+.hero-spotlight {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.win-btn {
-    width: 12px;
-    height: 12px;
+/* The Beam: Follows Mouse */
+.spotlight-beam {
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
+    position: absolute;
     border-radius: 50%;
-}
-.win-btn.red { background: #ff5f56; }
-.win-btn.yellow { background: #ffbd2e; }
-.win-btn.green { background: #27c93f; }
-
-.window-title {
-    margin-left: 20px;
-    font-size: 0.8rem;
-    color: #888;
+    transform: translate(-50%, -50%);
+    filter: blur(60px);
+    opacity: 0.8;
 }
 
-.window-body {
-    padding: 24px;
+.hero-content.center-focus {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    mix-blend-mode: overlay; /* Essential for liquid look */
+}
+
+/* Typography */
+.hero-label {
     font-size: 0.9rem;
-    line-height: 1.6;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+    font-weight: 500;
 }
 
-.code-line { display: flex; }
-.indent-1 { padding-left: 20px; }
-.indent-2 { padding-left: 40px; }
-.indent-3 { padding-left: 60px; }
+.liquid-title {
+    font-family: 'Inter', sans-serif; /* Prefer thicker font if available */
+    font-size: clamp(5rem, 18vw, 15rem);
+    font-weight: 900;
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255,255,255,0.4);
+    position: relative;
+    cursor: crosshair;
+    transition: all 0.4s;
+}
 
-/* Syntax Highlighting */
-.k { color: #569cd6; } /* Keyword blue */
-.f { color: #dcdcaa; } /* Function yellow */
-.t { color: #4ec9b0; } /* Type teal */
-.p { color: #9cdcfe; } /* Prop light blue */
-.s { color: #ce9178; } /* String orange */
+/* Liquid Fill Animation */
+.liquid-title::before {
+    content: 'NASEER';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0%;
+    height: 100%;
+    color: #fff;
+    overflow: hidden;
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    border-right: 6px solid #00ff85; /* Cursor Line */
+    filter: drop-shadow(0 0 40px rgba(0, 255, 133, 0.6));
+}
 
-.code-cursor {
+.liquid-title:hover::before {
+    width: 100%;
+}
+
+.hero-sub {
+    font-size: 1.25rem;
+    color: #aaa;
+    margin-top: 40px;
+    letter-spacing: 1px;
+}
+
+.neon-text {
+    color: #00ff85;
+    text-shadow: 0 0 20px rgba(0,255,133,0.8);
+    font-weight: 700;
+}
+
+/* Liquid Button */
+.btn-liquid {
+    margin-top: 50px;
     display: inline-block;
-    color: #569cd6;
-    animation: blink 1s step-end infinite;
+    padding: 18px 48px;
+    font-size: 1rem;
+    color: #fff;
+    background: rgba(255,255,255,0.05); /* Glass */
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    transition: all 0.4s;
+    backdrop-filter: blur(10px);
 }
 
-@keyframes blink { 50% { opacity: 0; } }
+.btn-liquid:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 50px rgba(255,255,255,0.5);
+    transform: scale(1.05);
+}
+
+.arrow { display: inline-block; transition: transform 0.3s; }
+.btn-liquid:hover .arrow { transform: translateX(6px); }
 
 /* Product Visuals Section */
 .product-section {

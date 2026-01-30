@@ -761,39 +761,20 @@ function initCTA() {
 }
 
 // 20. Spotlight Mouse Tracker
+// 20. Liquid Hero Spotlight
 function initSpotlight() {
-    const section = document.querySelector('.spotlight-section');
-    const text = document.querySelector('.spotlight-text');
+    const hero = document.querySelector('.hero-liquid');
+    const beam = document.querySelector('.spotlight-beam');
     
-    section.addEventListener('mousemove', (e) => {
-        // We can just use a simple mask or color switch
-        // But for "flashlight" effect, we might need a clip-path or complex mask
-        // Simpler premium feel: The text is dark grey (#333) and the beam lightens it?
-        // Actually CSS overlay mix-blend-mode handles the beam visual.
-        // Let's just make the text light up close to mouse?
-        // Or simple: Text is dark, Beam is white overlay with exclusion? 
-        // Let's stick to the CSS beam following mouse.
-        
-        const rect = section.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        gsap.to('.spotlight-beam', {
-            x: e.clientX, // Fixed position based on viewport
+    if(!hero || !beam) return;
+    
+    hero.addEventListener('mousemove', (e) => {
+        gsap.to(beam, {
+            x: e.clientX,
             y: e.clientY,
-            duration: 0.1,
-            ease: "power1.out"
+            duration: 0.2, // Lag for smoothness
+            ease: "power2.out"
         });
-        
-        // Dynamic text color shift
-        const textRect = text.getBoundingClientRect();
-        const relX = e.clientX - textRect.left;
-        const relY = e.clientY - textRect.top;
-        
-        // Advanced: Use CSS variables to update radial gradient on text itself
-        text.style.backgroundImage = `radial-gradient(circle at ${relX}px ${relY}px, white 0%, #333 150px)`;
-        text.style.webkitBackgroundClip = "text";
-        text.style.webkitTextFillColor = "transparent";
     });
 }
 
