@@ -752,52 +752,8 @@ function initSpotlight() {
     });
 }
 
-// 21. Testimonial Stack Swipe
-function initStack() {
-    const cards = document.querySelectorAll('.stack-card');
-    
-    // Pin section
-    ScrollTrigger.create({
-        trigger: '.stack-section',
-        start: "top top",
-        end: "+=200%", // 3 cards
-        pin: true,
-        scrub: 1,
-        onUpdate: (self) => {
-            // Logic to peel off cards
-            const progress = self.progress; // 0 to 1
-            const total = cards.length;
-            const index = Math.floor(progress * total);
-            
-            // Current card flies away? 
-            // Better: Stack logic. 
-            // All start visible. As we scroll, top one slides up/out.
-            
-            cards.forEach((card, i) => {
-                // Determine phase for this card
-                const start = i / total;
-                const end = (i + 1) / total;
-                const cardProgress = (progress - start) / (end - start); // 0 to 1 within its slot
-                
-                if (progress > start) {
-                    // Card is active or done
-                    // Animate it out
-                    gsap.to(card, {
-                        y: -50 * cardProgress + (i * 10), // slight offset
-                        scale: 1 - (cardProgress * 0.1),
-                        opacity: 1 - cardProgress,
-                        rotation: cardProgress * 5,
-                        duration: 0, // Scrub controlled
-                        overwrite: true
-                    });
-                } else {
-                    // Reset
-                    gsap.to(card, { y: i * 10, scale: 1 - (i * 0.05), opacity: 1, rotation: 0, duration: 0.1, overwrite: true });
-                }
-            });
-        }
-    });
-}
+// 21. Testimonial Stack Swipe (Removed)
+// function initStack() {} 
 
 // 22. Device Parallax
 function initDevices() {
@@ -910,7 +866,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initOrbit();
     initCTA();
     initSpotlight();
-    initStack();
+    initSpotlight();
+    // initStack(); // Removed
+    initDevices();
     initDevices();
     initMagnetic();
     initProjectModal();
