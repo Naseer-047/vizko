@@ -122,18 +122,25 @@ function initVelocityText() {
     tracks.forEach((track, i) => {
         const originalContent = track.innerHTML;
         
-        // Clone 3 more times (Total 4 copies) to guarantee no gaps on ultra-wide screens
+        // Clone 3 more times (Total 4 copies)
         track.innerHTML = originalContent + originalContent + originalContent + originalContent; 
         
-        const direction = i % 2 === 0 ? -1 : 1; // Alternate directions
+        // Row 1 moves Left, Row 2 moves Right, etc.
+        const moveLeft = i % 2 === 0; 
         
-        // Move -25% (one full copy length) to seamless loop
-        gsap.to(track, {
-            xPercent: direction * -25, 
-            ease: "none",
-            duration: 20, // Slower for readability
-            repeat: -1
-        });
+        if (moveLeft) {
+            // Move Left: Start at 0, slide to -25%
+            gsap.fromTo(track, 
+                { xPercent: 0 },
+                { xPercent: -25, ease: "none", duration: 25, repeat: -1 }
+            );
+        } else {
+            // Move Right: Start at -25% (shifted left), slide to 0
+            gsap.fromTo(track,
+                { xPercent: -25 },
+                { xPercent: 0, ease: "none", duration: 25, repeat: -1 }
+            );
+        }
     });
 }
 
