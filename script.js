@@ -666,14 +666,14 @@ function initEducation() {
     });
 }
 
-// 17. Workflow Circuit Animation
+// 17. Workflow Circuit Animation (Vertical)
 function initWorkflow() {
-    // Animate the connection line
-    gsap.to('.circuit-line-active', {
-        width: "100%",
+    // Animate the vertical line
+    gsap.to('.v-line-progress', {
+        height: "100%",
         ease: "none",
         scrollTrigger: {
-            trigger: ".circuit-container",
+            trigger: ".vertical-timeline",
             start: "top 70%",
             end: "bottom 70%",
             scrub: 1
@@ -681,16 +681,18 @@ function initWorkflow() {
     });
 
     // Animate Steps Entry (Staggered Fade Up)
-    gsap.from('.circuit-step', {
-        y: 50,
-        opacity: 1, // FORCE VISIBLE to avoid invisible state
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: ".circuit-container",
-            start: "top 85%"
-        }
+    const steps = document.querySelectorAll('.v-step');
+    steps.forEach((step, i) => {
+        const isLeft = step.classList.contains('left');
+        gsap.from(step, {
+            x: isLeft ? -50 : 50,
+            opacity: 0,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: step,
+                start: "top 85%"
+            }
+        });
     });
 }
 
