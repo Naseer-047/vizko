@@ -682,22 +682,33 @@ function initWorkflow() {
     // But to be super safe against "0 width" bugs:
     
     // We will use a function-based value for the tween to recalculate on resize
-    function getScrollWidth() {
-        return -(track.scrollWidth - window.innerWidth);
+    // 1. Force track to be wide so we can measure it
+    track.style.width = "max-content";
+
+    function getScrollAmount() {
+        // Distance to move = Total Width - Viewport Width
+        let amount = track.offsetWidth - window.innerWidth;
+        return amount > 0 ? amount : 0;
     }
 
-    gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".workflow-section",
-            start: "top top", // Lock exactly when top hits top
-            end: () => "+=" + (track.scrollWidth), // Scroll distance proportional to width
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true // Recalculate on window resize
-        }
-    });
+    const scrollAmount = getScrollAmount();
+    
+    // Only animate if there IS content to scroll
+    if(scrollAmount > 0) {
+        gsap.to(track, {
+            x: () => -getScrollAmount(),
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".workflow-section",
+                start: "top top",
+                end: () => `+=${getScrollAmount()}`, 
+                pin: true,
+                scrub: 1,
+                invalidateOnRefresh: true,
+                anticipatePin: 1
+            }
+        });
+    }
 }
 
 // 18. Orbit Interaction (Solar System Tilt)
