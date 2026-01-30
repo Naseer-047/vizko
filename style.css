@@ -48,7 +48,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none; /* Custom cursor mandatory */
+    /* cursor: none; */ /* Disabled global custom cursor forcing for usability safety */
 }
 
 html.lenis {
@@ -62,7 +62,11 @@ body {
     overflow-x: hidden;
     line-height: 1.4;
     -webkit-font-smoothing: antialiased;
+    cursor: default; /* Fallback */
 }
+
+/* Custom Cursor visible only on non-touch devices if needed, handled via JS classes usually */
+/* For now, we allow default cursor to exist so user isn't lost if JS fails. */
 
 ::selection {
     background: var(--neon-cyan);
@@ -81,7 +85,10 @@ body {
     top: 0; left: 0;
     transform: translate(-50%, -50%);
     mix-blend-mode: difference;
+    display: none; /* Hide default, show via JS if successful */
 }
+body.custom-cursor-active .cursor-dot { display: block; }
+body.custom-cursor-active * { cursor: none !important; }
 
 .cursor-outline {
     width: 60px;
@@ -94,10 +101,12 @@ body {
     top: 0; left: 0;
     transform: translate(-50%, -50%);
     transition: width 0.3s, height 0.3s, background 0.3s;
+    display: none; /* Hide default, show via JS if successful */
 }
+body.custom-cursor-active .cursor-outline { display: block; }
 
-/* Hover States for Cursor */
-body:hover .cursor-outline.hovered {
+/* ... (Hover States remain, but need body.custom-cursor-active scope if desired) ... */
+body.custom-cursor-active:hover .cursor-outline.hovered {
     width: 100px;
     height: 100px;
     background: rgba(255, 255, 255, 0.05);
@@ -266,8 +275,7 @@ section {
 
 .reveal-text {
     display: block;
-    transform: translateY(120%);
-    /* Animated by GSAP */
+    /* transform: translateY(120%); Removed for progressive enhancement. Handled by GSAP .from() or .set() */
 }
 
 .hero-subtitle {
