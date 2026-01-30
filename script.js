@@ -380,12 +380,13 @@ function initAbout() {
             scrollTrigger: {
                 trigger: '.about-section',
                 start: 'top 70%',
+                toggleActions: 'play none none reverse'
             },
             y: 100,
             opacity: 0,
             rotationX: -90,
-            stagger: 0.05, // 50ms delay between each character
-            duration: 0.8,
+            stagger: 0.08, // Slower character reveal
+            duration: 1.2, // Increased from 0.8
             ease: 'back.out(1.7)'
         });
     }
@@ -395,26 +396,28 @@ function initAbout() {
         scrollTrigger: {
             trigger: '.about-section',
             start: 'top 70%',
+            toggleActions: 'play none none reverse'
         },
         x: -30,
         opacity: 0,
-        duration: 0.8,
-        delay: 0.4,
+        duration: 1.2, // Increased from 0.8
+        delay: 0.6, // Increased delay
         ease: 'power2.out'
     });
     
-    // Animate description paragraphs (split into words for cooler effect)
+    // Animate description paragraphs
     const description = document.querySelector('.about-description');
     if (description) {
         gsap.from('.about-description', {
             scrollTrigger: {
                 trigger: '.about-section',
                 start: 'top 70%',
+                toggleActions: 'play none none reverse'
             },
             y: 30,
             opacity: 0,
-            duration: 1,
-            delay: 0.6,
+            duration: 1.5, // Increased from 1
+            delay: 0.9, // Increased delay
             ease: 'power2.out'
         });
     }
@@ -424,11 +427,12 @@ function initAbout() {
         scrollTrigger: {
             trigger: '.about-section',
             start: 'top 70%',
+            toggleActions: 'play none none reverse'
         },
         y: 20,
         opacity: 0,
-        duration: 0.8,
-        delay: 0.9,
+        duration: 1.2, // Increased from 0.8
+        delay: 1.2, // Increased delay
         ease: 'power2.out'
     });
     
@@ -437,11 +441,12 @@ function initAbout() {
         scrollTrigger: {
             trigger: '.about-section',
             start: 'top 70%',
+            toggleActions: 'play none none reverse'
         },
         scale: 0.8,
         opacity: 0,
-        duration: 1.2,
-        delay: 0.3,
+        duration: 1.8, // Increased from 1.2
+        delay: 0.4,
         ease: 'power3.out'
     });
 }
@@ -507,11 +512,12 @@ function initResume() {
             scrollTrigger: {
                 trigger: '.resume-section',
                 start: 'top 60%',
+                toggleActions: 'play none none reverse'
             },
             width: percent + '%',
-            duration: 1.5,
+            duration: 2.5, // Increased from 1.5 for slower, more visible fill
             ease: 'power3.out',
-            delay: 0.2
+            delay: 0.3
         });
     });
     
@@ -520,11 +526,12 @@ function initResume() {
         scrollTrigger: {
             trigger: '.timeline',
             start: 'top 70%',
+            toggleActions: 'play none none reverse'
         },
         opacity: 1,
         y: 0,
-        stagger: 0.15,
-        duration: 0.8,
+        stagger: 0.2, // Increased from 0.15 for clearer sequencing
+        duration: 1.2, // Increased from 0.8
         ease: 'power2.out'
     });
     
@@ -533,11 +540,12 @@ function initResume() {
         scrollTrigger: {
             trigger: '.hobbies-grid',
             start: 'top 80%',
+            toggleActions: 'play none none reverse'
         },
         opacity: 1,
         scale: 1,
-        stagger: 0.1,
-        duration: 0.6,
+        stagger: 0.15, // Increased from 0.1
+        duration: 1.0, // Increased from 0.6
         ease: 'back.out(1.7)'
     });
 }
