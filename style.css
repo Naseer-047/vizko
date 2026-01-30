@@ -2869,7 +2869,7 @@ section {
 /* 19B. EXPERIENCE Section (New) - Second Split */
 .experience-section-new {
     padding: 100px 80px;
-    background: #0a0a0a;
+    background: #fff;
 }
 
 .experience-container-new {
@@ -2886,7 +2886,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 4rem;
     font-weight: 800;
-    color: #fff;
+    color: #000;
     line-height: 1;
     margin-bottom: 15px;
     letter-spacing: -0.01em;
@@ -2895,7 +2895,7 @@ section {
 .experience-subtitle-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
-    color: #888;
+    color: #666;
 }
 
 .timeline-new {
@@ -2940,7 +2940,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #fff;
+    color: #000;
     margin-bottom: 8px;
     letter-spacing: 0.02em;
 }
@@ -2948,7 +2948,7 @@ section {
 .job-role-new {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    color: #aaa;
+    color: #555;
     margin-bottom: 5px;
 }
 
@@ -3105,10 +3105,10 @@ section {
 }
 
 
-/* 20. Services Section - Premium Dark Redesign */
+/* 20. Services Section - Light Theme */
 .services-section-new {
     padding: 120px 80px;
-    background: #0a0a0a;
+    background: #f9f9f9;
     position: relative;
 }
 
@@ -3126,7 +3126,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 5rem;
     font-weight: 800;
-    color: #fff;
+    color: #000;
     line-height: 1;
     margin-bottom: 20px;
     letter-spacing: -0.02em;
@@ -3135,7 +3135,7 @@ section {
 .services-subtitle {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.1rem;
-    color: #888;
+    color: #666;
     max-width: 700px;
     margin: 0 auto;
 }
@@ -3148,8 +3148,8 @@ section {
 }
 
 .service-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #fff;
+    border: 1px solid #e5e5e5;
     border-radius: 20px;
     padding: 50px 40px;
     position: relative;
@@ -3176,9 +3176,9 @@ section {
 
 .service-card:hover {
     transform: translateY(-10px);
-    border-color: rgba(46, 76, 158, 0.3);
-    background: rgba(255, 255, 255, 0.04);
-    box-shadow: 0 20px 60px rgba(46, 76, 158, 0.15);
+    border-color: #2E4C9E;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
 }
 
 /* Service Number Badge */
@@ -3189,14 +3189,14 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 3rem;
     font-weight: 800;
-    color: rgba(255, 255, 255, 0.05);
+    color: rgba(0, 0, 0, 0.03);
     line-height: 1;
     z-index: 1;
     transition: all 0.4s ease;
 }
 
 .service-card:hover .service-number {
-    color: rgba(46, 76, 158, 0.15);
+    color: rgba(46, 76, 158, 0.1);
     transform: scale(1.2);
 }
 
@@ -3230,7 +3230,7 @@ section {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: #fff;
+    color: #000;
     margin-bottom: 20px;
     position: relative;
     z-index: 2;
@@ -3241,7 +3241,7 @@ section {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.7;
-    color: #aaa;
+    color: #666;
     position: relative;
     z-index: 2;
 }
@@ -3293,8 +3293,8 @@ section {
 }
 
 .project-dark {
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #000;
 }
 
 .project-light {
@@ -3344,7 +3344,7 @@ section {
 }
 
 .project-dark .project-description {
-    color: #ccc;
+    color: #666;
 }
 
 .project-light .project-description {
