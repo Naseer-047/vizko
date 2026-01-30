@@ -3001,6 +3001,155 @@ section {
     }
 }
 
+/* 16. Project Sections (Dark & Light Themes) */
+.project-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 100px 80px;
+    display: flex;
+    align-items: center;
+}
+
+.project-dark {
+    background: #000;
+    color: #fff;
+}
+
+.project-light {
+    background: #f5f5f5;
+    color: #000;
+}
+
+.project-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 80px;
+    align-items: center;
+    width: 100%;
+}
+
+/* Project Content (Left) */
+.project-content {
+    padding-right: 40px;
+}
+
+.project-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+    color: #2E4C9E;
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+}
+
+.project-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.project-description {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.8;
+    max-width: 500px;
+}
+
+.project-dark .project-description {
+    color: #ccc;
+}
+
+.project-light .project-description {
+    color: #333;
+}
+
+/* Project Visual (Right) */
+.project-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Single Image Layout */
+.project-image-single {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.project-image-single img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.project-image-single:hover img {
+    transform: scale(1.05);
+}
+
+/* Multi-Image Grid Layout */
+.project-images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.project-images-grid img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.project-images-grid img:hover {
+    transform: translateY(-10px);
+}
+
+/* Responsive */
+@media(max-width: 1024px) {
+    .project-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    .project-content {
+        padding-right: 0;
+        text-align: center;
+    }
+    
+    .project-number {
+        font-size: 3.5rem;
+    }
+    
+    .project-subtitle {
+        font-size: 2rem;
+    }
+    
+    .project-description {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .project-images-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-images-grid img {
+        height: 300px;
+    }
+}
+
 /* 11. Atmosphere Mesh (Background) */
 .mesh-section {
     position: fixed;
