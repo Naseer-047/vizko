@@ -238,148 +238,206 @@ section {
     transform: translateX(-2px); /* Subtle shift to counter arrow movement balance */
 }
 
-/* --- Liquid Chrome Hero --- */
-.hero-liquid {
-    height: 100vh;
+/* --- Magnetic Code Editor Hero --- */
+.hero-split {
+    min-height: 100vh;
     width: 100%;
     position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background: #050505;
     overflow: hidden;
-    background: #000;
+    padding: 0 5%;
 }
 
-.noise-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0.07;
-    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-    pointer-events: none;
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
     z-index: 10;
 }
 
-.hero-spotlight {
+/* Background Orb */
+.bg-gradient-orb {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
+    top: -20%; right: -10%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 60%);
+    filter: blur(80px);
     z-index: 0;
+    pointer-events: none;
+    animation: orbFloat 10s infinite alternate;
 }
 
-/* The Beam: Follows Mouse */
-.spotlight-beam {
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
-    position: absolute;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    filter: blur(60px);
-    opacity: 0.8;
+@keyframes orbFloat { from { transform: translate(0,0); } to { transform: translate(-30px, 30px); } }
+
+/* Left: Text */
+.hero-text {
+    flex: 1;
+    max-width: 600px;
 }
 
-.hero-content.center-focus {
-    text-align: center;
-    z-index: 2;
-    position: relative;
-    mix-blend-mode: overlay; /* Essential for liquid look */
-}
-
-/* Typography */
-.hero-label {
+.cmd-badge {
+    font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: #666;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-
-.liquid-title {
-    font-family: 'Inter', sans-serif; /* Prefer thicker font if available */
-    font-size: clamp(5rem, 18vw, 15rem);
-    font-weight: 900;
-    line-height: 0.8;
-    color: transparent;
-    -webkit-text-stroke: 2px rgba(255,255,255,0.4);
-    position: relative;
-    cursor: crosshair;
-    transition: all 0.4s;
-    background: linear-gradient(90deg, #fff, #aaa, #fff); /* Metallic Gradient */
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 5s linear infinite;
-}
-
-@keyframes shine {
-    to {
-        background-position: 200% center;
-    }
-}
-
-/* Liquid Fill Animation */
-.liquid-title::before {
-    content: 'NASEER';
-    position: absolute;
-    top: 0; left: 0;
-    width: 0%;
-    height: 100%;
-    color: rgba(255, 255, 255, 0.1); /* Subtle ghost fill */
-    overflow: hidden;
-    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
-    border-right: 6px solid #00ff85; /* Cursor Line */
-    filter: drop-shadow(0 0 40px rgba(0, 255, 133, 0.6));
-    opacity: 0; /* Hidden by default until hover */
-}
-
-.liquid-title:hover::before {
-    width: 100%;
-    opacity: 1;
-}
-
-.hero-sub {
-    font-size: 1.25rem;
-    color: #aaa;
-    margin-top: 40px;
-    letter-spacing: 1px;
-}
-
-.neon-text {
     color: #00ff85;
-    text-shadow: 0 0 20px rgba(0,255,133,0.8);
-    font-weight: 700;
-}
-
-/* Liquid Button */
-.btn-liquid {
-    margin-top: 50px;
+    background: rgba(0, 255, 133, 0.1);
+    padding: 6px 12px;
+    border-radius: 4px;
     display: inline-block;
-    padding: 18px 48px;
-    font-size: 1rem;
-    color: #fff;
-    background: rgba(255,255,255,0.05); /* Glass */
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 100px;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
-    transition: all 0.4s;
-    backdrop-filter: blur(10px);
+    margin-bottom: 24px;
+    border: 1px solid rgba(0, 255, 133, 0.2);
 }
 
-.btn-liquid:hover {
+.glitch-name {
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+}
+
+.role-container {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.5rem;
+    color: #aaa;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.static-txt { color: #666; margin-right: 8px; }
+.typewriter-text { color: #fff; border-bottom: 2px solid #00ff85; }
+.cursor-blink { 
+    color: #00ff85; 
+    margin-left: 4px; 
+    animation: blink 1s step-end infinite; 
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero-brief {
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 40px;
+    max-width: 450px;
+    line-height: 1.6;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-terminal {
     background: #fff;
     color: #000;
-    box-shadow: 0 0 50px rgba(255,255,255,0.5);
-    transform: scale(1.05);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* transition: all 0.3s; */
+}
+.btn-terminal:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+
+.btn-minimal {
+    padding: 14px 28px;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    font-weight: 500;
+}
+.btn-minimal:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+
+
+/* Right: Magnetic Code Window */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    perspective: 1500px; /* Essential for 3D tilt */
 }
 
-.arrow { display: inline-block; transition: transform 0.3s; }
-.btn-liquid:hover .arrow { transform: translateX(6px); }
+.code-window-3d {
+    width: 500px;
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 100px rgba(59,130,246,0.1); /* Glow */
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out; /* Smooth follow match JS */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glass Reflection */
+.window-reflection {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.window-header {
+    background: rgba(255,255,255,0.03);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.dots { display: flex; gap: 8px; margin-right: 16px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+
+.filename {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.window-content {
+    padding: 24px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #ccc;
+    position: relative;
+    z-index: 1;
+}
+
+.line { display: block; }
+.indent-1 { padding-left: 20px; }
+.indent-2 { padding-left: 40px; }
+.indent-3 { padding-left: 60px; }
+
+/* Syntax Highlighting */
+.k { color: #ff79c6; } /* Keyword */
+.f { color: #8be9fd; } /* Function */
+.s { color: #f1fa8c; } /* String */
+.v { color: #bd93f9; } /* Variable */
+.t { color: #ffad7d; } /* Component Tag */
+.p { color: #50fa7b; } /* Prop */
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hero-split { flex-direction: column; padding-top: 100px; text-align: center; }
+    .hero-container { flex-direction: column; gap: 60px; }
+    .hero-text { margin: 0 auto; }
+    .hero-btns { justify-content: center; }
+    .role-container { justify-content: center; }
+    .hero-visual { justify-content: center; width: 100%; }
+    .code-window-3d { width: 90%; }
+}
+
 
 /* Product Visuals Section */
 .product-section {

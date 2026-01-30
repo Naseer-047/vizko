@@ -109,53 +109,69 @@ function splitTextToSpans(selector) {
 }
 
 // 3. Hero Setup & Animation (LIQUID CHROME EDITION)
+// 3. Hero Setup (MAGNETIC CODE EDITION)
 function initHero() {
-    // Note: initCodeWindow removed as we are now God-Tier Liquid.
+    // A. Typewriter Effect
+    const roles = ["Full Stack Developer", "Premium UI Engineer", "Creative Coder"];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 100;
+    const deleteSpeed = 50;
+    const pauseDelay = 2000;
+    const typeTarget = document.querySelector('.typewriter-text');
 
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-    // 1. Classical Curtain Rise
-    tl.from('.meta-tag', {
-        y: -50, opacity: 0, duration: 1.5, ease: "power3.out"
-    })
-    .from('.liquid-title', {
-        y: 100, opacity: 0, scale: 0.9,
-        duration: 2, ease: "power4.out",
-        blur: 10
-    }, "-=1.2")
-    .from('.period', {
-        scale: 0, rotation: 180, duration: 1, ease: "back.out(1.7)"
-    }, "-=1.0")
-    .from('.hero-sub', {
-        y: 20, opacity: 0, duration: 1.5
-    }, "-=1.5")
-    .from('.floating-shard', {
-        y: 100, opacity: 0, stagger: 0.2, duration: 2, ease: "power2.out"
-    }, "-=2.0")
-    .from('.btn-liquid', {
-        y: 50, opacity: 0, duration: 1, ease: "power2.out"
-    }, "-=1.5");
-
-    // 4. Spotlight Beam Initialization (Expand from center)
-    gsap.from('.spotlight-beam', {
-        width: 0,
-        height: 0,
-        opacity: 0,
-        duration: 2,
-        ease: "power2.out",
-        delay: 0.5
-    });
-
-    // 5. Parallax Effect for the Liquid Title on Scroll
-    gsap.to('.liquid-title', {
-        yPercent: 50,
-        ease: "none",
-        scrollTrigger: {
-            trigger: '.hero-liquid',
-            start: "top top",
-            end: "bottom top",
-            scrub: true
+    function type() {
+        if (!typeTarget) return;
+        const currentRole = roles[roleIndex];
+        
+        if (isDeleting) {
+            typeTarget.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typeTarget.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
         }
+
+        let nextSpeed = isDeleting ? deleteSpeed : typeSpeed;
+
+        if (!isDeleting && charIndex === currentRole.length) {
+            nextSpeed = pauseDelay;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            nextSpeed = 500;
+        }
+
+        setTimeout(type, nextSpeed);
+    }
+    type();
+
+    // B. Magnetic 3D Tilt for Code Window
+    const win = document.querySelector('.code-window-3d');
+    const container = document.querySelector('.hero-split');
+
+    if (win && container) {
+        container.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25; // Rotate Y
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25; // Rotate X
+            
+            win.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) scale(1.02)`;
+        });
+
+        // Reset on leave
+        container.addEventListener('mouseleave', () => {
+            win.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+        });
+    }
+
+    // C. Entrance Animations
+    gsap.from('.hero-text > *', {
+        y: 30, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.5
+    });
+    gsap.from('.hero-visual', {
+        x: 50, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.8
     });
 }
 
