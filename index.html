@@ -139,75 +139,65 @@
 
         <!-- Horizontal Scroll Gallery -> Projects -->
         <!-- Projects Section (Flip Grid) -->
+        <!-- Projects Section: 3D Parallax -->
         <section class="gallery-section" id="work">
-            <div class="section-header center-text">
-                <h2 class="section-title">Selected <span class="gradient-text-dark">Work</span></h2>
-                <p>Academic projects, hackathons, and open source contributions.</p>
-            </div>
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 100px;">
+                    <h2 style="font-size: var(--h1); line-height: 1;">Selected <span class="gradient-text">Works</span></h2>
+                    <p style="color: var(--text-secondary); max-width: 400px; margin-top: 20px;">A collection of high-performance web applications and system tools.</p>
+                </div>
 
-            <!-- Filter Buttons -->
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="web">Web</button>
-                <button class="filter-btn" data-filter="ai">AI / ML</button>
-                <button class="filter-btn" data-filter="systems">Systems</button>
-            </div>
-
-            <!-- Flip Grid -->
-            <div class="project-grid">
                 <!-- Project 1: Lumina -->
-                <div class="project-card" data-category="web">
-                    <div class="project-overlay"></div>
-                    <div class="project-info">
-                        <h3>Lumina (The E-Commerce App)</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.8;">A comprehensive campus management system for engineering colleges featuring attendance tracking, assignment submission, and real-time notifications.</p>
-                        <p style="font-size: 0.85rem; color: var(--accent);">React, Node.js, MongoDB, Socket.io</p>
+                <div class="project-card-3d">
+                    <div class="card-inner">
+                        <div class="project-overlay" style="background: linear-gradient(to top, black, transparent);"></div>
+                        <div class="card-content">
+                            <h3 style="font-size: 3rem; font-weight: 700;">Lumina</h3>
+                            <p style="color: var(--text-secondary); font-size: 1.2rem; margin-top: 10px;">Comprehensive Campus Management OS</p>
+                            <div class="card-tags">
+                                <span class="tech-pill">React</span>
+                                <span class="tech-pill">Node.js</span>
+                                <span class="tech-pill">MongoDB</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <!-- Project 2: E-Learning -->
-                <div class="project-card" data-category="web">
-                    <div class="project-overlay"></div>
-                    <div class="project-info">
-                        <h3>E-Learning Platform</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.8;">An advanced online learning platform offering video courses, quizzes, and progress tracking for students and instructors.</p>
-                        <p style="font-size: 0.85rem; color: var(--accent);">Next.js, TypeScript, PostgreSQL, AWS</p>
+                <div class="project-card-3d">
+                    <div class="card-inner">
+                        <div class="project-overlay" style="background: linear-gradient(to top, black, transparent);"></div>
+                        <div class="card-content">
+                            <h3 style="font-size: 3rem; font-weight: 700;">Nova Learn</h3>
+                            <p style="color: var(--text-secondary); font-size: 1.2rem; margin-top: 10px;">Advanced E-Learning Platform</p>
+                            <div class="card-tags">
+                                <span class="tech-pill">Next.js</span>
+                                <span class="tech-pill">TypeScript</span>
+                                <span class="tech-pill">AWS</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <!-- Project 3: IoT -->
-                <div class="project-card" data-category="systems">
-                    <div class="project-overlay"></div>
-                    <div class="project-info">
-                        <h3>IoT Lab Management</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.8;">Automated lab management system monitoring equipment usage and environmental conditions using IoT sensors.</p>
-                        <p style="font-size: 0.85rem; color: var(--accent);">Python, Django, R-Pi, React Native</p>
+                <div class="project-card-3d">
+                    <div class="card-inner">
+                        <div class="project-overlay" style="background: linear-gradient(to top, black, transparent);"></div>
+                        <div class="card-content">
+                            <h3 style="font-size: 3rem; font-weight: 700;">Sentinels</h3>
+                            <p style="color: var(--text-secondary); font-size: 1.2rem; margin-top: 10px;">IoT Lab Monitoring System</p>
+                            <div class="card-tags">
+                                <span class="tech-pill">Python</span>
+                                <span class="tech-pill">Raspberry Pi</span>
+                                <span class="tech-pill">React Native</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Project 4: LMS Platform -->
-                <div class="project-card" data-category="web">
-                    <div class="project-overlay"></div>
-                    <div class="project-info">
-                        <h3>LMS Platform</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.8;">Learning Management System designed for scalable content delivery and user management.</p>
-                        <p style="font-size: 0.85rem; color: var(--accent);">React, Node.js, PostgreSQL</p>
-                    </div>
-                </div>
-                <!-- Project 5: Systems -->
-                <div class="project-card" data-category="systems">
-                    <div class="project-overlay"></div>
-                    <div class="project-info">
-                        <h3>File Compressor</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.8;">Efficient file compression tool using Huffman Coding algorithm to reduce file size without data loss.</p>
-                        <p style="font-size: 0.85rem; color: var(--accent);">Huffman Coding, C++</p>
-                    </div>
-                </div>
-                <!-- Project 6: AI -->
-                <div class="project-card" data-category="ai">
-                    <div class="project-overlay"></div>
-                    <div class="project-info">
-                        <h3>Discord Bot</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.8;">AI-powered discord assistant capable of moderation, music playback, and answering user queries.</p>
-                        <p style="font-size: 0.85rem; color: var(--accent);">Node.js, Discord.js, OpenAI API</p>
-                    </div>
+
+                <!-- More projects can be added here with same structure -->
+                <div style="text-align: center; margin-top: 80px;">
+                    <a href="https://github.com/naseer-047" target="_blank" class="btn-magnetic">View All on GitHub <div class="btn-fill"></div></a>
                 </div>
             </div>
         </section>
