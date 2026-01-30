@@ -364,7 +364,7 @@ function initAtmosphere() {
     });
 }
 
-// 3.5 About Me 3D Entrance
+// 3.5 About Me 3D Entrance (Atomic)
 function initAbout() {
     gsap.from(".about-text > *", {
         scrollTrigger: {
@@ -378,15 +378,16 @@ function initAbout() {
         ease: "power2.out"
     });
 
-    gsap.from(".orbit-system", {
+    gsap.from(".atom-system", {
         scrollTrigger: {
             trigger: ".about-section",
             start: "top 80%"
         },
         scale: 0.5,
         autoAlpha: 0,
-        duration: 1,
-        ease: "back.out(1.5)"
+        rotation: 180, // Spin in effect
+        duration: 1.2,
+        ease: "back.out(1.2)"
     });
 }
 
