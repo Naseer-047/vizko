@@ -227,7 +227,7 @@ function initFeatures() {
         ease: "power2.out",
         scrollTrigger: {
             trigger: '.features-section',
-            start: "top 80%"
+            start: "top 95%" // Trigger almost immediately when section enters
         }
     });
 }
@@ -246,7 +246,7 @@ function initExpertise() {
         ease: "back.out(1.2)",
         scrollTrigger: {
             trigger: '.expertise-section',
-            start: "top 75%"
+            start: "top 90%" // Earlier trigger
         }
     });
 
