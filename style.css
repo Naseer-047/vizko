@@ -2383,6 +2383,12 @@ section {
         min-width: 40px; /* Prevent shrink */
     }
 
+    .step-card {
+        transform: none;
+        width: 100%;
+    }
+}
+
 /* --- Education Section (Timeline) --- */
 .education-section {
     padding: var(--section-padding) 48px;
@@ -2513,3 +2519,121 @@ section {
         right: auto;
     }
 }
+
+/* --- Contact Section (Terminal) --- */
+.contact-section {
+    padding: var(--section-padding) 48px;
+    background: #000;
+    display: flex;
+    justify-content: center;
+}
+
+.terminal-container {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    font-family: 'Fira Code', monospace;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.terminal-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0,80,255,0.1);
+    border-color: #555;
+}
+
+.terminal-header {
+    background: #1a1a1a;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.control.close { background: #ff5f56; }
+.control.minimize { background: #ffbd2e; }
+.control.maximize { background: #27c93f; }
+
+.terminal-title {
+    color: #888;
+    font-size: 0.85rem;
+    flex-grow: 1;
+    text-align: center;
+    margin-right: 50px; /* Balance controls */
+}
+
+.terminal-body {
+    padding: 24px;
+    color: #ddd;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.terminal-line {
+    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.prompt { color: #27c93f; margin-right: 8px; font-weight: 700; }
+.path { color: #59c2ff; margin-right: 8px; font-weight: 700; }
+.command { color: #fff; }
+.output { color: #aaa; }
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.03);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #333;
+}
+
+.terminal-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    flex-grow: 1;
+    outline: none;
+    margin-left: 8px;
+}
+
+.terminal-submit {
+    background: #00ff85;
+    color: #000;
+    border: none;
+    padding: 6px 16px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.terminal-submit:hover {
+    box-shadow: 0 0 15px rgba(0,255,133,0.4);
+    transform: scale(1.05);
+}
+
+/* Blinking Cursor logic handled by input focus usually, but adding a visual one if needed */
