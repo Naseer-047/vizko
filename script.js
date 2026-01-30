@@ -95,20 +95,6 @@ function splitTextToSpans(selector) {
     const elements = document.querySelectorAll(selector);
     elements.forEach(el => {
         const text = el.innerText;
-        el.innerHTML = '';
-        text.split('').forEach(char => {
-            const span = document.createElement('span');
-            span.innerText = char === ' ' ? '&nbsp;' : char;
-            span.style.display = 'inline-block';
-            span.style.opacity = '0';
-            span.style.transform = 'translateY(120%)';
-            if (char === ' ') span.style.width = '0.3em'; // Adjust space width
-            el.appendChild(span);
-        });
-    });
-}
-
-// 3. Hero Setup & Animation (LIQUID CHROME EDITION)
 // 3. Hero Setup (MAGNETIC CODE EDITION)
 function initHero() {
     // A. Typewriter Effect
@@ -174,342 +160,157 @@ function initHero() {
         x: 50, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.8
     });
 }
+// 4. Services: Glass Grid Reveal
+function initServices() {
+    const cards = document.querySelectorAll('.glass-card');
+    if (!cards.length) return;
 
-function initCodeWindow() {
-    // 3a. Magnetic Follow Effect + Glare
-    const heroSection = document.querySelector('.hero-section');
-    const codeWindow = document.querySelector('.code-window');
-    const glare = document.querySelector('.window-glare');
-    const heroGlow = document.querySelector('.hero-background-glow');
-
-    if (heroSection && codeWindow) {
-        heroSection.addEventListener('mousemove', (e) => {
-            const rect = heroSection.getBoundingClientRect();
-            // Calculate mouse position relative to center of hero section
-            const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2); // -1 to 1
-            const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2); // -1 to 1
-
-            // Move window slightly (Magnetic feel)
-            gsap.to(codeWindow, {
-                x: x * 30, // Move 30px max
-                y: y * 30, // Move 30px max
-                rotationY: x * 10, // Tilt 10deg
-                rotationX: -y * 10, // Tilt 10deg
-                duration: 0.5,
-                ease: "power2.out"
-            });
-
-            // Glare Effect
-            gsap.to(glare, {
-                x: x * 80, // Glare moves opposite/more
-                opacity: 0.5 + (x * 0.3), // Brightens on side
-                duration: 0.5
-            });
-
-            // Hero Glow Follow
-            if(heroGlow) {
-                 gsap.to(heroGlow, {
-                    x: x * 50, 
-                    y: y * 50,
-                    duration: 1.5,
-                    ease: "power2.out"
-                });
-            }
-        });
-
-        heroSection.addEventListener('mouseleave', () => {
-             // Reset Window
-            gsap.to(codeWindow, {
-                x: 0,
-                y: 0,
-                rotationY: -10, // Return to default CSS skew
-                rotationX: 5,
-                duration: 1,
-                ease: "elastic.out(1, 0.5)"
-            });
-            // Reset Glare
-             gsap.to(glare, { opacity: 0, duration: 0.5 });
-        });
-    }
-
-    // 3b. Typewriter Effect
-    const codeLines = document.querySelectorAll('.code-line');
-    
-    // reset text to hidden first
-    gsap.set(codeLines, { autoAlpha: 0, x: -10 });
-
-    const typeTl = gsap.timeline({ delay: 0.5 }); // Start quickly
-    codeLines.forEach((line) => {
-        typeTl.to(line, {
-            autoAlpha: 1,
-            x: 0,
-            duration: 0.05,
-            ease: "none"
-        }, "+=0.08"); 
-    });
-}
-
-// 4. Restored Features Section
-function initFeatures() {
-    // Animate the numbers and titles
-    gsap.from('.value-item', {
-        y: 30,
-        opacity: 1, // FORCE VISIBLE
+    gsap.from(cards, {
+        scrollTrigger: {
+            trigger: ".services-section",
+            start: "top 80%",
+        },
+        y: 50,
+        opacity: 0,
         duration: 0.8,
         stagger: 0.2,
-        ease: "power2.out",
+        ease: "power2.out"
+    });
+}
+
+// 5. Projects: Bento Grid Pop-in
+function initBento() {
+    const items = document.querySelectorAll('.bento-item');
+    if (!items.length) return;
+
+    gsap.from(items, {
         scrollTrigger: {
-            trigger: '.features-section',
-            start: "top 95%" 
-        }
-    });
-}
-
-
-// 5. Expertise Bento Grid
-function initExpertise() {
-    const cards = gsap.utils.toArray('.expertise-card');
-    
-    gsap.from(cards, {
-        y: 50,
-        opacity: 1, // FORCE VISIBLE
-        scale: 0.95,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "back.out(1.2)",
-        scrollTrigger: {
-            trigger: '.expertise-section',
-            start: "top 90%" // Earlier trigger
-        }
-    });
-
-    // Card Tilt Effect specifically for Bento
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Subtle tilt
-            const xPct = (x / rect.width - 0.5) * 5; 
-            const yPct = (y / rect.height - 0.5) * -5;
-
-            gsap.to(card, {
-                rotationY: xPct,
-                rotationX: yPct,
-                duration: 0.4,
-                ease: "power2.out"
-            });
-        });
-        
-        card.addEventListener('mouseleave', () => {
-             gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.4 });
-        });
-    });
-}
-
-// 6. 3D Workflow Animation
-// 6. Engineering Approach Animation (Stacked Cards)
-// 6. Circuit Workflow Animation
-function initWorkflow() {
-    // Animate the line filling up
-    gsap.to('.circuit-line-active', {
-        width: "100%",
-        ease: "none",
-        scrollTrigger: {
-            trigger: '.circuit-container',
-            start: "top 70%",
-            end: "bottom 70%",
-            scrub: 1
-        }
-    });
-
-    // Reveal Steps
-    const steps = gsap.utils.toArray('.circuit-step');
-    steps.forEach((step, i) => {
-        gsap.from(step, {
-            y: 50,
-            opacity: 0,
-            duration: 0.6,
-            delay: i * 0.2, // Stagger based on index
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: '.circuit-container',
-                start: "top 70%"
-                // No scrub, just play
-            }
-        });
-    });
-}
-
-// 7. Interactive Comparison Slider
-function initSlider() {
-    const container = document.querySelector('.comparison-container');
-    const afterImage = document.querySelector('.after-image');
-    const handle = document.querySelector('.slider-handle');
-
-    if (!container) return;
-
-    function moveSlider(e) {
-        const rect = container.getBoundingClientRect();
-        // Calculate position (clamp between 0 and width)
-        let x = (e.clientX || e.touches[0].clientX) - rect.left;
-        x = Math.max(0, Math.min(x, rect.width));
-        
-        const percentage = (x / rect.width) * 100;
-
-        // Update width of the Top image (After Image usually, or Before depending on layer order)
-        // Here .after-image is the one on top (z-index 2), covering the sketch.
-        // It has overflow hidden. 
-        // So resizing width reveals/hides it.
-        // If width is 100%, we see full render. If 0%, full sketch.
-        
-        gsap.to(afterImage, {
-            width: `${percentage}%`,
-            duration: 0.1, // Quick follow
-            ease: "none"
-        });
-        
-        gsap.to(handle, {
-            left: `${percentage}%`,
-            duration: 0.1,
-            ease: "none"
-        });
-    }
-
-    container.addEventListener('mousemove', moveSlider);
-    container.addEventListener('touchmove', moveSlider);
-}
-
-// 8. Projects Grid (Filterable + Animation)
-function initProjectsGrid() {
-    const filters = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.project-card');
-    
-    // Initial Reveal
-    gsap.from(cards, {
-        y: 50,
+            trigger: ".projects-section",
+            start: "top 75%",
+        },
+        scale: 0.9,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.6,
         stagger: 0.1,
-        scrollTrigger: {
-            trigger: ".project-grid",
-            start: "top 80%"
-        }
-    });
-
-    filters.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // 1. Update Active State
-            filters.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const category = btn.dataset.filter;
-            
-            // 2. Filter Logic (Fade Out -> Layout Change -> Fade In)
-            // Ideally we'd use GSAP Flip here, but without the plugin loaded, 
-            // a robust "animate out, switch, animate in" is safest.
-            
-            const tl = gsap.timeline();
-
-            // Step A: Hide all current cards
-            tl.to(cards, {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.3,
-                ease: "power2.in",
-                onComplete: () => {
-                    // Step B: Update DOM layout (Display None/Block)
-                    cards.forEach(card => {
-                        if (category === 'all' || card.dataset.category === category) {
-                            card.style.display = "block";
-                        } else {
-                            card.style.display = "none";
-                        }
-                    });
-                }
-            });
-
-            // Step C:  Animate visible cards back in (New Layout)
-            tl.to(cards, {
-                 scale: 1,
-                 opacity: 1,
-                 duration: 0.4,
-                 ease: "power2.out",
-                 stagger: 0.05,
-                 clearProps: "scale" // Ensure hover effects work later
-            }); // This runs after A completes due to timeline
-        });
+        ease: "back.out(1.7)"
     });
 }
 
-// 9. Footer Parallax
-function initFooter() {
-    gsap.from('.footer-big-text span', {
-        yPercent: 50,
-        opacity: 0,
+// 6. Tech Stack: Terminal Typing
+function initTerminal() {
+    const terminal = document.querySelector('.terminal-container');
+    if (!terminal) return;
+
+    gsap.from(terminal, {
         scrollTrigger: {
-            trigger: '.site-footer',
+            trigger: ".tech-terminal-section",
             start: "top 80%",
-            end: "bottom bottom",
-            scrub: 1
-        }
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
     });
 }
 
-// 10. Tech Ecosystem Logic
-function initStyleSelector() {
-    const tabs = document.querySelectorAll('.style-tab');
-    const images = document.querySelectorAll('.style-image');
+// 7. Process Section (New)
+function initProcess() {
+    const steps = document.querySelectorAll('.process-step');
+    if (!steps.length) return;
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Remove active
-            tabs.forEach(t => t.classList.remove('active'));
-            images.forEach(img => img.classList.remove('active'));
+    gsap.from(steps, {
+        scrollTrigger: {
+            trigger: ".process-section",
+            start: "top 80%"
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.3,
+        duration: 1,
+        ease: "power2.out"
+    });
+}
 
-            // Add active
-            tab.classList.add('active');
-            // ID format is style-[name] e.g. style-cyberpunk
-            const targetId = `style-${tab.dataset.style}`;
-            const target = document.getElementById(targetId);
-            if(target) target.classList.add('active');
-        });
+// 8. Testimonials Section (New - Marquee)
+function initTestimonials() {
+    const track = document.querySelector('.testimonial-track');
+    if(!track) return;
+    
+    // Clone for infinite loop
+    track.innerHTML += track.innerHTML; 
+    
+    // Infinite Scroll
+    gsap.to(track, {
+        xPercent: -50,
+        duration: 20,
+        ease: "none",
+        repeat: -1
+    });
+}
+
+// 9. Contact: CLI Form Slide Up
+function initContact() {
+    const form = document.querySelector('.contact-container');
+    if (!form) return;
+
+    gsap.from(form, {
+        scrollTrigger: {
+            trigger: ".contact-section",
+            start: "top 75%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+}
+
+// 10. Footer: Parallax Reveal
+function initFooter() {
+    gsap.from(".footer-text", {
+        scrollTrigger: {
+            trigger: ".site-footer",
+            start: "top 90%",
+            scrub: 1
+        },
+        y: 100,
+        opacity: 0,
     });
 }
 
 // 11. 3D Pricing Tilt
 // 11. Contact Terminal Typing Effect
-function initTerminal() {
-    const section = document.querySelector('.contact-section');
-    if(!section) return;
+// This function is replaced by the new initTerminal and initContact
+// function initTerminal() {
+//     const section = document.querySelector('.contact-section');
+//     if(!section) return;
 
-    // Typewriter for the command
-    gsap.fromTo('.terminal-line .command', 
-        { width: "0ch", opacity: 1, overflow: "hidden", whiteSpace: "nowrap", display: "inline-block", borderRight: "2px solid #fff" },
-        { 
-            width: "16ch", // "initiate_contact".length
-            duration: 1.5, 
-            ease: "steps(16)",
-            scrollTrigger: {
-                trigger: section,
-                start: "top 60%"
-            },
-            onComplete: () => {
-                gsap.set('.terminal-line .command', { borderRight: "none" }); // Remove cursor
+//     // Typewriter for the command
+//     gsap.fromTo('.terminal-line .command', 
+//         { width: "0ch", opacity: 1, overflow: "hidden", whiteSpace: "nowrap", display: "inline-block", borderRight: "2px solid #fff" },
+//         { 
+//             width: "16ch", // "initiate_contact".length
+//             duration: 1.5, 
+//             ease: "steps(16)",
+//             scrollTrigger: {
+//                 trigger: section,
+//                 start: "top 60%"
+//             },
+//             onComplete: () => {
+//                 gsap.set('.terminal-line .command', { borderRight: "none" }); // Remove cursor
                 
-                // Show Output
-                gsap.to('.terminal-line .output', { opacity: 1, duration: 0.5, stagger: 0.5 });
-                // Show Input
-                gsap.to('.terminal-input-line', { opacity: 1, y: 0, duration: 0.5, delay: 1 });
-            }
-        }
-    );
+//                 // Show Output
+//                 gsap.to('.terminal-line .output', { opacity: 1, duration: 0.5, stagger: 0.5 });
+//                 // Show Input
+//                 gsap.to('.terminal-input-line', { opacity: 1, y: 0, duration: 0.5, delay: 1 });
+//             }
+//         }
+//     );
 
-    // Initial Hide
-    gsap.set('.terminal-line .output', { opacity: 0 });
-    gsap.set('.terminal-input-line', { opacity: 0, y: 10 });
-}
+//     // Initial Hide
+//     gsap.set('.terminal-line .output', { opacity: 0 });
+//     gsap.set('.terminal-input-line', { opacity: 0, y: 10 });
+// }
 
 // 12. Video Window Parallax
 function initVideoParallax() {

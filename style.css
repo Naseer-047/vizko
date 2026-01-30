@@ -2455,58 +2455,152 @@ section {
     left: 50%;
     text-align: left;
 }
+/* --- Global Redesign Components --- */
 
-.timeline-dot {
-    position: absolute;
-    top: 40px;
-    width: 16px;
-    height: 16px;
+/* 1. Services: Glass Grid */
+.services-section {
+    padding: 100px 5%;
     background: #000;
-    border: 2px solid #555;
-    border-radius: 50%;
-    z-index: 2;
-    transition: all 0.3s;
 }
-
-.timeline-item.left .timeline-dot {
-    right: -8px; 
+.glass-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
 }
-
-.timeline-item.right .timeline-dot {
-    left: -8px;
-}
-
-.timeline-item:hover .timeline-dot {
-    background: #fff;
-    border-color: #fff;
-    box-shadow: 0 0 15px rgba(255,255,255,0.5);
-    transform: scale(1.3);
-}
-
-.timeline-content {
-    background: #111;
-    border: 1px solid #222;
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
+.glass-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
     transition: all 0.4s;
+    cursor: default;
+}
+.glass-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-10px);
+}
+.card-icon { font-size: 2.5rem; margin-bottom: 24px; }
+.glass-card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 12px; }
+.glass-card p { color: #888; line-height: 1.6; }
+
+
+/* 2. Projects: Bento Grid */
+.projects-section {
+    padding: 100px 5%;
+    background: #050505;
+}
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 300px;
+    gap: 24px;
+    margin-top: 48px;
+}
+.bento-item {
+    background: #111;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.bento-item:hover { transform: scale(0.98); border-color: rgba(255,255,255,0.3); }
+
+/* Bento Spans */
+.main-feature { grid-column: span 2; grid-row: span 2; }
+.tall-feature { grid-row: span 2; }
+.wide-feature { grid-column: span 2; }
+
+/* Bento Content */
+.bento-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s;
+    opacity: 0.6;
+}
+.bento-item:hover .bento-bg { transform: scale(1.1); opacity: 0.4; }
+
+.bento-content {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+.bento-content h3 { color: #fff; font-size: 1.5rem; margin-bottom: 8px; }
+.bento-content p { color: #ccc; font-size: 0.9rem; }
+.tech-tags { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+.tech-tags span { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 100px; font-size: 0.75rem; color: #fff; }
+
+
+/* 3. Tech Stack: Terminal */
+.tech-terminal-section { padding: 80px 5%; background: #000; display: flex; justify-content: center; }
+.terminal-container { width: 100%; max-width: 800px; background: #0c0c0c; border: 1px solid #333; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); overflow: hidden; }
+.terminal-header { background: #1a1a1a; padding: 12px 16px; display: flex; align-items: center; justify-content: center; position: relative; }
+.terminal-header .dots { position: absolute; left: 16px; display: flex; gap: 6px; }
+.terminal-header .title { color: #888; font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+.terminal-body { padding: 32px; font-family: 'Fira Code', monospace; color: #fff; line-height: 1.8; }
+.json-line { display: block; }
+.blinking-cursor { animation: blink 1s step-end infinite; color: #00ff85; }
+
+
+/* 4. Contact: CLI Form */
+.contact-section { padding: 100px 5%; background: #050505; display: flex; justify-content: center; }
+.contact-container { width: 100%; max-width: 600px; }
+.cli-form { margin-top: 48px; font-family: 'Fira Code', monospace; }
+.form-group { margin-bottom: 24px; }
+.form-group label { display: block; color: #00ff85; margin-bottom: 8px; }
+.form-group input, .form-group textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid #333; color: #fff; padding: 12px 0; font-family: inherit; font-size: 1.1rem; outline: none; transition: border-color 0.3s; }
+.form-group input:focus, .form-group textarea:focus { border-color: #00ff85; }
+.btn-terminal-submit { background: #00ff85; color: #000; border: none; padding: 16px 32px; font-family: 'Fira Code', monospace; font-weight: 700; cursor: pointer; margin-top: 24px; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; }
+.btn-terminal-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0, 255, 133, 0.3); }
+
+
+/* 5. Footer */
+.site-footer { padding: 80px 5%; background: #000; border-top: 1px solid #222; }
+.footer-text { font-size: clamp(3rem, 15vw, 12rem); color: #111; text-align: center; font-weight: 900; letter-spacing: -5px; line-height: 1; user-select: none; }
+.footer-links { display: flex; justify-content: center; gap: 32px; margin-top: -40px; position: relative; z-index: 2; }
+.footer-links a { color: #fff; text-decoration: none; font-size: 1.1rem; transition: color 0.3s; }
+.footer-links a:hover { color: #00ff85; }
+.copyright { text-align: center; color: #444; margin-top: 40px; font-family: 'Fira Code', monospace; font-size: 0.8rem; }
+
+
+/* 6. Process Section */
+.process-section { padding: 100px 5%; background: #000; }
+.process-grid { display: flex; justify-content: space-between; gap: 40px; margin-top: 60px; }
+.process-step { text-align: center; flex: 1; }
+.step-num { font-size: 3rem; font-weight: 900; color: #111; -webkit-text-stroke: 1px #333; margin-bottom: 20px; }
+.process-step h3 { font-size: 1.5rem; color: #fff; margin-bottom: 12px; }
+.process-step p { color: #888; }
+
+/* 7. Testimonials Section */
+.testimonials-section { padding: 100px 0; background: #050505; overflow: hidden; }
+.testimonial-header { text-align: center; margin-bottom: 60px; }
+.testimonial-marquee { width: 100%; display: flex; text-wrap: wrap; }
+.testimonial-track { display: flex; gap: 32px; white-space: nowrap; will-change: transform; }
+.testimonial-card { 
+    background: #111; 
+    border: 1px solid #222; 
+    padding: 40px; 
+    border-radius: 16px; 
+    width: 400px; 
+    flex-shrink: 0;
+}
+.testimonial-card p { color: #ccc; font-size: 1.1rem; line-height: 1.6; white-space: normal; }
+.user-meta { margin-top: 20px; color: #00ff85; font-weight: 600; font-family: 'Fira Code', monospace; }
+
+@media (max-width: 768px) {
+    .process-grid { flex-direction: column; }
 }
 
-.timeline-item:hover .timeline-content {
-    background: #1a1a1a;
-    border-color: #444;
-    transform: translateY(-5px);
-}
-
-.timeline-date {
-    display: inline-block;
-    padding: 4px 12px;
-    background: #222;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    color: #bbb;
-    margin-bottom: 12px;
-}
 
 .timeline-content h3 {
     font-size: 1.5rem;
