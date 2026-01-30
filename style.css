@@ -2556,8 +2556,64 @@ section {
 .blinking-cursor { animation: blink 1s step-end infinite; color: #00ff85; }
 
 
+/* 13. Spotlight Section */
+.spotlight-section {
+    padding: var(--section-padding) 48px;
+    height: 80vh; /* Taller for drama */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    position: relative;
+    perspective: 1000px; /* Enable 3D tilt */
+}
+
+.spotlight-text {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    color: #444; /* Dim by default */
+    text-align: center;
+    max-width: 900px;
+    line-height: 1.2;
+    z-index: 2;
+    cursor: default;
+    transform-style: preserve-3d; /* Key for rotation */
+    transition: color 0.5s ease, text-shadow 0.5s ease; /* Smooth transition */
+}
+
+/* New: Hover Effect for entire text block */
+.spotlight-text:hover {
+    color: #ffffff;
+    text-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+}
+
+.spotlight-text .highlight {
+    color: #00ff85; /* Accent color */
+    display: inline-block;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.spotlight-beam {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1000px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 1;
+}
+
 /* 4. Contact: CLI Form */
-.contact-section { padding: 100px 5%; background: #050505; display: flex; justify-content: center; }
+.contact-section {
+    padding: 100px 5%;
+    background: #050505;
+    display: flex;
+    justify-content: center;
+}
 .contact-container { width: 100%; max-width: 600px; }
 .cli-form { margin-top: 48px; font-family: 'Fira Code', monospace; }
 .form-group { margin-bottom: 24px; }

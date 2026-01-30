@@ -115,20 +115,23 @@ function initServices() {
     );
 }
 
-// 4.5 Velocity Scroll Text (Global)
+// 4.5 Velocity Scroll Text (Global - Seamless Infinite Loop)
 function initVelocityText() {
     const tracks = document.querySelectorAll('.velocity-track');
     
     tracks.forEach((track, i) => {
-        // Clone for infinite loop (double up to ensure width)
-        track.innerHTML += track.innerHTML; 
+        const originalContent = track.innerHTML;
+        
+        // Clone 3 more times (Total 4 copies) to guarantee no gaps on ultra-wide screens
+        track.innerHTML = originalContent + originalContent + originalContent + originalContent; 
         
         const direction = i % 2 === 0 ? -1 : 1; // Alternate directions
         
+        // Move -25% (one full copy length) to seamless loop
         gsap.to(track, {
-            xPercent: direction * -50, // Move half its total width (which is 1 original width)
+            xPercent: direction * -25, 
             ease: "none",
-            duration: 15,
+            duration: 20, // Slower for readability
             repeat: -1
         });
     });
@@ -181,9 +184,11 @@ function initSkills() {
 function initSpotlight() {
     const section = document.querySelector('.spotlight-section');
     const text = document.querySelector('.spotlight-text');
+    const highlight = document.querySelector('.spotlight-text .highlight');
     
     if (!section || !text) return;
 
+    // 1. Scroll Reveal
     gsap.fromTo(text,
         { scale: 0.8, autoAlpha: 0, y: 50 },
         {
@@ -201,6 +206,44 @@ function initSpotlight() {
         }
     );
     
+    // 2. Interactive Magnetic Hover
+    section.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 30;
+        const y = (e.clientY / window.innerHeight - 0.5) * 30;
+        
+        gsap.to(text, {
+            rotationX: -y,
+            rotationY: x,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+    
+    // Reset on leave
+    section.addEventListener('mouseleave', () => {
+        gsap.to(text, { rotationX: 0, rotationY: 0, duration: 1 });
+    });
+
+    // 3. Highlight Word Hover (Glow Burst)
+    if (highlight) {
+        highlight.addEventListener('mouseenter', () => {
+            gsap.to(highlight, { 
+                textShadow: "0 0 30px #00ff85, 0 0 60px #00ff85", 
+                color: "#fff",
+                scale: 1.1,
+                duration: 0.3 
+            });
+        });
+        highlight.addEventListener('mouseleave', () => {
+            gsap.to(highlight, { 
+                textShadow: "none", 
+                color: "#00ff85", // Return to green/accent
+                scale: 1,
+                duration: 0.3 
+            });
+        });
+    }
+
     // Animate the beam light if it exists
     gsap.to('.spotlight-beam', {
         rotation: 20,
