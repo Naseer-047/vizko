@@ -364,6 +364,33 @@ function initAtmosphere() {
     });
 }
 
+// 3.5 About Me 3D Entrance
+function initAbout() {
+    gsap.from(".about-text > *", {
+        scrollTrigger: {
+            trigger: ".about-section",
+            start: "top 80%"
+        },
+        x: -50,
+        autoAlpha: 0,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    gsap.from(".orbit-system", {
+        scrollTrigger: {
+            trigger: ".about-section",
+            start: "top 80%"
+        },
+        scale: 0.5,
+        autoAlpha: 0,
+        duration: 1,
+        ease: "back.out(1.5)"
+    });
+}
+
+
 // Master Init
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Register
@@ -371,6 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Initialize Components
     initHero();
+    initAbout(); // New 3D Section
     initServices(); 
     initVelocityText(); // New Velocity Text
     initBento();     
