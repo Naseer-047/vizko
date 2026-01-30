@@ -2697,36 +2697,38 @@ section {
     background-position: center bottom;
 }
 
-/* Atomic Rings (React Logo Style) */
+/* Atomic Rings (Fixed Logic) */
 .atom-ring {
     position: absolute;
     top: 50%; left: 50%;
-    width: 100%;
-    height: 120px; /* Ellipse */
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle orbit line */
+    width: 400px; /* Circle Diameter */
+    height: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     transform-style: preserve-3d;
+    pointer-events: none;
 }
 
-/* Rotation Angles for React Look */
-.ring-1 { transform: translate(-50%, -50%) rotate(0deg); }
-.ring-2 { transform: translate(-50%, -50%) rotate(60deg); }
-.ring-3 { transform: translate(-50%, -50%) rotate(-60deg); }
+/* Squash circles into ellipses using Scale */
+.ring-1 { transform: translate(-50%, -50%) rotate(0deg) scaleY(0.4); }
+.ring-2 { transform: translate(-50%, -50%) rotate(60deg) scaleY(0.4); }
+.ring-3 { transform: translate(-50%, -50%) rotate(-60deg) scaleY(0.4); }
 
-/* Electron (The Icon) */
+/* Electron Container (Spins the position) */
 .electron {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    animation: atomSpin 15s linear infinite; /* Slower (was 8s) */
+    border-radius: 50%;
+    animation: atomSpin 12s linear infinite;
 }
 
-.electron.delay-1 { animation-delay: -7.5s; }
+.electron.delay-1 { animation-delay: -6s; }
 
-/* The visible badge inside the spinner */
+/* The visible badge (Counter-scales and Counter-rotates) */
 .electron .tech-icon {
     position: absolute;
-    top: 50%; right: -25px; /* Place on edge */
-    width: 50px; height: 50px; /* Larger icons */
+    top: 50%; right: -25px; /* On the rim */
+    width: 50px; height: 50px;
     margin-top: -25px;
     background: #111;
     border: 1px solid #333;
@@ -2734,9 +2736,13 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Counter-rotate to stay upright */
-    animation: atomCounterSpin 15s linear infinite; /* Match parent speed */
     box-shadow: 0 0 15px rgba(0,0,0,0.8);
+    
+    /* 
+       1. scaleY(2.5) to un-squash the parent's scaleY(0.4). 
+       2. rotate to billboard against the spin.
+    */
+    animation: atomCounterSpin 12s linear infinite;
 }
 
 .electron .tech-icon img {
@@ -2751,8 +2757,8 @@ section {
 }
 
 @keyframes atomCounterSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-360deg); }
+    0% { transform: scaleY(2.5) rotate(0deg); }
+    100% { transform: scaleY(2.5) rotate(-360deg); }
 }
 
 /* 11. Atmosphere Mesh (Background) */
