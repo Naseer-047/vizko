@@ -2241,9 +2241,142 @@ section {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
     }
-    .expertise-card.large {
-        grid-column: auto;
-        grid-row: auto;
-        min-height: 300px;
+/* --- Workflow Section (Circuit Timeline) --- */
+.circuit-header {
+    margin-bottom: 80px;
+}
+
+.circuit-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* Connecting Line */
+.circuit-line-bg {
+    position: absolute;
+    top: 60px; /* Adjust based on marker center */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #222;
+    z-index: 0;
+}
+
+.circuit-step {
+    position: relative;
+    z-index: 1;
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.step-marker {
+    width: 40px;
+    height: 40px;
+    background: #000;
+    border: 2px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-weight: 700;
+    margin-bottom: 32px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+/* Marker Halo */
+.step-marker::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.circuit-step:hover .step-marker {
+    background: #fff;
+    color: #000;
+    transform: scale(1.2);
+    border-color: #fff;
+}
+
+.circuit-step:hover .step-marker::after {
+    border-color: rgba(255,255,255,0.3);
+    animation: ping 1.5s infinite;
+}
+
+.step-card {
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    border-radius: 16px;
+    padding: 24px;
+    opacity: 0.7;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+.circuit-step:hover .step-card {
+    opacity: 1;
+    transform: translateY(0);
+    border-color: #333;
+    background: #111;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.step-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.step-card p {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.5;
+}
+
+@keyframes ping {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+@media (max-width: 900px) {
+    .circuit-container {
+        flex-direction: column;
+        padding-left: 20px;
+    }
+    .circuit-line-bg {
+        width: 2px;
+        height: 100%;
+        left: 20px;
+        top: 0;
+    }
+    .circuit-step {
+        width: 100%;
+        flex-direction: row;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        text-align: left;
+    }
+    .step-marker {
+        margin-right: 24px;
+        margin-bottom: 0;
+        min-width: 40px; /* Prevent shrink */
+    }
+    .step-card {
+        transform: none;
+        width: 100%;
     }
 }
