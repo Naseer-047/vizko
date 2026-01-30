@@ -93,28 +93,6 @@ function initHero() {
     });
 }
 
-// 4. Services: Glass Grid Reveal (Section 2)
-function initServices() {
-    const cards = document.querySelectorAll('.glass-card');
-    if (!cards.length) return;
-
-    gsap.fromTo(cards, 
-        { y: 80, autoAlpha: 0 },
-        {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: ".services-section",
-                start: "top 85%", 
-                toggleActions: "play none none reverse"
-            }
-        }
-    );
-}
-
 // 4.5 Velocity Scroll Text (Global - Seamless Infinite Loop)
 function initVelocityText() {
     const tracks = document.querySelectorAll('.velocity-track');
@@ -628,39 +606,35 @@ function initMagneticButton() {
 }
 
 
-// 3.9 Testimonial Section Animations
+// 3.9 Testimonial Auto-Scroll Carousel
 function initTestimonialsNew() {
-    const section = document.querySelector('.testimonial-section');
-    if (!section) return;
+    const track = document.querySelector('.testimonial-track');
+    if (!track) return;
     
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: section,
-            start: 'top 70%',
-            end: 'top 20%',
-            scrub: 1
+    const cards = gsap.utils.toArray('.testi-card');
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 30; // Must match CSS gap
+    const totalWidth = (cardWidth + gap) * (cards.length / 2); // Half because duplicated
+    
+    // Infinite horizontal scroll
+    gsap.to(track, {
+        x: -totalWidth,
+        duration: 30, // Adjust speed (higher = slower)
+        ease: 'none',
+        repeat: -1,
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
         }
     });
     
-    tl.from('.testi-title', {
-        x: -50,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out'
-    })
-    .from('.testi-desc', {
-        x: -30,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out'
-    }, '-=0.3')
-    .from('.testi-card', {
-        y: 30,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 0.7,
-        ease: 'power2.out'
-    }, '-=0.2');
+    // Pause on hover
+    track.addEventListener('mouseenter', () => {
+        gsap.to(track, { timeScale: 0, duration: 0.5 });
+    });
+    
+    track.addEventListener('mouseleave', () => {
+        gsap.to(track, { timeScale: 1, duration: 0.5 });
+    });
 }
 
 
@@ -676,7 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjects(); // Project showcase sections
     initMagneticButton(); // Magnetic button interaction
     initTestimonialsNew(); // Testimonial section
-    initServices(); 
     initVelocityText(); // New Velocity Text
     initBento();     
     initSkills();    
