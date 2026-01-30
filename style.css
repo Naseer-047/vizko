@@ -3150,6 +3150,63 @@ section {
     }
 }
 
+/* Magnetic Button */
+.magnetic-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    padding: 40px 0;
+}
+
+.magnetic-btn {
+    position: relative;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #2E4C9E 0%, #4A6FC9 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(46, 76, 158, 0.3);
+    letter-spacing: 0.02em;
+}
+
+.magnetic-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 30px rgba(46, 76, 158, 0.5);
+}
+
+.btn-text {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.magnetic-btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+@media(max-width: 768px) {
+    .magnetic-button-wrapper {
+        margin-top: 50px;
+    }
+    
+    .magnetic-btn {
+        padding: 16px 32px;
+        font-size: 0.9rem;
+    }
+}
+
 /* 11. Atmosphere Mesh (Background) */
 .mesh-section {
     position: fixed;
