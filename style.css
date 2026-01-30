@@ -2012,9 +2012,108 @@ section {
     margin-bottom: 32px;
 }
 
-.modal-image {
+
+/* --- Value / Hire Me Section Redesign --- */
+.value-section {
+    padding: var(--section-padding) 48px;
+    background: #050505;
+    position: relative;
+    z-index: 10;
+}
+
+.value-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.value-header h2 {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.value-header p {
+    color: #888;
+    font-size: 1.25rem;
+}
+
+.value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.value-card {
+    background: linear-gradient(145deg, #111, #0a0a0a);
+    border: 1px solid #222;
+    border-radius: 24px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    group: hover;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    border-color: #444;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* Inner Glow Effect */
+.value-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 200px;
-    background: #222;
-    border-radius: 12px;
+    height: 100%;
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.value-card:hover::before {
+    opacity: 1;
+}
+
+.value-icon-box {
+    width: 64px;
+    height: 64px;
+    background: #1a1a1a;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    color: white;
+    font-size: 1.5rem;
+    transition: transform 0.4s;
+}
+
+.value-card:hover .value-icon-box {
+    transform: scale(1.1) rotate(5deg);
+    background: white;
+    color: black;
+}
+
+.value-card h3 {
+    font-size: 1.75rem;
+    margin-bottom: 16px;
+    color: white;
+}
+
+.value-card p {
+    color: #999;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+    .value-grid {
+        grid-template-columns: 1fr;
+    }
 }
