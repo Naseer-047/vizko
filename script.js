@@ -771,43 +771,87 @@ function initAchievements() {
     });
     
     // Animate stat cards
-    gsap.from('.stat-card', {
-        scrollTrigger: {
-            trigger: '.stats-grid',
-            start: 'top 75%'
-        },
-        y: 50,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.8,
-        ease: 'power3.out'
-    });
+    const statCards = document.querySelectorAll('.stat-card');
+    if (statCards.length > 0) {
+        gsap.fromTo('.stat-card', 
+            { opacity: 1, y: 0 },
+            {
+                scrollTrigger: {
+                    trigger: '.stats-grid',
+                    start: 'top 75%',
+                    once: true
+                },
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: 'power3.out'
+            }
+        );
+    }
     
     // Animate badges
-    gsap.from('.badge-item', {
-        scrollTrigger: {
-            trigger: '.badges-grid',
-            start: 'top 80%'
-        },
-        y: 30,
-        opacity: 0,
-        stagger: 0.08,
-        duration: 0.6,
-        ease: 'power2.out'
-    });
+    const badges = document.querySelectorAll('.badge-item');
+    if (badges.length > 0) {
+        gsap.fromTo('.badge-item',
+            { opacity: 1, y: 0 },
+            {
+                scrollTrigger: {
+                    trigger: '.badges-grid',
+                    start: 'top 80%',
+                    once: true
+                },
+                y: 0,
+                opacity: 1,
+                stagger: 0.08,
+                duration: 0.6,
+                ease: 'power2.out'
+            }
+        );
+    }
     
     // Animate client logos
-    gsap.from('.client-logo', {
-        scrollTrigger: {
-            trigger: '.clients-grid',
-            start: 'top 80%'
-        },
-        scale: 0.8,
-        opacity: 0,
-        stagger: 0.05,
-        duration: 0.5,
-        ease: 'back.out(1.7)'
-    });
+    const logos = document.querySelectorAll('.client-logo');
+    if (logos.length > 0) {
+        gsap.fromTo('.client-logo',
+            { opacity: 1, scale: 1 },
+            {
+                scrollTrigger: {
+                    trigger: '.clients-grid',
+                    start: 'top 80%',
+                    once: true
+                },
+                scale: 1,
+                opacity: 1,
+                stagger: 0.05,
+                duration: 0.5,
+                ease: 'back.out(1.7)'
+            }
+        );
+    }
+}
+
+
+// 3.11 Certifications Section Animations
+function initCertifications() {
+    const certCards = document.querySelectorAll('.cert-card');
+    if (certCards.length > 0) {
+        gsap.fromTo('.cert-card',
+            { opacity: 1, y: 0 },
+            {
+                scrollTrigger: {
+                    trigger: '.certifications-section',
+                    start: 'top 70%',
+                    once: true
+                },
+                y: 0,
+                opacity: 1,
+                stagger: 0.12,
+                duration: 0.8,
+                ease: 'power3.out'
+            }
+        );
+    }
 }
 
 
@@ -853,6 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAbout(); // New 3D Section
     initResume(); // Resume section with skills/timeline
     initAchievements(); // Achievements & Impact section
+    initCertifications(); // Certifications section
     initProjects(); // Project showcase sections
     initMagneticButton(); // Magnetic button interaction
     initTestimonialsNew(); // Testimonial section
